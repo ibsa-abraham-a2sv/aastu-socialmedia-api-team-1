@@ -31,7 +31,6 @@
     <Folder Include="Features\Notifications\Handler\Commands\" />
     <Folder Include="Features\Notifications\Handler\Queries\" />
     <Folder Include="Features\Notifications\Request\Commands\" />
-    <Folder Include="Features\Notifications\Request\Queries\" />
     <Folder Include="Features\Posts\Handler\Commands\" />
     <Folder Include="Features\Posts\Handler\Queries\" />
     <Folder Include="Features\Posts\Request\Commands\" />
