@@ -8,4 +8,5 @@ namespace SocialMediaApp.Domain;
 
 public class Post
 {
+
 }
