@@ -15,30 +15,4 @@
     <ProjectReference Include="..\SocialMediaApp.Domain\SocialMediaApp.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Comments\Handler\Commands\" />
-    <Folder Include="Features\Comments\Handler\Queries\" />
-    <Folder Include="Features\Comments\Request\Commands\" />
-    <Folder Include="Features\Comments\Request\Queries\" />
-    <Folder Include="Features\Follows\Handler\Commands\" />
-    <Folder Include="Features\Follows\Handler\Queries\" />
-    <Folder Include="Features\Follows\Request\Commands\" />
-    <Folder Include="Features\Follows\Request\Queries\" />
-    <Folder Include="Features\Likes\Handler\Commands\" />
-    <Folder Include="Features\Likes\Handler\Queries\" />
-    <Folder Include="Features\Likes\Request\Commands\" />
-    <Folder Include="Features\Likes\Request\Queries\" />
-    <Folder Include="Features\Notifications\Handler\Commands\" />
-    <Folder Include="Features\Notifications\Handler\Queries\" />
-    <Folder Include="Features\Notifications\Request\Commands\" />
-    <Folder Include="Features\Posts\Handler\Commands\" />
-    <Folder Include="Features\Posts\Handler\Queries\" />
-    <Folder Include="Features\Posts\Request\Commands\" />
-    <Folder Include="Features\Posts\Request\Queries\" />
-    <Folder Include="Features\Users\Handler\Commands\" />
-    <Folder Include="Features\Users\Handler\Queries\" />
-    <Folder Include="Features\Users\Request\Commands\" />
-    <Folder Include="Features\Users\Request\Queries\" />
-  </ItemGroup>
-
 </Project>
