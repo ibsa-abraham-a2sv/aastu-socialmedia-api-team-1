@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SocialMediaApp.Application.DTOs.Common;
+using SocialMediaApp.Application.DTOs.Posts;
 
 namespace SocialMediaApp.Application.DTOs.Users;
 

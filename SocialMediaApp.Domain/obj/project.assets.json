@@ -72,5 +72,13 @@
         "runtimeIdentifierGraphPath": "/home/jimd/.dotnet/sdk/7.0.306/RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file /home/jimd/Desktop/Projects/aastu-socialmedia-api-team-1/SocialMediaApp.Domain/obj/project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
