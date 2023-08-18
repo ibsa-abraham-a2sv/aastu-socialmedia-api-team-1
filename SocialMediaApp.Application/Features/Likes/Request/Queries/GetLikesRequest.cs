@@ -8,4 +8,5 @@ namespace SocialMediaApp.Application.Features.Likes.Request.Queries;
 
 public class GetLikesRequest
 {
+    public int id { get; set; }
 }
