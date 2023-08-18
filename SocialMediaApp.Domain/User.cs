@@ -6,6 +6,22 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Domain;
 
-public class User
+public class User: BaseEntity
 {
+    /*
+String Name
+List follow
+List post
+String Bio
+List Followers
+
+    */
+
+    public string Name { get; set; }
+    public string email { get; set; }
+    public string password { get; set; }
+    public List<User> Followers { get; set; }
+    public List<Post> Post { get; set; }
+    public string Bio { get; set; }
+
 }

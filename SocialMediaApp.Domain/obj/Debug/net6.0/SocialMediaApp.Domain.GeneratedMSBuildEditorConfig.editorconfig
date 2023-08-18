@@ -8,4 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = SocialMediaApp.Domain
-build_property.ProjectDir = C:\Users\Bebe_x\source\repos\SocialMediaApp\SocialMediaApp.Domain\
+build_property.ProjectDir = /home/jimd/Desktop/Projects/aastu-socialmedia-api-team-1/SocialMediaApp.Domain/
