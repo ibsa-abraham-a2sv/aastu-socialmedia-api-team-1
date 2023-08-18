@@ -183,16 +183,6 @@
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
         }
-      },
-      "SocialMediaApp.Domain/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "compile": {
-          "bin/placeholder/SocialMediaApp.Domain.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/SocialMediaApp.Domain.dll": {}
-        }
       }
     }
   },
@@ -481,18 +471,12 @@
         "system.runtime.compilerservices.unsafe.nuspec",
         "useSharedDesignerContext.txt"
       ]
-    },
-    "SocialMediaApp.Domain/1.0.0": {
-      "type": "project",
-      "path": "../SocialMediaApp.Domain/SocialMediaApp.Domain.csproj",
-      "msbuildProject": "../SocialMediaApp.Domain/SocialMediaApp.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.1",
-      "MediatR.Extensions.Autofac.DependencyInjection >= 11.1.0",
-      "SocialMediaApp.Domain >= 1.0.0"
+      "MediatR.Extensions.Autofac.DependencyInjection >= 11.1.0"
     ]
   },
   "packageFolders": {
@@ -521,11 +505,7 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {
-            "C:\\Users\\Administrator\\source\\repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Domain\\SocialMediaApp.Domain.csproj": {
-              "projectPath": "C:\\Users\\Administrator\\source\\repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Domain\\SocialMediaApp.Domain.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
