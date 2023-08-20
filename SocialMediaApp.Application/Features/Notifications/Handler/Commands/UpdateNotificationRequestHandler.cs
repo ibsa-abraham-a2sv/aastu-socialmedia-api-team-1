@@ -21,7 +21,7 @@ public class UpdateNotificationRequestHandler : IRequestHandler<UpdateNotificati
     }
     public async Task<Unit> Handle(UpdateNotificationRequest request, CancellationToken cancellationToken)
     {
-        var notification = await _notificationRepository.GetNotificationDetails(request.UpdateNotificationDto.UserId, request.UpdateNotificationDto.Id);
+        var notification = await _notificationRepository.GetNotificationDetails(request.UpdateNotificationDto.Id, request.UpdateNotificationDto.Id);
         if (notification != null)
         {
             _mapper.Map(notification,request.UpdateNotificationDto);
