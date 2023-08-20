@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
+using SocialMediaApp.Application.Exceptions;
 using SocialMediaApp.Application.Features.Notifications.Request.Commands;
 using SocialMediaApp.Application.Persistence.Contracts;
+using SocialMediaApp.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +24,10 @@ public class DeleteNotificationRequestHandler : IRequestHandler<DeleteNotificati
     public async Task<Unit> Handle(DeleteNotificationRequest request, CancellationToken cancellationToken)
     {
         var notification = await _notificationRepository.GetNotificationDetails(request.UserId, request.NotificationId);
-        if (notification != null) { 
-            await _notificationRepository.Delete(notification);
+        if (notification == null) {
+            throw new NotFoundException(nameof(Notification),request.NotificationId);
         }
+        await _notificationRepository.Delete(notification);
         return Unit.Value;
     }
 }
