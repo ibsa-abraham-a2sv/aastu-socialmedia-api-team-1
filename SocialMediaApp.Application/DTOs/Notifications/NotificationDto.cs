@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.DTOs.Notifications;
 
-public class NotificationDto : BaseDto
+public class NotificationDto : BaseDto, INotificationDto
 {
     public string Content { get; set; } = "";
     public int UserId { get; set; }

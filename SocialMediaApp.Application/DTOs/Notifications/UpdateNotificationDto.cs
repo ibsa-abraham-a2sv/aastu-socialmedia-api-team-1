@@ -10,5 +10,4 @@ namespace SocialMediaApp.Application.DTOs.Notifications;
 public class UpdateNotificationDto : BaseDto
 {
     public string Content { get; set; } = "";
-    public int UserId { get; set; }
 }
