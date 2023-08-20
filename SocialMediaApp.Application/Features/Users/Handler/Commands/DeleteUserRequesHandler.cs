@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using SocialMediaApp.Application.Features.Users.Request.Commands;
 using SocialMediaApp.Application.Persistence.Contracts;
+using SocialMediaApp.Application.Exceptions;
 
 namespace SocialMediaApp.Application.Features.Users.Handler.Commands
 {
@@ -23,6 +20,10 @@ namespace SocialMediaApp.Application.Features.Users.Handler.Commands
     public async Task<Unit> Handle(DeleteUserCommandRequest request, CancellationToken cancellationToken)
     {
         var user = await _userRepository.GetById(request.Id);
+
+        if(user == null){
+            throw new NotFoundException(nameof(user), request.Id);
+        }
         await _userRepository.Delete(user);
         return Unit.Value;
     }

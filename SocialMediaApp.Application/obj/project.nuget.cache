@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "qp4jA5b90+f6mjWYDd3cfRToqtM32icKJTkT4cLWXEohTxlEcY7rbumMxqu1ay7xsBpJmp32kmYOFAXw2i3F9g==",
+  "dgSpecHash": "j2uH00BGUcTSAh9eEk/8rEEOtw4SFErBg68VnbXlBkUTXBhrxDcSVM+PnqF58MtnSrmpeAKIAOlZ5OuOcyB4jw==",
   "success": true,
   "projectFilePath": "/home/jimd/Desktop/Projects/aastu-socialmedia-api-team-1/SocialMediaApp.Application/SocialMediaApp.Application.csproj",
   "expectedPackageFiles": [
     "/home/jimd/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
     "/home/jimd/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
+    "/home/jimd/.nuget/packages/fluentvalidation/11.7.1/fluentvalidation.11.7.1.nupkg.sha512",
+    "/home/jimd/.nuget/packages/fluentvalidation.dependencyinjectionextensions/11.7.1/fluentvalidation.dependencyinjectionextensions.11.7.1.nupkg.sha512",
     "/home/jimd/.nuget/packages/mediatr/12.1.1/mediatr.12.1.1.nupkg.sha512",
     "/home/jimd/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",
     "/home/jimd/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",

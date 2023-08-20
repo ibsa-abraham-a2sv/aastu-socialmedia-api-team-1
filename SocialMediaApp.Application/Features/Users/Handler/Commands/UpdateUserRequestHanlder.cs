@@ -1,11 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using FluentValidation.Results;
 using AutoMapper;
 using MediatR;
+using SocialMediaApp.Application.DTOs.Users.Validations;
 using SocialMediaApp.Application.Features.Users.Request.Commands;
 using SocialMediaApp.Application.Persistence.Contracts;
+using SocialMediaApp.Application.Exceptions;
 
 namespace SocialMediaApp.Application.Features.Users.Handler.Commands
 {
@@ -22,6 +21,14 @@ namespace SocialMediaApp.Application.Features.Users.Handler.Commands
 
         public async Task<Unit> Handle(UpdateUserCommandRequest request, CancellationToken cancellationToken)
         {
+            var validator = new ValidateUpdateUserDto(_userRepository);
+
+            var validationResult = await validator.ValidateAsync(request.UpdateUserDto);
+
+            if(validationResult.IsValid == false)
+                throw new ValidationException(validationResult);
+
+
             var user = await _userRepository.GetById(request.Id);
             await _userRepository.Delete(user);
             return Unit.Value;
