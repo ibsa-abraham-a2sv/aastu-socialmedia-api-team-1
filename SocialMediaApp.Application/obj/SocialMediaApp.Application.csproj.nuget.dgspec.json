@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Administrator\\Source\\Repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Application\\SocialMediaApp.Application.csproj": {}
+    "C:\\Users\\Administrator\\source\\repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Application\\SocialMediaApp.Application.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Administrator\\Source\\Repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Application\\SocialMediaApp.Application.csproj": {
+    "C:\\Users\\Administrator\\source\\repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Application\\SocialMediaApp.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Administrator\\Source\\Repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Application\\SocialMediaApp.Application.csproj",
+        "projectUniqueName": "C:\\Users\\Administrator\\source\\repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Application\\SocialMediaApp.Application.csproj",
         "projectName": "SocialMediaApp.Application",
-        "projectPath": "C:\\Users\\Administrator\\Source\\Repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Application\\SocialMediaApp.Application.csproj",
+        "projectPath": "C:\\Users\\Administrator\\source\\repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Application\\SocialMediaApp.Application.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Administrator\\Source\\Repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Application\\obj\\",
         "projectStyle": "PackageReference",
@@ -28,8 +28,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Administrator\\Source\\Repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Domain\\SocialMediaApp.Domain.csproj": {
-                "projectPath": "C:\\Users\\Administrator\\Source\\Repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Domain\\SocialMediaApp.Domain.csproj"
+              "C:\\Users\\Administrator\\source\\repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Domain\\SocialMediaApp.Domain.csproj": {
+                "projectPath": "C:\\Users\\Administrator\\source\\repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Domain\\SocialMediaApp.Domain.csproj"
               }
             }
           }
@@ -73,12 +73,12 @@
         }
       }
     },
-    "C:\\Users\\Administrator\\Source\\Repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Domain\\SocialMediaApp.Domain.csproj": {
+    "C:\\Users\\Administrator\\source\\repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Domain\\SocialMediaApp.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Administrator\\Source\\Repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Domain\\SocialMediaApp.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Administrator\\source\\repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Domain\\SocialMediaApp.Domain.csproj",
         "projectName": "SocialMediaApp.Domain",
-        "projectPath": "C:\\Users\\Administrator\\Source\\Repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Domain\\SocialMediaApp.Domain.csproj",
+        "projectPath": "C:\\Users\\Administrator\\source\\repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Domain\\SocialMediaApp.Domain.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Administrator\\Source\\Repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Domain\\obj\\",
         "projectStyle": "PackageReference",

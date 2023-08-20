@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QoVKtW4MZtBrD1gDRx3UbHuPbyj3TINA0JDohuYjt5HuL6N+W1CKAZ9Uv3eTDcJFg+bV0F7WksFSybWVdn5qcQ==",
+  "dgSpecHash": "G41p1Hs1hmvsjXRnAi6XTfYCbVWKsudyk3jMQM6AZIjZCyd/95h4qLuA1K7Ml4bVi0cUfxVTBEx2zhWrCwYz/g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Administrator\\Source\\Repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Domain\\SocialMediaApp.Domain.csproj",
+  "projectFilePath": "C:\\Users\\Administrator\\source\\repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Domain\\SocialMediaApp.Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

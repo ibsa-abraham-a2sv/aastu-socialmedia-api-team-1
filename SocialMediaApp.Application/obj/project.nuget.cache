@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "SYiZ8+BZe1MpGypvtFM4NbkL51s2o5F1qaFlj65FD4HSsqeqEmf9Cn0oa12rMegrzOxpnodLrWDsqHKi19x36Q==",
+  "dgSpecHash": "AA9Q7cmWPK2I0ACd0wHvW9/TVuFkfSBxoBIN20lyKcmvZv6NZ3E9euw3l4aGwLR6d4l8YUos70gpRMSrkzchLQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Administrator\\Source\\Repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Application\\SocialMediaApp.Application.csproj",
+  "projectFilePath": "C:\\Users\\Administrator\\source\\repos\\aastu-socialmedia-api-team-1\\SocialMediaApp.Application\\SocialMediaApp.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
