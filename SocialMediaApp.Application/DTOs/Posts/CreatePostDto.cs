@@ -11,6 +11,6 @@ namespace SocialMediaApp.Application.DTOs.Posts
         public string? Title { get; set; }
         public string? Content { get; set; }
 
-        public string?
+        // public List<Comment> Comments {get; set;}
     }
 }
