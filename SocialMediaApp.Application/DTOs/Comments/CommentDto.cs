@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.DTOs.Comments;
 
-public class CommentDto : BaseDto
+public class CommentDto : BaseDto, ICommentDto
 {
     public int UserId { get; set; }
     public int PostId { get; set; }

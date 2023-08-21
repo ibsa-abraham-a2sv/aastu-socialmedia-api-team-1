@@ -1,5 +1,4 @@
-﻿using SocialMediaApp.Application.DTOs.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.DTOs.Notifications;
 
-public class UpdateNotificationDto : BaseDto
+public interface INotificationDto
 {
-    public string Content { get; set; } = "";
+    public string Content { get; set; }
+    public int UserId { get; set; }
 }

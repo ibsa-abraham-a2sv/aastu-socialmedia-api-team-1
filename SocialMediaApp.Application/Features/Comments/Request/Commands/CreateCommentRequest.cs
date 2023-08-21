@@ -10,5 +10,5 @@ namespace SocialMediaApp.Application.Features.Comments.Request.Commands;
 
 public class CreateCommentRequest : IRequest<int>
 {
-    public CommentDto? creatCommentDto { get; set; }
+    public CreateCommentDto? creatCommentDto { get; set; }
 }
