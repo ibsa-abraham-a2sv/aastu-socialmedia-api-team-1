@@ -24,8 +24,8 @@ namespace SocialMediaApp.Application.Features.Likes.Handler.Commands
         }
         public async Task<Unit> Handle(DeleteLikeRequest request, CancellationToken cancellationToken)
         {
-            var like = await _likeRepository.GetLike
-                (request.UserId , request.LikeId);
+            var like = await _likeRepository.GetById
+                ( request.LikeId);
              
             if (like == null)
             {
