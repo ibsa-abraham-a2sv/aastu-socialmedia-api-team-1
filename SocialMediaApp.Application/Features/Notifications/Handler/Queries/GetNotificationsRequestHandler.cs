@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using AutoMapper;
 using MediatR;
 using SocialMediaApp.Application.DTOs.Notifications;
@@ -5,6 +6,9 @@ using SocialMediaApp.Application.Features.Notifications.Request.Queries;
 using SocialMediaApp.Application.Persistence.Contracts;
 using SocialMediaApp.Domain;
 using System;
+=======
+﻿using System;
+>>>>>>> origin/mikeyas_branch
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.Features.Notifications.Handler.Queries;
 
+<<<<<<< HEAD
 public class GetNotificationsRequestHandler : IRequestHandler<GetNotificationsRequest, List<NotificationDto>>
 {
     private readonly INotificationRepository _notificationRepository;
@@ -26,4 +31,8 @@ public class GetNotificationsRequestHandler : IRequestHandler<GetNotificationsRe
         var notifications = await _notificationRepository.GetNotifications(request.UserId);
         return _mapper.Map<List<NotificationDto>>(notifications);
     }
+=======
+public class GetNotificationsRequestHandler
+{
+>>>>>>> origin/mikeyas_branch
 }

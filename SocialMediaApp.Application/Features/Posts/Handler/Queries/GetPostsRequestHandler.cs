@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 ﻿using AutoMapper;
 using MediatR;
 using SocialMediaApp.Application.DTOs.Posts;
 using SocialMediaApp.Application.Features.Posts.Request.Queries;
 using SocialMediaApp.Application.Persistence.Contracts;
 using System;
+=======
+﻿using System;
+>>>>>>> origin/mikeyas_branch
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.Features.Posts.Handler.Queries;
 
+<<<<<<< HEAD
 public class GetPostsRequestHandler : IRequestHandler<GetPostsRequest, List<PostDto>>
 {   
     private readonly IPostRepository _postRepository;
@@ -27,4 +32,8 @@ public class GetPostsRequestHandler : IRequestHandler<GetPostsRequest, List<Post
         var post = await _postRepository.GetAll(); 
         return _mapper.Map<List<PostDto>>(post);
     }
+=======
+public class GetPostsRequestHandler
+{
+>>>>>>> origin/mikeyas_branch
 }

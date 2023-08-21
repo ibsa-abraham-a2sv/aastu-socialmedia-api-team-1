@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+<<<<<<< HEAD
 using AutoMapper;
 using MediatR;
 using SocialMediaApp.Application.DTOs.Users;
@@ -27,4 +28,11 @@ public class GetUsersRequestHandler:IRequestHandler<GetUsersRequest, List<UserDt
             var user = await _userRepository.GetAll();
             return _mapper.Map<List<UserDto>>(user);
         }
+=======
+
+namespace SocialMediaApp.Application.Features.Users.Handler.Queries;
+
+public class GetUsersRequestHandler
+{
+>>>>>>> origin/mikeyas_branch
 }
