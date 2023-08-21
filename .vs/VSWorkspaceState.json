@@ -1,7 +1,16 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\SocialMediaApp.Application",
+    "\\SocialMediaApp.Application\\Features",
+    "\\SocialMediaApp.Application\\Features\\Comments",
+    "\\SocialMediaApp.Application\\Features\\Comments\\Handler",
+    "\\SocialMediaApp.Application\\Features\\Comments\\Handler\\Commands",
+    "\\SocialMediaApp.Application\\Features\\Comments\\Request",
+    "\\SocialMediaApp.Application\\Features\\Comments\\Request\\Commands",
+    "\\SocialMediaApp.Application\\Persistence",
+    "\\SocialMediaApp.Application\\Persistence\\Contracts"
   ],
-  "SelectedNode": "\\SocialMediaApp.sln",
+  "SelectedNode": "\\SocialMediaApp.Application\\Features\\Comments\\Handler\\Commands\\UpdateCommentRequestHandler.cs",
   "PreviewInSolutionExplorer": false
 }

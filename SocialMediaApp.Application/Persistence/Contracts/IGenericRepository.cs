@@ -15,4 +15,5 @@ public interface IGenericRepository<T> where T : class
     Task<T> Delete(T entity);
 
 
+
 }

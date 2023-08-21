@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.Persistence.Contracts;
 
-public class ICommentRepository : IGenericRepository<Comment>
+public interface ICommentRepository : IGenericRepository<Comment>
 {
+    Task<List<Comment>> GetCommentsByPostId(int postId);
+    Task<Comment> GetCommentById(int postId);
+
 }
