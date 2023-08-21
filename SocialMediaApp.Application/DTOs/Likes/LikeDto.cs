@@ -9,4 +9,6 @@ namespace SocialMediaApp.Application.DTOs.Likes;
 
 public class LikeDto : BaseDto
 {
+    public int UserId { get; set; }
+    public int PostId { get; set; }
 }
