@@ -18,11 +18,29 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
+        #region User
         CreateMap<User, UserDto>().ReverseMap();
+        #endregion User
+
+        #region Post
         CreateMap<Post, PostDto>().ReverseMap();
+        #endregion Post
+
+        #region Comment
         CreateMap<Comment, CommentDto>().ReverseMap();
+        #endregion Comment
+
+        #region Like
         CreateMap<Like, LikeDto>().ReverseMap();
+        #endregion Like
+
+        #region Follow
         CreateMap<Follow, FollowDto>().ReverseMap();
+        #endregion Follow
+
+        #region Notification
         CreateMap<Notification, NotificationDto>().ReverseMap();
+        CreateMap<Notification, CreateNotificationDto>().ReverseMap();
+        #endregion Notification
     }
 }

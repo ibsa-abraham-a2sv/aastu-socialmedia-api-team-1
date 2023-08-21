@@ -9,7 +9,7 @@ using SocialMediaApp.Application.Responses;
 
 namespace SocialMediaApp.Application.Features.Users.Handler.Commands;
 
-public class CreateUsersRequestHandler: IRequestHandler<CreateUserRequest, BaseCommandResponse>
+public class CreateUsersRequestHandler: IRequestHandler<CreateUserRequest, BaseResponseClass>
 {
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
@@ -20,12 +20,12 @@ public class CreateUsersRequestHandler: IRequestHandler<CreateUserRequest, BaseC
         _mapper = mapper;
     }
 
-public async Task<BaseCommandResponse> Handle(CreateUserRequest request, CancellationToken cancellationToken)
+public async Task<BaseResponseClass> Handle(CreateUserRequest request, CancellationToken cancellationToken)
     {
         var validator = new ValidateCreateUserDto(_userRepository);
 
         var validationResult = await validator.ValidateAsync(request.CreateUserDto);
-        var response = new BaseCommandRespnose();
+        var response = new BaseResponseClass();
 
         if(validationResult.IsValid == false)
         {

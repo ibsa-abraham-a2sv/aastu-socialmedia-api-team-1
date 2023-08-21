@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.DTOs.Notifications;
 
-public class CreateNotificationDto : INotificationDto
+public interface INotificationDto
 {
-    public bool IsRead { get; set; }
-    public string Content { get; set; } = "";
+    public string Content { get; set; }
     public int UserId { get; set; }
 }

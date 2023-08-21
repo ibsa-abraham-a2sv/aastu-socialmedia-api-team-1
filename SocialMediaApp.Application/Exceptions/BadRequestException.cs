@@ -1,15 +1,15 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace SocialMediaApp.Application.Exceptions
-{
-    public class BadRequestException:ApplicationException
-    {
+namespace SocialMediaApp.Application.Exceptions;
 
-      public BadRequestException(string message):base(message)
-      {
-      }   
+public class BadRequestException :ApplicationException
+{
+    public BadRequestException(string message): base(message)
+    {
+        
     }
 }

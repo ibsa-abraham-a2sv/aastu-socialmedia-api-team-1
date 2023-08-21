@@ -1,17 +1,15 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace SocialMediaApp.Application.Exceptions
-{
-    public class NotFoundException:ApplicationException
-    {
+namespace SocialMediaApp.Application.Exceptions;
 
-        public NotFoundException(string name, object key):base($"{name} {key} was not found")
-        {
-            
-        }
+public class NotFoundException : ApplicationException
+{
+    public NotFoundException(string message, object key):base($"{message} ({key}) was not found")
+    {
         
     }
 }
