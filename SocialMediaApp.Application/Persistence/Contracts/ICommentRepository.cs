@@ -9,4 +9,7 @@ namespace SocialMediaApp.Application.Persistence.Contracts;
 
 public interface ICommentRepository : IGenericRepository<Comment>
 {
+    Task<List<Comment>> GetCommentsByPostId(int postId);
+    Task<Comment> GetCommentById(int postId);
+
 }

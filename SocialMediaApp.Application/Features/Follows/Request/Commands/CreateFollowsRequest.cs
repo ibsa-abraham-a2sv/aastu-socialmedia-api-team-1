@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿﻿using MediatR;
+using SocialMediaApp.Application.DTOs.Follows;
+using SocialMediaApp.Application.Responses;
 
 namespace SocialMediaApp.Application.Features.Follows.Request.Commands;
 
-public class CreateFollowsRequest
+public class CreateFollowsRequest:IRequest<BaseResponseClass>
 {
+    public FollowDto createFollowDto {get; set;}
 }
