@@ -23,10 +23,7 @@ public class DeleteNotificationRequestHandler : IRequestHandler<DeleteNotificati
     }
     public async Task<Unit> Handle(DeleteNotificationRequest request, CancellationToken cancellationToken)
     {
-        var notification = await _notificationRepository.GetNotificationDetails(request.UserId, request.NotificationId);
-        if (notification == null) {
-            throw new NotFoundException(nameof(Notification),request.NotificationId);
-        }
+        var notification = await _notificationRepository.GetNotificationDetails(request.UserId, request.NotificationId) ?? throw new NotFoundException(nameof(Notification),request.NotificationId);
         await _notificationRepository.Delete(notification);
         return Unit.Value;
     }
