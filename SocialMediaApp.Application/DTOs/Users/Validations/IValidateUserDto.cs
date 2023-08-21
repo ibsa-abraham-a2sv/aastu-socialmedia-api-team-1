@@ -19,6 +19,5 @@ namespace SocialMediaApp.Application.DTOs.Users.Validations
             
         }
 
-
     }
 }
