@@ -1,4 +1,5 @@
-﻿using SocialMediaApp.Application.Persistence.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using SocialMediaApp.Application.Persistence.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,33 +10,43 @@ namespace SocialMediaApp.Persistence.Repositories;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
-    public Task<T> Add(T entity)
+    private readonly SocialMediaAppDbContext _context;
+    public GenericRepository(SocialMediaAppDbContext socialMediaAppDbContext)
     {
-        throw new NotImplementedException();
+        _context = socialMediaAppDbContext;
+    }
+    public async Task<T> Add(T entity)
+    {
+        await _context.AddAsync(entity);
+        await _context.SaveChangesAsync();
+        return entity;
     }
 
-    public Task Delete(T entity)
+    public async Task Delete(T entity)
     {
-        throw new NotImplementedException();
+        _context.Set<T>().Remove(entity);
+        await _context.SaveChangesAsync();
     }
 
-    public Task<bool> Exists(int id)
+    public async Task<bool> Exists(int id)
     {
-        throw new NotImplementedException();
+        var entity = await GetById(id);
+        return entity != null;
     }
 
-    public Task<IReadOnlyList<T>> GetAll()
+    public async Task<IReadOnlyList<T>> GetAll()
     {
-        throw new NotImplementedException();
+        return await _context.Set<T>().ToListAsync();
     }
 
-    public Task<T> GetById(int id)
+    public async Task<T> GetById(int id)
     {
-        throw new NotImplementedException();
+        return await _context.Set<T>().FindAsync(id);
     }
 
-    public Task Update(T entity)
+    public async Task Update(T entity)
     {
-        throw new NotImplementedException();
+        _context.Entry(entity).State = EntityState.Modified;
+        await _context.SaveChangesAsync();
     }
 }

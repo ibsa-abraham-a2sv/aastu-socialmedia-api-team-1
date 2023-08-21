@@ -7,7 +7,7 @@ namespace SocialMediaApp.Persistence.Repositories;
 public class NotificationRepository : GenericRepository<Notification>, INotificationRepository
 {
     private readonly SocialMediaAppDbContext _dbContext;
-    public NotificationRepository(SocialMediaAppDbContext dbContext)
+    public NotificationRepository(SocialMediaAppDbContext dbContext):base(dbContext)
     {
         _dbContext = dbContext;
     }
