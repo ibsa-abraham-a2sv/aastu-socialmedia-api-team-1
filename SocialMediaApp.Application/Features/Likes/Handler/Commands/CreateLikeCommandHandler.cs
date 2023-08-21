@@ -11,19 +11,19 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.Features.Likes.Handler.Commands;
 
-public class CreateLikesCommandHandler : IRequestHandler<CreateLikesCommand, int>
+public class CreateLikeCommandHandler : IRequestHandler<CreateLikeRequest, int>
 {
     private readonly ILikeRepository _likeRepository;
     private readonly IMapper _mapper;
 
-    public CreateLikesCommandHandler(ILikeRepository likeRepository,IMapper mapper)
+    public CreateLikeCommandHandler(ILikeRepository likeRepository,IMapper mapper)
     {
         _likeRepository = likeRepository;
         _mapper = mapper;
         
     }
 
-    public async Task<int> Handle(CreateLikesCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateLikeRequest request, CancellationToken cancellationToken)
     {
         var like = _mapper.Map<Like>(request.LikeDto);
         like =  await _likeRepository.Add(like);
