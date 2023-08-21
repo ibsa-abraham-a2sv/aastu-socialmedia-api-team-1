@@ -32,14 +32,16 @@ public async Task<BaseResponseClass> Handle(CreateUserRequest request, Cancellat
             response.Success = false;
             response.Message = "Creation Failed";
             response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
-        }
-           
+        }else{
+
         var user = _mapper.Map<User>(request);
         user = await _userRepository.Add(user);
 
         response.Success = true;
         response.Message = "Creation Successful";
         response.Id = user.Id;
+        }
+           
         return response;
         
     }

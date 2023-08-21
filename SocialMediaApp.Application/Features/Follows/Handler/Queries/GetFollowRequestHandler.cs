@@ -6,7 +6,7 @@ using SocialMediaApp.Application.Persistence.Contracts;
 
 namespace SocialMediaApp.Application.Features.Follows.Handler.Queries
 {
-    public class GetFollowRequestHandler : IRequestHandler<GetFollowRequest, FollowDto>
+    public class GetFollowRequestHandler : IRequestHandler<GetFollowerRequest, List<FollowDto>>
     {
         private readonly IFollowRepository _followRepository;
         private readonly IMapper _mapper;
@@ -16,10 +16,13 @@ namespace SocialMediaApp.Application.Features.Follows.Handler.Queries
             _followRepository = followRepository;
             _mapper = mapper;
         }
-        public async Task<FollowDto> Handle(GetFollowRequest request, CancellationToken cancellationToken)
+        public async Task<List<FollowDto>>  Handle(GetFollowerRequest request, CancellationToken cancellationToken)
         {
-            var follow = await _followRepository.GetById(request.Id);
-            return _mapper.Map<FollowDto>(follow);
+            var follow = await _followRepository.GetFollowersAsync(request.userId, request.Id);
+            var followersData = _mapper.Map<List<FollowDto>>(follow);
+            return followersData;
         }
+
+
     }
 }

@@ -23,7 +23,7 @@ namespace SocialMediaApp.Application.Features.Users.Handler.Queries
 
         public async Task<UserDto> Handle(GetUserRequest request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetAll();
+            var user = await _userRepository.GetById(request.Id);
             return _mapper.Map<UserDto>(user);
         }
     }

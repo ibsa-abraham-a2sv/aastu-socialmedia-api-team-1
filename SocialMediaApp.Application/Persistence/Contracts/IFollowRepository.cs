@@ -9,6 +9,6 @@ namespace SocialMediaApp.Application.Persistence.Contracts;
 
 public interface IFollowRepository: IGenericRepository<Follow>
 {
-    List<Follow> GetFollowersAsync(int userId,int id);
-    List<Follow> GetFollowingsAsync(int userId, int id);
+    Task<List<Follow>> GetFollowersAsync(int userId,int id);
+    Task<List<Follow>> GetFollowingsAsync(int userId, int id);
 }
