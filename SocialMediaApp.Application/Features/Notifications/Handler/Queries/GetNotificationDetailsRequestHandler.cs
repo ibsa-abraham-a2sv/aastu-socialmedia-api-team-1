@@ -3,7 +3,6 @@ using MediatR;
 using SocialMediaApp.Application.DTOs.Notifications;
 using SocialMediaApp.Application.Features.Notifications.Request.Queries;
 using SocialMediaApp.Application.Persistence.Contracts;
-using SocialMediaApp.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +11,18 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.Features.Notifications.Handler.Queries;
 
-public class GetNotificationsRequestHandler : IRequestHandler<GetNotificationsRequest, List<NotificationDto>>
+public class GetNotificationDetailsRequestHandler : IRequestHandler<GetNotificationDetailsRequest, NotificationDto>
 {
     private readonly INotificationRepository _notificationRepository;
     private readonly IMapper _mapper;
-    public GetNotificationsRequestHandler(INotificationRepository notificationRepository, IMapper mapper)
+    public GetNotificationDetailsRequestHandler(INotificationRepository notificationRepository, IMapper mapper)
     {
         _notificationRepository = notificationRepository;
         _mapper = mapper;
     }
-    public async Task<List<NotificationDto>> Handle(GetNotificationsRequest request, CancellationToken cancellationToken)
+    public async Task<NotificationDto> Handle(GetNotificationDetailsRequest request, CancellationToken cancellationToken)
     {
-        var notifications = await _notificationRepository.GetNotifications(request.UserId);
-        return _mapper.Map<List<NotificationDto>>(notifications);
+        var notification = await _notificationRepository.GetNotificationDetails(request.UserId, request.NotificationId);
+        return _mapper.Map<NotificationDto>(notification);
     }
 }

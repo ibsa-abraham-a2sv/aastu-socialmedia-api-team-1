@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.Persistence.Contracts;
 
+
 public interface IPostRepository:IGenericRepository<Post>
+
 {
     
 }

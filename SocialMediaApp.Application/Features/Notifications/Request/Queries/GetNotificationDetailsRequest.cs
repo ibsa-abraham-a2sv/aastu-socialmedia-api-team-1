@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.Features.Notifications.Request.Queries;
 
-public class GetNotificationsRequest : IRequest<List<NotificationDto>>
+public class GetNotificationDetailsRequest : IRequest<NotificationDto>
 {
     public int UserId { get; set; }
+    public int NotificationId { get; set; }
 }

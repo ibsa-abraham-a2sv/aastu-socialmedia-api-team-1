@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.Persistence.Contracts;
 
+
 public interface ILikeRepository: IGenericRepository<Like>
+
 {
 }
