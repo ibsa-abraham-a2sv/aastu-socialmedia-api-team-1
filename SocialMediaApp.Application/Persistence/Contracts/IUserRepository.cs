@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.Persistence.Contracts;
-
-public interface IUserRepository : IGenericRepository<Post>
+public interface IUserRepository:IGenericRepository<User>
 {
 }
