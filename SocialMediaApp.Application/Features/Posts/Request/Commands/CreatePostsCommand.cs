@@ -11,5 +11,5 @@ namespace SocialMediaApp.Application.Features.Posts.Request.Commands;
 
 public class CreatePostsCommand: IRequest<int>
 {
-    public PostDto postDto { get; set; }
+    public CreatePostDto postDto { get; set; }
 }

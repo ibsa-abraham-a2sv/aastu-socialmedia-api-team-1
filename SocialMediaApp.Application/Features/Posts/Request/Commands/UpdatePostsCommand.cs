@@ -11,6 +11,6 @@ namespace SocialMediaApp.Application.Features.Posts.Request.Commands
 {
     public class UpdatePostsCommand:IRequest<Unit>
     {
-        public PostDto post { set; get; }
+        public UpdatePostDto post { set; get; }
     }
 }

@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MediatR;
+using SocialMediaApp.Application.DTOs.Likes.Validators;
+using SocialMediaApp.Application.Exceptions;
 using SocialMediaApp.Application.Features.Likes.Request.Commands;
 using SocialMediaApp.Application.Persistence.Contracts;
 using SocialMediaApp.Domain;
@@ -25,8 +28,15 @@ public class CreateLikeCommandHandler : IRequestHandler<CreateLikeRequest, int>
 
     public async Task<int> Handle(CreateLikeRequest request, CancellationToken cancellationToken)
     {
+
         var like = _mapper.Map<Like>(request.LikeDto);
-        like =  await _likeRepository.Add(like);
+        like = await _likeRepository.Add(like);
+
+        if (_likeRepository.LikeExists(like.UserId, like.PostId)){
+
+            throw new BadRequestException("Bad Request");
+        }
+   
         return like.Id;
     }
 }
