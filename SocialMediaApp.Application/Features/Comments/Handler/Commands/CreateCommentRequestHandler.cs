@@ -1,14 +1,10 @@
-<<<<<<< HEAD
-﻿using System;
-=======
-﻿using AutoMapper;
+using AutoMapper;
 using MediatR;
 using SocialMediaApp.Application.DTOs.Comments;
 using SocialMediaApp.Application.Features.Comments.Request.Commands;
 using SocialMediaApp.Application.Persistence.Contracts;
 using SocialMediaApp.Domain;
 using System;
->>>>>>> origin/mikeyas_branch
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,10 +12,6 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.Features.Comments.Handler.Commands;
 
-<<<<<<< HEAD
-public class CreateCommentRequestHandler
-{
-=======
 public class CreateCommentRequestHandler : IRequestHandler<CreateCommentRequest, int>
 {
     private ICommentRepository _commentRepository;
@@ -35,5 +27,4 @@ public class CreateCommentRequestHandler : IRequestHandler<CreateCommentRequest,
         comment = await _commentRepository.Add(comment);
         return comment.Id;
     }
->>>>>>> origin/mikeyas_branch
 }
