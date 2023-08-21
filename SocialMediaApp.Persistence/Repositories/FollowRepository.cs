@@ -13,7 +13,7 @@ public class FollowRepository : GenericRepository<Follow>, IFollowRepository
 {
     private readonly SocialMediaAppDbContext _context;
 
-    public FollowRepository(SocialMediaAppDbContext dbContext)
+    public FollowRepository(SocialMediaAppDbContext dbContext):base(dbContext)
     {
         _context = dbContext;
     }
