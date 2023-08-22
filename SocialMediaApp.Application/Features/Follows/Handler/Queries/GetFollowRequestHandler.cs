@@ -18,7 +18,7 @@ namespace SocialMediaApp.Application.Features.Follows.Handler.Queries
         }
         public async Task<List<FollowDto>>  Handle(GetFollowerRequest request, CancellationToken cancellationToken)
         {
-            var follow = await _followRepository.GetFollowersAsync(request.userId, request.Id);
+            var follow = await _followRepository.GetFollowersAsync(request.userId);
             var followersData = _mapper.Map<List<FollowDto>>(follow);
             return followersData;
         }

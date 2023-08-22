@@ -39,14 +39,18 @@ public class CreateFollowsRequestHandler: IRequestHandler<CreateFollowsRequest, 
             response.Message = "Creation Failed";
             response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
         }
+        else
+        {
+            var follow = _mapper.Map<Follow>(request.createFollowDto);
+            follow = await _followRepository.Add(follow);
+
+            response.Success = true;
+            response.Message = "Creation Successful";
+            response.Id = follow.Id;
+        }
 
 
-        var follow = _mapper.Map<Follow>(request.createFollowDto);
-        
-
-        response.Success = true;
-        response.Message = "Creation Successful";
-        response.Id = follow.Id;
+       
         
         return response;
     }
