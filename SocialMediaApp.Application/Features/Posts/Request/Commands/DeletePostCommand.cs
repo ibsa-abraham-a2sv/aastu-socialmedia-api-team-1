@@ -1,6 +1,4 @@
 ﻿using MediatR;
-using SocialMediaApp.Application.DTOs.Posts;
-using SocialMediaApp.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.Features.Posts.Request.Commands
 {
-    public class UpdatePostsCommand:IRequest<Unit>
+    public class DeletePostCommand: IRequest<Unit>
     {
         public int Id { get; set; }
-        public UpdatePostDto post { set; get; }
     }
 }

@@ -10,6 +10,6 @@ namespace SocialMediaApp.Application.Features.Posts.Request.Queries;
 
 public class GetPostsRequest: IRequest<List<PostDto>>
 {
-    public int PostId { get; set; }
+  
 
 }

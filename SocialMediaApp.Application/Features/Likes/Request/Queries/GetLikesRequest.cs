@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-﻿using MediatR;
-=======
 using MediatR;
->>>>>>> origin/abdulsemed
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +9,8 @@ using SocialMediaApp.Application.DTOs.Likes;
 namespace SocialMediaApp.Application.Features.Likes.Request.Queries;
 
 public class GetLikesRequest:IRequest<List<LikeDto>>
-{
+{   
+    public int PostId { get; set; }
     
 
 }
