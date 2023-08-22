@@ -11,21 +11,20 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.Features.Posts.Handler.Queries;
 
-public class GetPostsRequestHandler : IRequestHandler<GetPostsRequestByUser, List<PostDto>>
-{   
+public class GetPostDetailsRequestHandler : IRequestHandler<GetPostRequestById, PostDto>
+{
     private readonly IPostRepository _postRepository;
-    private readonly IMapper _mapper; 
-    public GetPostsRequestHandler(IPostRepository postRepositiory, IMapper mapper)
+    private readonly IMapper _mapper;
+    public GetPostDetailsRequestHandler(IPostRepository postRepositiory, IMapper mapper)
     {
         _postRepository = postRepositiory;
         _mapper = mapper;
 
-            
+
     }
-    public async Task<List<PostDto>> Handle(GetPostsRequestByUser request, CancellationToken cancellationToken)
+    public async Task<PostDto> Handle(GetPostRequestById request, CancellationToken cancellationToken)
     {
-        var post = await _postRepository.GetPosts(request.UserId);
-        
-        return _mapper.Map<List<PostDto>>(post);
+        var post = await _postRepository.GetPostDetails(request.UserID, request.Id);
+        return _mapper.Map<PostDto>(post);
     }
 }

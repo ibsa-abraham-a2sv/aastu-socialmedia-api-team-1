@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using SocialMediaApp.Application.DTOs.Posts.Validators;
 using SocialMediaApp.Application.Features.Posts.Request.Commands;
 using SocialMediaApp.Application.Persistence.Contracts;
 using SocialMediaApp.Domain;
@@ -26,8 +27,14 @@ namespace SocialMediaApp.Application.Features.Posts.Handler.Commands
         public async Task<Unit> Handle(UpdatePostsCommand request, CancellationToken cancellationToken)
         {
             var post = await _postRepository.GetById(request.post.Id);
-            _mapper.Map(request.post, post);
-            await _postRepository.Update(post);
+            var validator = new UpdatePostDtoValidator(_postRepository);
+            var validationResult = await validator.ValidateAsync(request.post);
+            if (validationResult.IsValid == true)
+            {
+                _mapper.Map(request.post, post);
+                await _postRepository.Update(post);
+            }
+           
             return Unit.Value;
         }
     }
