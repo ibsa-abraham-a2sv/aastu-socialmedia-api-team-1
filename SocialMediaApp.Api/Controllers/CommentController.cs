@@ -52,8 +52,8 @@ namespace SocialMediaApp.Api.Controllers
         }
 
         // PUT api/<CommentController>/5
-        [HttpPut("{commentId:int}")]
-        public async Task<ActionResult> Put( int commentId, [FromBody] UpdateCommentDto updateCommentDto)
+        [HttpPut]
+        public async Task<ActionResult> Put([FromBody] UpdateCommentDto updateCommentDto)
         {
             var command = new UpdateCommentRequest { updatedCommentDto = updateCommentDto };
             await _mediator.Send(command);
