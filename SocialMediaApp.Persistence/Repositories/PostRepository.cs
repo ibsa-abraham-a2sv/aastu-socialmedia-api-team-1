@@ -16,4 +16,28 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
     {
         _dbContext = dbContext;
     }
+    public async Task<Post> GetPostDetails(int userId, int id)
+    {
+        var user = await _dbContext.Users.FindAsync(userId);
+        if (user != null)
+        {
+            var post = await _dbContext.Posts.FindAsync(id);
+            if (post != null)
+            {
+                return post;
+            }
+        }
+        return null;
+    }
+
+    public async Task<List<Post>> GetPosts(int userId, int id)
+    {
+        var user = await _dbContext.Users.FindAsync(userId);
+        if (user != null)
+        {
+            var posts = await _dbContext.Posts.Where(n => n.Id == userId).ToListAsync();
+            return posts;
+        }
+        return null;
+    }
 }

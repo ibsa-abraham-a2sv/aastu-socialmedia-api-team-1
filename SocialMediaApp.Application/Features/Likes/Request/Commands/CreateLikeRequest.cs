@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.Features.Likes.Request.Commands;
 
-public class CreateLikesCommand: IRequest<int> 
+public class CreateLikeRequest: IRequest<int> 
 {
     public LikeDto LikeDto { get; set; }
 }

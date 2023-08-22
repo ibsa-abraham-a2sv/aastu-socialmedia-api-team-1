@@ -10,5 +10,7 @@ namespace SocialMediaApp.Domain;
 public class Like: BaseEntity 
 {
     // it initiate the id in the base entitiy. the remaining part will be integrated in the context
+    public int UserId { get; set; }
+    public int PostId { get; set; }
         
 }

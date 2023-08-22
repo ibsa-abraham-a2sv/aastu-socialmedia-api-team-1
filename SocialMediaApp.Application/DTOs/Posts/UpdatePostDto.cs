@@ -1,4 +1,4 @@
-﻿using SocialMediaApp.Domain;
+﻿using SocialMediaApp.Application.DTOs.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +7,12 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.DTOs.Posts
 {
-    public class CreatePostDto
+    public class UpdatePostDto:BaseDto
+
     {
-        public int UserId { get; set; }
-        public int PostId { get; set; }
         public string? Title { get; set; }
         public string? Content { get; set; }
-
-
-        public List<Comment> comments { get; set; }
+        public List<String>? HashTag { get; set; }
 
     }
 }

@@ -7,9 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SocialMediaApp.Application.Features.Posts.Request.Commands;
-
-public class CreatePostsCommand: IRequest<int>
+namespace SocialMediaApp.Application.Features.Posts.Request.Commands
 {
-    public CreatePostDto postDto { get; set; }
+    public class UpdatePostsCommand:IRequest<Unit>
+    {
+        public UpdatePostDto post { set; get; }
+    }
 }

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+﻿using MediatR;
+=======
 using MediatR;
+>>>>>>> origin/abdulsemed
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -11,5 +11,6 @@ namespace SocialMediaApp.Application.Persistence.Contracts;
 public interface IPostRepository:IGenericRepository<Post>
 
 {
-    
+    Task<List<Post>> GetPosts(int userId, int id);
+    Task<Post> GetPostDetails(int userId, int id);
 }

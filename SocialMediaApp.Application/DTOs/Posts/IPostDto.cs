@@ -7,15 +7,13 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.DTOs.Posts
 {
-    public class CreatePostDto
+    public interface IPostDto
     {
         public int UserId { get; set; }
-        public int PostId { get; set; }
         public string? Title { get; set; }
         public string? Content { get; set; }
-
-
-        public List<Comment> comments { get; set; }
-
+        public List<Comment>? Comments { get; set; }
+        public List<Like>? Like { get; set; }
+        public List<String>? HashTag { get; set; }
     }
 }
