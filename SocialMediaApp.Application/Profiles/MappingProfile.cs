@@ -20,6 +20,8 @@ public class MappingProfile : Profile
     {
         #region User
         CreateMap<User, UserDto>().ReverseMap();
+        CreateMap<User, CreateUserDto>().ReverseMap();
+        CreateMap<User, UpdateUserDto>().ReverseMap();
         #endregion User
 
         #region Post
