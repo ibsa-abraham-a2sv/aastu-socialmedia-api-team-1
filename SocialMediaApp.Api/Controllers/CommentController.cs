@@ -1,5 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
+using SocialMediaApp.Application.DTOs.Comments;
+using SocialMediaApp.Application.DTOs.Notifications;
+using SocialMediaApp.Application.Features.Comments.Request.Commands;
+using SocialMediaApp.Application.Features.Comments.Request.Queries;
+using SocialMediaApp.Application.Features.Notifications.Request.Commands;
+using SocialMediaApp.Application.Features.Notifications.Request.Queries;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -9,44 +16,57 @@ namespace SocialMediaApp.Api.Controllers
     [ApiController]
     public class CommentController : ControllerBase
     {
-        public IMediator Mediator { get; }
+        public IMediator _mediator { get; }
 
         public CommentController(IMediator mediator)
         {
-            Mediator = mediator;
+            _mediator = mediator;
         }
 
 
         // GET: api/<CommentController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("{userId:int}")]
+        public async Task<ActionResult<List<CommentDto>>> Get(int userId)
         {
-            return new string[] { "value1", "value2" };
+            var query = new GetCommentListRequest { Id = userId };
+            var comments = await _mediator.Send(query);
+            return Ok(comments);
         }
 
         // GET api/<CommentController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("/GetComment/{id:int}")]
+        public async Task<ActionResult<CommentDto>> GetComment( int id)
         {
-            return "value";
+            var query = new GetCommentDetailRequest { Id = id };
+            var comment = await _mediator.Send(query);
+            return Ok(comment);
         }
 
         // POST api/<CommentController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult> Post([FromBody] CreateCommentDto commentDto)
         {
+            var command = new CreateCommentRequest { creatCommentDto = commentDto };
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
 
         // PUT api/<CommentController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{commentId:int}")]
+        public async Task<ActionResult> Put( int commentId, [FromBody] UpdateCommentDto updateCommentDto)
         {
+            var command = new UpdateCommentRequest { updatedCommentDto = updateCommentDto };
+            await _mediator.Send(command);
+            return NoContent();
         }
 
         // DELETE api/<CommentController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{userId:int},{id:int}")]
+        public async Task<ActionResult<int>> Delete(int userId, int id)
         {
+            var command = new DeleteCommentRequest { UserId= userId, Id = id};
+            await _mediator.Send(command);
+            return NoContent();
         }
     }
 }
