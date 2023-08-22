@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
+using SocialMediaApp.Application.DTOs.Comments.Validator;
+using SocialMediaApp.Application.Exceptions;
 using SocialMediaApp.Application.Features.Comments.Request.Commands;
 using SocialMediaApp.Application.Persistence.Contracts;
 using System;
@@ -21,9 +23,24 @@ namespace SocialMediaApp.Application.Features.Comments.Handler.Commands
             this._mapper = mapper;  
             this._commentRepository = commentRepository;
         }
-        public Task<Unit> Handle(UpdateCommentRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateCommentRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+           
+
+            var CommentToBeUpdated = await _commentRepository.GetCommentById(request.updatedCommentDto.Id);
+            var validator = new UpdateCommentDtoValidator(_commentRepository);
+            var validationResult = await validator.ValidateAsync(request.updatedCommentDto, cancellationToken);
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult);
+            }
+
+            _mapper.Map(request.updatedCommentDto, CommentToBeUpdated);
+
+            await _commentRepository.Update(CommentToBeUpdated);
+
+            return Unit.Value;
+            
         }
     }
 }

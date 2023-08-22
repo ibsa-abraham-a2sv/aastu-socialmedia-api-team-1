@@ -18,11 +18,11 @@ public static class PersistenceServicesRegistration
     {
         services.AddDbContext<SocialMediaAppDbContext>(opt => opt.UseNpgsql(configuration.GetConnectionString("SocialMediaAppConnection")));
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-       /* services.AddScoped <IUserRepository,UserRepository > ();
+        services.AddScoped <IUserRepository,UserRepository > ();
         services.AddScoped <IPostRepository, PostRepository > ();
         services.AddScoped < ICommentRepository, CommentRepository > ();
         services.AddScoped <IFollowRepository, FollowRepository > ();
-        services.AddScoped <ILikeRepository, LikeRepository  > ();*/
+        services.AddScoped <ILikeRepository, LikeRepository  > ();
         services.AddScoped <INotificationRepository, NotificationRepository  > ();
 
         return services;

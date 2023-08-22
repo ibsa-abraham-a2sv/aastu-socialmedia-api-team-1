@@ -12,13 +12,13 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="FluentAssertions" Version="6.11.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1" />
-    <PackageReference Include="MediatR" Version="12.1.1" />
+    <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="11.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SocialMediaApp.Domain\SocialMediaApp.Domain.csproj" />
-    <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="11.1.0" />
   </ItemGroup>
 
 </Project>

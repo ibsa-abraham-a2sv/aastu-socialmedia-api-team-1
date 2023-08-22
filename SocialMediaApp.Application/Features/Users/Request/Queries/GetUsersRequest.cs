@@ -10,5 +10,5 @@ namespace SocialMediaApp.Application.Features.Users.Request.Queries;
 
 public class GetUsersRequest: IRequest<List<UserDto>>
 {
-    public int Id { get; set; }
+    
 }

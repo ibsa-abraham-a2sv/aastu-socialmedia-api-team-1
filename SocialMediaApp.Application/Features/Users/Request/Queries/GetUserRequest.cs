@@ -9,6 +9,6 @@ namespace SocialMediaApp.Application.Features.Users.Request.Queries
 {
     public class GetUserRequest:IRequest<UserDto>
     {
-        public int Id;
+      public int Id { get; set; }
     }
 }
