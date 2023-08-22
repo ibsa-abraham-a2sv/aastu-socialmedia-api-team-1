@@ -10,5 +10,9 @@ namespace SocialMediaApp.Application.Features.Comments.Request.Commands;
 
 public class CreateCommentRequest : IRequest<int>
 {
+<<<<<<< HEAD
     public CommentDto? creatCommentDto { get; set; }
+=======
+    public CreateCommentDto? creatCommentDto { get; set; }
+>>>>>>> origin/mikeyas_branch
 }

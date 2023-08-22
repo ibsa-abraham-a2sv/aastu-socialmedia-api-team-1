@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.Features.Comments.Request.Commands
 {
-    public class UpdateCommentRequest : IRequest<Unit>
+    public class DeleteCommentRequest : IRequest<Unit>
     {
-
-        public UpdateCommentDto? updatedCommentDto { get; set; }
+        public DeleteCommentDto? deleteCommentDto { get; set; }
     }
 }
