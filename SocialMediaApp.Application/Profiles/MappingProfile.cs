@@ -33,7 +33,8 @@ public class MappingProfile : Profile
 
         #region Comment
         CreateMap<Comment, CommentDto>().ReverseMap();
-
+        CreateMap<Comment, CreateCommentDto>().ReverseMap();
+        CreateMap<Comment, UpdateCommentDto>().ReverseMap();
         #endregion Comment
 
         #region Like
