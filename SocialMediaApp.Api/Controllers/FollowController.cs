@@ -30,7 +30,7 @@ public class FollowController:ControllerBase
     }
 
     // GET: api/items/{id}
-    [HttpGet("{Followingid}")]
+    [HttpGet("following/{Followingid:int},{id:int}")]
     public async Task<ActionResult<List<FollowDto>>> GetFollowings(int FollowingId, int id)
     {
         var follow = await _mediator.Send(new GetFollowerRequest {userId = FollowingId,Id = id});
@@ -39,7 +39,7 @@ public class FollowController:ControllerBase
     }
 
     // POST: api/items
-    [HttpGet("{FollowerId}")]
+    [HttpGet("followers/{FollowerId},{id:int}")]
    public async Task<ActionResult<List<FollowDto>>> GetFollowers(int FollowerId, int id)
     {
         var follow = await _mediator.Send(new GetFollowerRequest {userId = FollowerId,Id = id});
