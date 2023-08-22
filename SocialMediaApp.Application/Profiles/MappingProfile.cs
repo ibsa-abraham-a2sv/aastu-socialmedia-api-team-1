@@ -20,10 +20,15 @@ public class MappingProfile : Profile
     {
         #region User
         CreateMap<User, UserDto>().ReverseMap();
+        CreateMap<User, CreateUserDto>().ReverseMap();
+        CreateMap<User, UpdateUserDto>().ReverseMap();
         #endregion User
 
         #region Post
         CreateMap<Post, PostDto>().ReverseMap();
+        CreateMap<Post, PostListDto>().ReverseMap();
+        CreateMap<Post, CreatePostDto>().ReverseMap();
+        CreateMap<Post, UpdatePostDto>().ReverseMap();
         #endregion Post
 
         #region Comment
@@ -34,6 +39,7 @@ public class MappingProfile : Profile
 
         #region Like
         CreateMap<Like, LikeDto>().ReverseMap();
+        CreateMap<Like, CreateLikeDto>().ReverseMap();
         #endregion Like
 
         #region Follow

@@ -7,6 +7,13 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.Persistence.Contracts;
 
+
 public interface ILikeRepository : IGenericRepository<Like>
+
 {
+
+
+    bool LikeExists(int UserId, int PostId);
+
+
 }

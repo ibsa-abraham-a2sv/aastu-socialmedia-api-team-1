@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using MediatR;
 using SocialMediaApp.Application.DTOs.Comments;
 using SocialMediaApp.Application.DTOs.Comments.Validator;
