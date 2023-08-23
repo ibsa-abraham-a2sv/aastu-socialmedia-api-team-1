@@ -9,27 +9,21 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.DTOs.Likes.Validators
 {
-    public class ILikeDtoValidator: AbstractValidator<ILikeDto>
-    {
-        private readonly ILikeRepository _likeRepository;
-        public ILikeDtoValidator(ILikeRepository likeRepository)
+    public class ILikeDtoValidator: AbstractValidator<ILikeDto> {
+        private readonly IPostRepository _postRepository;
+        public ILikeDtoValidator(IPostRepository postRepository)
         {
-            _likeRepository = likeRepository;
+            _postRepository = postRepository;
             RuleFor(n => n.UserId)
             .GreaterThan(0)
-            .MustAsync(async (id, token) =>
-            {
-                var UserIdExists = await _likeRepository.Exists(id);
-                return !UserIdExists;
-            })
             .WithMessage("{PropertyName} does not exist.");
 
             RuleFor(n => n.PostId)
             .GreaterThan(0)
             .MustAsync(async (id, token) =>
             {
-                var UserIdExists = await _likeRepository.Exists(id);
-                return !UserIdExists;
+                var UserIdExists = await _postRepository.Exists(id);
+                return UserIdExists;
             })
             .WithMessage("{PropertyName} does not exist.");
         }

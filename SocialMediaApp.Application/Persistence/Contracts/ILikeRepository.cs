@@ -13,4 +13,6 @@ public interface ILikeRepository : IGenericRepository<LikeDto>
     bool LikeExists(int UserId, int PostId);
     
     Task<List<LikeDto>> GetLikesByPostId(int userId, int Id);
+    Task<List<Like>> GetLikesById(int postId);
+
 }

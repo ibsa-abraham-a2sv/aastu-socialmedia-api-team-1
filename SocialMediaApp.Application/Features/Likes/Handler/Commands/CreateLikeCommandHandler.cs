@@ -5,6 +5,7 @@ using SocialMediaApp.Application.DTOs.Likes.Validators;
 using SocialMediaApp.Application.Exceptions;
 using SocialMediaApp.Application.Features.Likes.Request.Commands;
 using SocialMediaApp.Application.Persistence.Contracts;
+using SocialMediaApp.Application.Responses;
 using SocialMediaApp.Domain;
 using System;
 using System.Collections.Generic;
@@ -14,29 +15,50 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.Features.Likes.Handler.Commands;
 
-public class CreateLikeCommandHandler : IRequestHandler<CreateLikeRequest, int>
+public class CreateLikeCommandHandler : IRequestHandler<CreateLikeRequest, BaseResponseClass>
 {
     private readonly ILikeRepository _likeRepository;
+    private readonly IPostRepository _postRepository;
     private readonly IMapper _mapper;
 
-    public CreateLikeCommandHandler(ILikeRepository likeRepository,IMapper mapper)
+    public CreateLikeCommandHandler(ILikeRepository likeRepository, IPostRepository postRepository , IMapper mapper)
     {
         _likeRepository = likeRepository;
         _mapper = mapper;
+        _postRepository = postRepository;
         
     }
 
-    public async Task<int> Handle(CreateLikeRequest request, CancellationToken cancellationToken)
+    public async Task<BaseResponseClass> Handle(CreateLikeRequest request, CancellationToken cancellationToken)
     {
-       
-        var like = _mapper.Map<Like>(request.LikeDto);
-        like = await _likeRepository.Add(like);
 
-        if (_likeRepository.LikeExists(like.UserId, like.PostId)){
+        
+        var validator = new CreateLikeDtoValidator(_postRepository);
+        var validationResult = await validator.ValidateAsync(request.LikeDto, cancellationToken);
 
-            throw new BadRequestException("Bad Request");
+        var response = new BaseResponseClass();
+        if (validationResult.IsValid == false)
+        {
+            response.Success = false;
+            response.Message = "Creation failed";
+            response.Errors = validationResult.Errors.Select(err => err.ErrorMessage).ToList();
         }
-   
-        return like.Id;
+        else if (!_likeRepository.LikeExists(request.LikeDto.UserId, request.LikeDto.PostId))
+        {
+            response.Success = false;
+            response.Message = "Creation failed";
+            response.Errors = new List<string>() { "post with this id does not exist"};
+        }
+        else
+        {
+            var like = _mapper.Map<Like>(request.LikeDto);
+            like = await _likeRepository.Add(like);
+            response.Success = true;
+            response.Message = "Creation successful";
+            response.Id = like.Id;
+            
+        }
+
+        return response;
     }
 }

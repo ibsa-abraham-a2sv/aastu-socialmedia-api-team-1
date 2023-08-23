@@ -23,7 +23,7 @@ public class GetLikesRequestHandler : IRequestHandler<GetLikesRequest, List<Like
     }
     public async Task<List<LikeDto>> Handle(GetLikesRequest request, CancellationToken cancellationToken)
     {
-        var like = await _likeRepository.GetAll();
+        var like = await _likeRepository.GetLikesById(request.PostId);
         return _mapper.Map<List<LikeDto>>(like);
     }
 }
