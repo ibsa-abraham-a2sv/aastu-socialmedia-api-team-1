@@ -1,5 +1,8 @@
 using SocialMediaApp.Persistence;
 using SocialMediaApp.Application;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
+using SocialMediaApp.Infrastructure;
 using Microsoft.Extensions.Hosting;
 using SocialMediaApp.Domain;
 using Microsoft.AspNetCore.Authentication;
@@ -15,8 +18,9 @@ builder.Services.ConfigurePersistenceServices(builder.Configuration);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
-
+builder.Services
+    .AddApplication()
+    .AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
