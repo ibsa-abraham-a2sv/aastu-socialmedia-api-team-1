@@ -10,7 +10,9 @@ using SocialMediaApp.Application.Features.Follows.Request.Commands;
 
 namespace SocialMediaApp.Api.Controllers
 {
-public class FollowController:ControllerBase
+[Route("api/[controller]")]
+[ApiController]
+    public class FollowController:ControllerBase
 {
     private readonly IMediator _mediator;
 
@@ -21,7 +23,7 @@ public class FollowController:ControllerBase
         
     }
 
-    // GET: api/items
+    // GET:follow
     [HttpGet]
     public async Task<ActionResult<List<FollowDto>>> Get()
     {
@@ -29,25 +31,26 @@ public class FollowController:ControllerBase
         return users;
     }
 
-    // GET: api/items/{id}
-    [HttpGet("following/{Followingid:int},{id:int}")]
-    public async Task<ActionResult<List<FollowDto>>> GetFollowings(int FollowingId, int id)
+    // GET: follow/folllowing/{id}
+    [HttpGet("following/{FollowingId:int}")]
+        //[HttpGet("following/{FollowingId:int}")]
+        public async Task<ActionResult<List<FollowDto>>> GetFollowings(int FollowingId)
     {
-        var follow = await _mediator.Send(new GetFollowerRequest {userId = FollowingId,Id = id});
+        var follow = await _mediator.Send(new GetFollowingRequest {userId = FollowingId});
         
         return follow;
     }
 
-    // POST: api/items
-    [HttpGet("followers/{FollowerId},{id:int}")]
-   public async Task<ActionResult<List<FollowDto>>> GetFollowers(int FollowerId, int id)
+    // POST: follow/followers
+    [HttpGet("followers/{FollowerId:int}")]
+   public async Task<ActionResult<List<FollowDto>>> GetFollowers(int FollowerId)
     {
-        var follow = await _mediator.Send(new GetFollowerRequest {userId = FollowerId,Id = id});
+        var follow = await _mediator.Send(new GetFollowerRequest {userId = FollowerId});
         
         return follow;
     }
 
-   // POST: api/items
+   // POST: follow
     [HttpPost]
     public async Task<ActionResult> PostFollow([FromBody] FollowDto  followDto)
     {
@@ -58,7 +61,7 @@ public class FollowController:ControllerBase
         return Ok(followRespond);
 
     }
-    // DELETE: api/items/{id}
+    // DELETE: follow/{id}
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteUser(int id)
     {

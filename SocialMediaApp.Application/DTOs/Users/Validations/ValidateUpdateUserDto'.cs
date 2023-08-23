@@ -20,7 +20,7 @@ namespace SocialMediaApp.Application.DTOs.Users.Validations
         .MustAsync(async (id, token) =>
         {
             var userIdExist = await _userRepository.Exists(id);
-            return !userIdExist;
+            return userIdExist;
         })
         .WithMessage("{PropertyName} does not exist.");
         }
