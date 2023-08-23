@@ -18,9 +18,15 @@ public class LikeRepository: GenericRepository<Like>, ILikeRepository
         
     }
 
-    public  bool LikeExists(int UserId, int PostId)
+    public async Task<List<Like>> GetLikesById(int postId)
     {
-        var user = _dbContext.Likes.Where(n => n.UserId == UserId && n.PostId == PostId).FirstOrDefault();
-        throw new NotImplementedException();
+        var likes = await _dbContext.Likes.Where(L=>L.PostId == postId).ToListAsync();
+        return likes;
+    }
+
+    public bool LikeExists(int UserId, int PostId)
+    {
+        var user = _dbContext.Posts.Where(n => n.UserId == UserId && n.Id == PostId).FirstOrDefault();
+        return user != null;
     }
 }

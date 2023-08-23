@@ -11,9 +11,11 @@ namespace SocialMediaApp.Application.DTOs.Notifications.Validators;
 public class INotificationDtoValidator :AbstractValidator<INotificationDto>
 {
     private readonly INotificationRepository _notificationRepository;
-    public INotificationDtoValidator(INotificationRepository notificationRepository)
+    private readonly IUserRepository _userRepository;
+    public INotificationDtoValidator(INotificationRepository notificationRepository, IUserRepository userRepository)
     {
         _notificationRepository = notificationRepository;
+        _userRepository = userRepository;
         RuleFor(n => n.Content)
             .NotEmpty().WithMessage("{PropertyName} is required")
             .NotNull()
@@ -22,9 +24,10 @@ public class INotificationDtoValidator :AbstractValidator<INotificationDto>
             .GreaterThan(0)
             .MustAsync(async (id, token) =>
             {
-                var UserIdExists = await _notificationRepository.Exists(id);
-                return !UserIdExists;
+                var UserIdExists = await _userRepository.Exists(id);
+                return UserIdExists;
             })
             .WithMessage("{PropertyName} does not exist.");
+        
     }
 }
