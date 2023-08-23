@@ -21,4 +21,9 @@
     <ProjectReference Include="..\SocialMediaApp.Domain\SocialMediaApp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\NewsFeedItem\Handler\Commands\" />
+    <Folder Include="Features\NewsFeedItem\Request\Commands\" />
+  </ItemGroup>
+
 </Project>
