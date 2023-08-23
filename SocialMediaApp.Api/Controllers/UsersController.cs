@@ -4,6 +4,7 @@ using SocialMediaApp.Application.DTOs.Users;
 using SocialMediaApp.Application.Features.Users.Request.Queries;
 using SocialMediaApp.Application.Features.Users.Request.Commands;
 
+
 namespace SocialMediaApp.Api.Controllers
 {
 [Route("api/[controller]")]
@@ -36,7 +37,7 @@ public class UsersController:ControllerBase
         return user;
     }
     //Get:user/name
-    [HttpGet("{name}")]
+    [HttpGet("UserByName/{name}")]
     public async Task<ActionResult<List<UserDto>>> GetByNameAsync(string name)
     {
         var users = await _mediator.Send(new GetUsersByNameRequest{Name = name});

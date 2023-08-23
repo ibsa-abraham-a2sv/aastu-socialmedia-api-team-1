@@ -67,7 +67,12 @@ namespace SocialMediaApp.Persistence.Migrations
                     b.Property<int>("FollowingId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Follows");
                 });
@@ -171,9 +176,6 @@ namespace SocialMediaApp.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("email")
                         .IsRequired()
                         .HasColumnType("text");
@@ -183,8 +185,6 @@ namespace SocialMediaApp.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Users");
                 });
@@ -196,6 +196,13 @@ namespace SocialMediaApp.Persistence.Migrations
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SocialMediaApp.Domain.Follow", b =>
+                {
+                    b.HasOne("SocialMediaApp.Domain.User", null)
+                        .WithMany("Followers")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("SocialMediaApp.Domain.Like", b =>
@@ -214,13 +221,6 @@ namespace SocialMediaApp.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("SocialMediaApp.Domain.User", b =>
-                {
-                    b.HasOne("SocialMediaApp.Domain.User", null)
-                        .WithMany("Followers")
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("SocialMediaApp.Domain.Post", b =>

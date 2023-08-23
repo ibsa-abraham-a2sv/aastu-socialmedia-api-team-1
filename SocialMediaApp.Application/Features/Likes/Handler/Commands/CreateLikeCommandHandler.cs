@@ -28,7 +28,7 @@ public class CreateLikeCommandHandler : IRequestHandler<CreateLikeRequest, int>
 
     public async Task<int> Handle(CreateLikeRequest request, CancellationToken cancellationToken)
     {
-
+       
         var like = _mapper.Map<Like>(request.LikeDto);
         like = await _likeRepository.Add(like);
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SocialMediaApp.Application.Exceptions;
 using SocialMediaApp.Application.Persistence.Contracts;
 using SocialMediaApp.Domain;
 using System;
@@ -40,4 +41,15 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
         }
         return null;
     }
+
+    public async Task<List<Comment>> GetPostComments(int userId, int id)
+    {
+        var Postcomments = _dbContext.Comments.Where(n => n.UserId == userId).Where(n => n.PostId == id).ToList();
+        if (Postcomments == null)
+            throw new NotFoundException("${userId}", id);
+
+        return Postcomments;
+    }
+
+
 }

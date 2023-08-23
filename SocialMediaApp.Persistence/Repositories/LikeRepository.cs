@@ -23,4 +23,10 @@ public class LikeRepository: GenericRepository<Like>, ILikeRepository
         var user = _dbContext.Likes.Where(n => n.UserId == UserId && n.PostId == PostId).FirstOrDefault();
         throw new NotImplementedException();
     }
+
+    public Task<List<Like>> GetLikesByPostId(int userId, int PostId)
+    {
+        var likes = _dbContext.Likes.Where(l => l.PostId == PostId).ToList();
+        return likes;
+    }
 }
