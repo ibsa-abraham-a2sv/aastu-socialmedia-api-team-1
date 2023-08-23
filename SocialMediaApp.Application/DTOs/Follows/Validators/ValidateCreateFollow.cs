@@ -8,13 +8,13 @@ using SocialMediaApp.Application.Persistence.Contracts;
 
 namespace SocialMediaApp.Application.DTOs.Follows.Validators
 {
-    public class ValidateCreateFollow:AbstractValidator<FollowDto>
+    public class ValidateCreateFollow:AbstractValidator<CreateFollowDto>
     {
-        private readonly IFollowRepository _followRepository;
-        public ValidateCreateFollow(IFollowRepository followRepository)
+        private readonly IUserRepository _userRepository;
+        public ValidateCreateFollow(IUserRepository userRepository)
         {
-            _followRepository = followRepository;
-            Include(new IFollowDtoValidator(_followRepository));
+            _userRepository = userRepository;
+            Include(new IFollowDtoValidator(_userRepository));
         }
         
     }
