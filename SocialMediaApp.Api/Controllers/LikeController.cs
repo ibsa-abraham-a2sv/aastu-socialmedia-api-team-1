@@ -34,9 +34,9 @@ namespace SocialMediaApp.Api.Controllers
         [HttpPost]
         public async void Post([FromBody] CreateLikeDto likeDto)
         {
+
             var command = new CreateLikeRequest { LikeDto = likeDto };
             await _mediator.Send(command);
-
         }
        
 
