@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.DTOs.Posts
 {
-    public class UpdatePostDto:BaseDto
+    public class UpdatePostDto:BaseDto, IPostDto
 
     {
         public string? Title { get; set; }
         public string? Content { get; set; }
         public List<String>? HashTag { get; set; }
+        public int UserId { get; set; }
 
       
     }

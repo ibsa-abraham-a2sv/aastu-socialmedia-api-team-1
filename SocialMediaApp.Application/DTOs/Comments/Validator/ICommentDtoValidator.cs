@@ -21,7 +21,7 @@ namespace SocialMediaApp.Application.DTOs.Comments.Validator
                .MustAsync(async (id, token) =>
                {
                    var UserIdExists = await _commentRepository.Exists(id);
-                   return !UserIdExists;
+                   return UserIdExists;
                })
                .WithMessage("{PropertyName} does not exist.");
 
@@ -30,7 +30,7 @@ namespace SocialMediaApp.Application.DTOs.Comments.Validator
                .MustAsync(async (id, token) =>
                {
                    var PostIdExists = await _commentRepository.Exists(id);
-                   return !PostIdExists;
+                   return PostIdExists;
                })
                .WithMessage("{PropertyName} does not exist.");
 

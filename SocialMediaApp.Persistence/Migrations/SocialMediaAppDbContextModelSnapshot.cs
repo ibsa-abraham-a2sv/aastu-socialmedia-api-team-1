@@ -67,18 +67,8 @@ namespace SocialMediaApp.Persistence.Migrations
                     b.Property<int>("FollowingId")
                         .HasColumnType("integer");
 
-<<<<<<< HEAD
                     b.HasKey("Id");
 
-=======
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
->>>>>>> origin/abdulsemed
                     b.ToTable("Follows");
                 });
 
@@ -181,12 +171,9 @@ namespace SocialMediaApp.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-<<<<<<< HEAD
                     b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
-=======
->>>>>>> origin/abdulsemed
                     b.Property<string>("email")
                         .IsRequired()
                         .HasColumnType("text");
@@ -197,11 +184,8 @@ namespace SocialMediaApp.Persistence.Migrations
 
                     b.HasKey("Id");
 
-<<<<<<< HEAD
                     b.HasIndex("UserId");
 
-=======
->>>>>>> origin/abdulsemed
                     b.ToTable("Users");
                 });
 
@@ -214,16 +198,6 @@ namespace SocialMediaApp.Persistence.Migrations
                         .IsRequired();
                 });
 
-<<<<<<< HEAD
-=======
-            modelBuilder.Entity("SocialMediaApp.Domain.Follow", b =>
-                {
-                    b.HasOne("SocialMediaApp.Domain.User", null)
-                        .WithMany("Followers")
-                        .HasForeignKey("UserId");
-                });
-
->>>>>>> origin/abdulsemed
             modelBuilder.Entity("SocialMediaApp.Domain.Like", b =>
                 {
                     b.HasOne("SocialMediaApp.Domain.Post", null)
@@ -242,7 +216,6 @@ namespace SocialMediaApp.Persistence.Migrations
                         .IsRequired();
                 });
 
-<<<<<<< HEAD
             modelBuilder.Entity("SocialMediaApp.Domain.User", b =>
                 {
                     b.HasOne("SocialMediaApp.Domain.User", null)
@@ -250,8 +223,6 @@ namespace SocialMediaApp.Persistence.Migrations
                         .HasForeignKey("UserId");
                 });
 
-=======
->>>>>>> origin/abdulsemed
             modelBuilder.Entity("SocialMediaApp.Domain.Post", b =>
                 {
                     b.Navigation("Comments");

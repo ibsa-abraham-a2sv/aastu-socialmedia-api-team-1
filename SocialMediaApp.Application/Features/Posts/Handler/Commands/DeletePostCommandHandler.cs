@@ -28,7 +28,7 @@ namespace SocialMediaApp.Application.Features.Posts.Handler.Commands
         {
             var post = await _postRepository.GetById(request.Id);
 
-            if (post == null)
+            if (post == null || post.UserId != request.UserId)
             {
                 throw new NotFoundException(nameof(post), request.Id);
             }

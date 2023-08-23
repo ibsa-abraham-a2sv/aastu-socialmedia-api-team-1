@@ -23,19 +23,19 @@ namespace SocialMediaApp.Api.Controllers
         }
 
         // GET: api/<PostController>
-        [HttpGet]
-        public async Task<ActionResult<List<PostDto>>> Get()
+        [HttpGet("{UserId:int}")]
+        public async Task<ActionResult<List<PostDto>>> Get(int UserId)
         {
-            var posts = await _mediator.Send(new GetPostsRequest());
+            var posts = await _mediator.Send(new GetPostsRequestByUser { UserId = UserId});
 
             return Ok(posts);
         }
 
         // GET api/<PostController>/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<PostDto>> Get(int id)
+        [HttpGet("{UserId:int},{id:int}")]
+        public async Task<ActionResult<PostDto>> Get(int UserId,int id)
         {
-            var post = await _mediator.Send(new GetPostRequestById{Id=id});
+            var post = await _mediator.Send(new GetPostRequestById{Id=id, UserID = UserId});
             return Ok(post);
         }  
 
@@ -49,19 +49,19 @@ namespace SocialMediaApp.Api.Controllers
         }
 
         // PUT api/<PostController>/5
-        [HttpPut("{id}")]
-        public async Task<ActionResult>  UpdatePost(int id, [FromBody] UpdatePostDto posts)
+        [HttpPut]
+        public async Task<ActionResult>  UpdatePost([FromBody] UpdatePostDto posts)
         {
-            var command = new UpdatePostsCommand {Id = id, post = posts };
+            var command = new UpdatePostsCommand {post = posts };
             await _mediator.Send(command);
             return NoContent();
         }
 
         // DELETE api/<PostController>/5 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        [HttpDelete("{id:int}, {UserId:int}")]
+        public async Task<ActionResult> Delete(int id, int UserId)
         {
-            await _mediator.Send(new DeletePostCommand { Id  =id});
+            await _mediator.Send(new DeletePostCommand { Id  =id, UserId = UserId});
             return NoContent();
         }
     }

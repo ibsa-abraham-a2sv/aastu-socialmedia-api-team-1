@@ -10,7 +10,7 @@ namespace SocialMediaApp.Application.Features.Posts.Request.Queries
 {
     public class GetPostRequestById : IRequest<PostDto>
     {
-        
+        public int UserID { get; set; }
         public int Id { get; set; }
     }
 }
