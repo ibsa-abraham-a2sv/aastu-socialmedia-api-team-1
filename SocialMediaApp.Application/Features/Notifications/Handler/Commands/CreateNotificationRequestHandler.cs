@@ -17,16 +17,18 @@ namespace SocialMediaApp.Application.Features.Notifications.Handler.Commands;
 public class CreateNotificationRequestHandler : IRequestHandler<CreateNotificationRequest, BaseResponseClass>
 {
     private readonly INotificationRepository _notificationRepository;
+    private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
-    public CreateNotificationRequestHandler(INotificationRepository notificationRepository, IMapper mapper)
+    public CreateNotificationRequestHandler(INotificationRepository notificationRepository, IMapper mapper, IUserRepository userRepository)
     {
         _notificationRepository = notificationRepository;
         _mapper = mapper;
+        _userRepository = userRepository;
     }
     public async Task<BaseResponseClass> Handle(CreateNotificationRequest request, CancellationToken cancellationToken)
     {
         var response = new BaseResponseClass();
-        var validator = new CreateNotificationRequestValidator(_notificationRepository);
+        var validator = new CreateNotificationRequestValidator(_notificationRepository, _userRepository);
         var validationResult = await validator.ValidateAsync(request.CreateNotificationDto);
 
         if(validationResult.IsValid == false) {
@@ -35,11 +37,16 @@ public class CreateNotificationRequestHandler : IRequestHandler<CreateNotificati
             response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             //throw new ValidationException(validationResult);
         }
-        var notification = _mapper.Map<Notification>(request.CreateNotificationDto);
-        notification = await _notificationRepository.Add(notification);
-        response.Success = true;
-        response.Message = "Creation successful";
-        response.Id = notification.Id;
+        else
+        {
+            var notification = _mapper.Map<Notification>(request.CreateNotificationDto);
+            notification = await _notificationRepository.Add(notification);
+            response.Success = true;
+            response.Message = "Creation successful";
+            response.Id = notification.Id;
+
+        }
+        
         return response;
     }
 
