@@ -35,7 +35,13 @@ public class UsersController:ControllerBase
 
         return user;
     }
-
+    //Get:user/name
+    [HttpGet("{name}")]
+    public async Task<ActionResult<List<UserDto>>> GetByNameAsync(string name)
+    {
+        var users = await _mediator.Send(new GetUsersByNameRequest{Name = name});
+        return users;
+    }
     // POST: api/items
     [HttpPost]
     public async Task<ActionResult> PostUsers([FromBody] CreateUserDto  createUserDto)
