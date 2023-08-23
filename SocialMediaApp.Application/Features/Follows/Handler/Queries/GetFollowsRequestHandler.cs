@@ -22,11 +22,10 @@ public class GetFollowsRequestHandler : IRequestHandler<GetFollowsRequest, List<
         _mapper = mapper;
     }
 
-    public Task<List<FollowDto>> Handle(GetFollowsRequest request, CancellationToken cancellationToken)
+    public async Task<List<FollowDto>> Handle(GetFollowsRequest request, CancellationToken cancellationToken)
     {
-        var follows = _followRepository.GetAll();
-        var followDto = _mapper.Map<List<FollowDto>>(follows);
-        return Task.FromResult(followDto);
+        var follows = await _followRepository.GetAll();
+        return _mapper.Map<List<FollowDto>>(follows);
     }
     
 }

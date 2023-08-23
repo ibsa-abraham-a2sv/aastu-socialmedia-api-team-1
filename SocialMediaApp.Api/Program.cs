@@ -1,5 +1,8 @@
 using SocialMediaApp.Persistence;
 using SocialMediaApp.Application;
+using Microsoft.Extensions.Hosting;
+using SocialMediaApp.Domain;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

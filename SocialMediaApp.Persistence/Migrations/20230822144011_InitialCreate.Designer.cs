@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SocialMediaApp.Persistence;
@@ -12,9 +13,11 @@ using SocialMediaApp.Persistence;
 namespace SocialMediaApp.Persistence.Migrations
 {
     [DbContext(typeof(SocialMediaAppDbContext))]
-    partial class SocialMediaAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230822144011_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,10 +70,6 @@ namespace SocialMediaApp.Persistence.Migrations
                     b.Property<int>("FollowingId")
                         .HasColumnType("integer");
 
-<<<<<<< HEAD
-                    b.HasKey("Id");
-
-=======
                     b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
@@ -78,7 +77,6 @@ namespace SocialMediaApp.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
->>>>>>> origin/abdulsemed
                     b.ToTable("Follows");
                 });
 
@@ -181,12 +179,6 @@ namespace SocialMediaApp.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-<<<<<<< HEAD
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
-=======
->>>>>>> origin/abdulsemed
                     b.Property<string>("email")
                         .IsRequired()
                         .HasColumnType("text");
@@ -197,11 +189,6 @@ namespace SocialMediaApp.Persistence.Migrations
 
                     b.HasKey("Id");
 
-<<<<<<< HEAD
-                    b.HasIndex("UserId");
-
-=======
->>>>>>> origin/abdulsemed
                     b.ToTable("Users");
                 });
 
@@ -214,8 +201,6 @@ namespace SocialMediaApp.Persistence.Migrations
                         .IsRequired();
                 });
 
-<<<<<<< HEAD
-=======
             modelBuilder.Entity("SocialMediaApp.Domain.Follow", b =>
                 {
                     b.HasOne("SocialMediaApp.Domain.User", null)
@@ -223,7 +208,6 @@ namespace SocialMediaApp.Persistence.Migrations
                         .HasForeignKey("UserId");
                 });
 
->>>>>>> origin/abdulsemed
             modelBuilder.Entity("SocialMediaApp.Domain.Like", b =>
                 {
                     b.HasOne("SocialMediaApp.Domain.Post", null)
@@ -242,16 +226,6 @@ namespace SocialMediaApp.Persistence.Migrations
                         .IsRequired();
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("SocialMediaApp.Domain.User", b =>
-                {
-                    b.HasOne("SocialMediaApp.Domain.User", null)
-                        .WithMany("Followers")
-                        .HasForeignKey("UserId");
-                });
-
-=======
->>>>>>> origin/abdulsemed
             modelBuilder.Entity("SocialMediaApp.Domain.Post", b =>
                 {
                     b.Navigation("Comments");

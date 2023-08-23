@@ -9,7 +9,6 @@ namespace SocialMediaApp.Application.Features.Follows.Request.Queries
 {
     public class GetFollowerRequest:IRequest<List<FollowDto>>
     {
-        public int Id {get; set;}
         public int userId { get; set; }
 
         

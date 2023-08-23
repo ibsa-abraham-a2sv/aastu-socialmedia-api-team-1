@@ -34,7 +34,7 @@ public async Task<BaseResponseClass> Handle(CreateUserRequest request, Cancellat
             response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
         }else{
 
-        var user = _mapper.Map<User>(request);
+        var user = _mapper.Map<User>(request.CreateUserDto);
         user = await _userRepository.Add(user);
 
         response.Success = true;

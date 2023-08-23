@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using SocialMediaApp.Application.Exceptions;
 using SocialMediaApp.Application.Persistence.Contracts;
 using SocialMediaApp.Domain;
@@ -19,16 +20,16 @@ public class FollowRepository : GenericRepository<Follow>, IFollowRepository
     }
 
 
-    public async Task<List<Follow>>  GetFollowersAsync(int userId,int id)
+    public async Task<List<Follow>>  GetFollowersAsync(int userId)
     {
-        var followers  = _context.Follows.Where(u => u.FollowerId == userId).ToList() ?? throw new NotFoundException("${userId}", id);
+        var followers  = await _context.Follows.Where(u => u.FollowerId == userId).ToListAsync() ?? throw new NotFoundException("${userId}", userId);
         return followers;
         
         }
 
-    public async Task<List<Follow>> GetFollowingsAsync(int userId, int id)
+    public async Task<List<Follow>> GetFollowingsAsync(int userId)
     {
-        var followings =  _context.Follows.Where(u => u.FollowingId == userId).ToList() ?? throw new NotFoundException("${userId}", id);
+        var followings = await _context.Follows.Where(u => u.FollowingId == userId).ToListAsync();
         
         return followings;
 

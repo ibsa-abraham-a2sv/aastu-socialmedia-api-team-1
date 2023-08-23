@@ -30,7 +30,7 @@ namespace SocialMediaApp.Application.Features.Users.Handler.Commands
 
 
             var user = await _userRepository.GetById(request.Id);
-            await _userRepository.Delete(user);
+            await _userRepository.Update(user);
             return Unit.Value;
         }
     }

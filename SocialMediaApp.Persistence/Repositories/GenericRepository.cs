@@ -30,7 +30,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     public async Task<bool> Exists(int id)
     {
-        var entity = await GetById(id);
+        var entity = await  GetById(id);
         return entity != null;
     }
 
