@@ -34,6 +34,7 @@ namespace SocialMediaApp.Api.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
+            var command = new CreateLikeRequest { }
         }
        
 

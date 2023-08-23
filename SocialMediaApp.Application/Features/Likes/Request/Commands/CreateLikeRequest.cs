@@ -10,5 +10,5 @@ namespace SocialMediaApp.Application.Features.Likes.Request.Commands;
 
 public class CreateLikeRequest: IRequest<int> 
 {
-    public LikeDto LikeDto { get; set; }
+    public CreateLikeDto LikeDto { get; set; }
 }
