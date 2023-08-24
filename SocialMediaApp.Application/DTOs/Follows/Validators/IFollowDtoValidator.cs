@@ -10,16 +10,16 @@ namespace SocialMediaApp.Application.DTOs.Follows.Validators
 {
     public class IFollowDtoValidator:AbstractValidator<IFollowDto>
     {
-        private readonly IFollowRepository _followRepository;
-        public IFollowDtoValidator(IFollowRepository followRepository)
+        private readonly IUserRepository _userRepository;
+        public IFollowDtoValidator(IUserRepository userRepository)
         {
-            _followRepository = followRepository;
+            _userRepository = userRepository;
             RuleFor(n => n.FollowerId)
             .GreaterThan(0)
             .MustAsync(async (id, token) =>
             {
-                var UserIdExists = await _followRepository.Exists(id);
-                return !UserIdExists;
+                var UserIdExists = await _userRepository.Exists(id);
+                return UserIdExists;
             })
             .WithMessage("{PropertyName} does not exist.");
             
@@ -27,8 +27,8 @@ namespace SocialMediaApp.Application.DTOs.Follows.Validators
             .GreaterThan(0)
             .MustAsync(async (id, token) =>
             {
-                var UserIdExists = await _followRepository.Exists(id);
-                return !UserIdExists;
+                var UserIdExists = await _userRepository.Exists(id);
+                return UserIdExists;
             })
             .WithMessage("{PropertyName} does not exist.");
 

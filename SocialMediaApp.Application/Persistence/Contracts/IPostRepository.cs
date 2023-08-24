@@ -14,4 +14,5 @@ public interface IPostRepository:IGenericRepository<Post>
     Task<List<Post>> GetPosts(int userId);
     Task<Post> GetPostDetails(int userId, int id);
     Task<List<Post>> SearchPosts(string query);
+    List<Post> GetPostForNewsFeed();
 }

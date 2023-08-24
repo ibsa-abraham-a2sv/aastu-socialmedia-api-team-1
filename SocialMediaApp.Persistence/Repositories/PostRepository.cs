@@ -64,4 +64,13 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
         return postResult;
 
     }
+    public List<Post> GetPostForNewsFeed()
+    {
+        return _dbContext.Posts
+            .Include(p => p.UserId)
+            .OrderByDescending(p => p.CreatedDate) 
+            .ToList();
+    }
+
+    
 }
