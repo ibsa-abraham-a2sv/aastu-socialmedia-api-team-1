@@ -13,7 +13,7 @@ using SocialMediaApp.Persistence;
 namespace SocialMediaApp.Persistence.Migrations
 {
     [DbContext(typeof(SocialMediaAppDbContext))]
-    [Migration("20230823065427_InitialCreate")]
+    [Migration("20230824075951_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -28,23 +28,21 @@ namespace SocialMediaApp.Persistence.Migrations
 
             modelBuilder.Entity("SocialMediaApp.Domain.Comment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("PostId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Text")
                         .HasColumnType("text");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -55,23 +53,21 @@ namespace SocialMediaApp.Persistence.Migrations
 
             modelBuilder.Entity("SocialMediaApp.Domain.Follow", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("FollowerId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("FollowerId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("FollowingId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("FollowingId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -82,20 +78,18 @@ namespace SocialMediaApp.Persistence.Migrations
 
             modelBuilder.Entity("SocialMediaApp.Domain.Like", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("PostId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -106,11 +100,9 @@ namespace SocialMediaApp.Persistence.Migrations
 
             modelBuilder.Entity("SocialMediaApp.Domain.Notification", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -122,23 +114,24 @@ namespace SocialMediaApp.Persistence.Migrations
                     b.Property<bool>("IsRead")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("SocialMediaApp.Domain.Post", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
@@ -148,10 +141,11 @@ namespace SocialMediaApp.Persistence.Migrations
                         .HasColumnType("text[]");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -162,11 +156,9 @@ namespace SocialMediaApp.Persistence.Migrations
 
             modelBuilder.Entity("SocialMediaApp.Domain.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Bio")
                         .IsRequired()
@@ -217,6 +209,15 @@ namespace SocialMediaApp.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SocialMediaApp.Domain.Notification", b =>
+                {
+                    b.HasOne("SocialMediaApp.Domain.User", null)
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SocialMediaApp.Domain.Post", b =>
                 {
                     b.HasOne("SocialMediaApp.Domain.User", null)
@@ -236,6 +237,8 @@ namespace SocialMediaApp.Persistence.Migrations
             modelBuilder.Entity("SocialMediaApp.Domain.User", b =>
                 {
                     b.Navigation("Followers");
+
+                    b.Navigation("Notifications");
 
                     b.Navigation("Post");
                 });

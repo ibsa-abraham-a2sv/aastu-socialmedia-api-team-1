@@ -9,6 +9,6 @@ namespace SocialMediaApp.Application.Features.Notifications.Request.Commands;
 
 public class DeleteNotificationRequest : IRequest<Unit>
 {
-    public int UserId { get; set; }
-    public int NotificationId { get; set; }
+    public Guid UserId { get; set; }
+    public Guid NotificationId { get; set; }
 }

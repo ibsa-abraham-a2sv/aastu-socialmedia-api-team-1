@@ -10,5 +10,5 @@ namespace SocialMediaApp.Application.Features.Comments.Request.Queries;
 
 public class GetCommentDetailRequest : IRequest<CommentDto>
 {
-    public int Id { get; set;}
+    public Guid Id { get; set;}
 }

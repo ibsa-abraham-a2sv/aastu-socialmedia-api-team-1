@@ -45,7 +45,7 @@ namespace SocialMediaApp.Application.Services.Authentication
             };
 
 
-            _userRepository.AddUser(user);
+            _userRepository.Add(user);
 
            
             var token = _jwtTokenGenerator.GenerateToken(user.Id, Name);
