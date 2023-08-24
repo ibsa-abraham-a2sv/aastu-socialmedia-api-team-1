@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\aastu-socialmedia-api-team-1\SocialMediaApp.Application\SocialMediaApp.Application.csproj" />
-    <ProjectReference Include="..\aastu-socialmedia-api-team-1\SocialMediaApp.Domain\SocialMediaApp.Domain.csproj" />
+    <ProjectReference Include="..\SocialMediaApp.Domain\SocialMediaApp.Domain.csproj" />
+    <ProjectReference Include="..\SocialMediaApp.Application\SocialMediaApp.Application.csproj" />
   </ItemGroup>
 
 </Project>

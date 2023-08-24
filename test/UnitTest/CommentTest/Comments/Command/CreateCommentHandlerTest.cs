@@ -10,6 +10,7 @@ using SocialMediaApp.Application.Persistence.Contracts;
 using SocialMediaApp.Application.Features.Comments.Handler.Queries;
 using SocialMediaApp.Application.Features.Comments.Request.Queries;
 using SocialMediaApp.Application.DTOs.Comments;
+using SocialMediaApp.Application.Responses;
 using SocialMediaApp.Application.Profiles;   
 using Shouldly;
 using SocialMediaApp.Application.Features.Comments.Handler.Commands;
@@ -21,13 +22,16 @@ namespace test.UnitTest.CommentTest.Comments.Handler
     public class CreateCommentHandlerTest
     {
         private  readonly IMapper _mapper;
-        private readonly Mock<ICommentRepository> _mockRepo;
+        private readonly Mock<ICommentRepository> _mockRepoComment;
+        private readonly Mock<IPostRepository> _mockRepoPost;
+        private readonly Mock<IUserRepository> _mockRepoUser;
         
         private readonly CreateCommentDto _createCommentDto;
         public CreateCommentHandlerTest()
         {
-            _mockRepo = MockCommentRepository.GetCommentRepository();
-
+            _mockRepoComment = MockRepositoryFactory.GetCommentRepository();
+            _mockRepoPost = MockRepositoryFactory.GetPostRepository();
+            _mockRepoUser = MockRepositoryFactory.GetUserRepository();
             var mapperConfig = new MapperConfiguration(c => {
                 c.AddProfile<MappingProfile>();
             });
@@ -47,16 +51,14 @@ namespace test.UnitTest.CommentTest.Comments.Handler
         public async Task CreateComment()
         {
             // When
-            var handler = new CreateCommentRequestHandler(_mockRepo.Object, _mapper);
+            var handler = new CreateCommentRequestHandler(_mockRepoComment.Object, _mapper, _mockRepoPost.Object,_mockRepoUser.Object);
 
             var result = handler.Handle(new CreateCommentRequest(){ creatCommentDto = _createCommentDto}, CancellationToken.None);
 
-            var comments = await _mockRepo.Object.GetAll();
+            var comments = await _mockRepoComment.Object.GetAll();
 
-            result.ShouldBeOfType<CreateCommentDto>();
+            result.ShouldBeOfType<BaseResponseClass>();
 
-
-        
             // Then
         }
     }

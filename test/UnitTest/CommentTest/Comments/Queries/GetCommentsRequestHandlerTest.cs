@@ -22,7 +22,7 @@ namespace test.UnitTest.CommentTest.Comments.Queries
 
             public GetCommentsRequestHandlerTest()
             {
-            _mockRepo = MockCommentRepository.GetCommentRepository();
+            _mockRepo = MockRepositoryFactory.GetCommentRepository();
 
             var mapperConfig = new MapperConfiguration(c => {
                 c.AddProfile<MappingProfile>();
