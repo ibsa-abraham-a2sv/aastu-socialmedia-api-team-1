@@ -17,8 +17,8 @@ namespace SocialMediaApp.Api.Controllers
             _mediator = mediator;
         }
         // GET: api/<NotificationController>
-        [HttpGet("{userId:int}")]
-        public async Task<ActionResult<List<NotificationDto>>> Get(int userId)
+        [HttpGet("{userId:Guid}")]
+        public async Task<ActionResult<List<NotificationDto>>> Get(Guid userId)
         {
             var query = new GetNotificationsRequest { UserId = userId };
             var notifications = await _mediator.Send(query);
@@ -26,8 +26,8 @@ namespace SocialMediaApp.Api.Controllers
         }
 
         // GET api/<NotificationController>/5
-        [HttpGet("{userId:int},{id:int}")]
-        public async Task<ActionResult<NotificationDto>> Get(int userId,int id)
+        [HttpGet("{userId:Guid},{id:Guid}")]
+        public async Task<ActionResult<NotificationDto>> Get(Guid userId, Guid id)
         {
             var query = new GetNotificationDetailsRequest { UserId = userId, NotificationId = id };
             var notificaiton = await _mediator.Send(query);
@@ -44,8 +44,8 @@ namespace SocialMediaApp.Api.Controllers
         }       
 
         // DELETE api/<NotificationController>/5
-        [HttpDelete("{userId:int},{id:int}")]
-        public async Task<ActionResult<int>> Delete(int userId,int id)
+        [HttpDelete("{userId:Guid},{id:Guid}")]
+        public async Task<ActionResult<Guid>> Delete(Guid userId, Guid id)
         {
             var command = new DeleteNotificationRequest { UserId = userId,NotificationId = id };
             await _mediator.Send(command);

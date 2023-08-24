@@ -11,7 +11,8 @@ namespace SocialMediaApp.Application.Persistence.Contracts;
 public interface ILikeRepository : IGenericRepository<Like>
 
 {
-    Task<List<Like>> GetLikesById(int postId);
-    bool LikeExists(int UserId, int PostId);
+
+    Task<List<Like>> GetLikesById(Guid PostId);
+    bool LikeExists(Guid UserId, Guid PostId);
 
 }

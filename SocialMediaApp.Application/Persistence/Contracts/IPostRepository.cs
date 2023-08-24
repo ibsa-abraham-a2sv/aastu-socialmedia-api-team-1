@@ -11,7 +11,7 @@ namespace SocialMediaApp.Application.Persistence.Contracts;
 public interface IPostRepository:IGenericRepository<Post>
 
 {
-    Task<List<Post>> GetPosts(int userId);
-    Task<Post> GetPostDetails(int userId, int id);
-    Task<List<Post>> GetPostForNewsFeed(int UserId);
+    Task<List<Post>> GetPosts(Guid userId);
+    Task<Post> GetPostDetails(Guid userId, Guid id);
+    Task<List<Post>> GetPostForNewsFeed(Guid UserId);
 }

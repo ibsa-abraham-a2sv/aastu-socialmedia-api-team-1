@@ -12,10 +12,12 @@ namespace SocialMediaApp.Application.DTOs.Likes.Validators
     public class CreateLikeDtoValidator:AbstractValidator<CreateLikeDto>
     {
         private readonly IPostRepository _postRepository;
-        public CreateLikeDtoValidator(IPostRepository postRepository)
+        private readonly IUserRepository _userRepository;
+        public CreateLikeDtoValidator(IPostRepository postRepository, IUserRepository userRepository)
         {
             _postRepository = postRepository;
-            Include(new ILikeDtoValidator(_postRepository));
+            _userRepository = userRepository;
+            Include(new ILikeDtoValidator(_postRepository, _userRepository));
           
         }
     }

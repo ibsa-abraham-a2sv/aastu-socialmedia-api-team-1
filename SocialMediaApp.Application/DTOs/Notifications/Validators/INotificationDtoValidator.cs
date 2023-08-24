@@ -21,7 +21,6 @@ public class INotificationDtoValidator :AbstractValidator<INotificationDto>
             .NotNull()
             .MaximumLength(50).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");
         RuleFor(n => n.UserId)
-            .GreaterThan(0)
             .MustAsync(async (id, token) =>
             {
                 var UserIdExists = await _userRepository.Exists(id);

@@ -27,8 +27,8 @@ namespace SocialMediaApp.Api.Controllers
         
 
         // GET api/<LikeController>/5
-        [HttpGet("{PostId}")]
-        public async Task<ActionResult<List<LikeDto>>> Get(int PostId)
+        [HttpGet("{PostId:Guid}")]
+        public async Task<ActionResult<List<LikeDto>>> Get(Guid PostId)
         {
             var likes = await _mediator.Send(new GetLikesRequest { PostId = PostId });
 
@@ -62,8 +62,8 @@ namespace SocialMediaApp.Api.Controllers
        
 
         // DELETE api/<LikeController>/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Unlike(int id)
+        [HttpDelete("{id:Guid}")]
+        public async Task<ActionResult> Unlike(Guid id)
         {
             await _mediator.Send(new DeleteLikeRequest { LikeId = id });
             return NoContent();

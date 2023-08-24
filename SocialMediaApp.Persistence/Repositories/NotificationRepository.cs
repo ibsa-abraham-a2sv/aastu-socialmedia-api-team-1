@@ -11,7 +11,7 @@ public class NotificationRepository : GenericRepository<Notification>, INotifica
     {
         _dbContext = dbContext;
     }
-    public async Task<Notification> GetNotificationDetails(int userId, int id)
+    public async Task<Notification> GetNotificationDetails(Guid userId, Guid id)
     {
         var user = await _dbContext.Users.FindAsync(userId);
         if (user != null)
@@ -28,7 +28,7 @@ public class NotificationRepository : GenericRepository<Notification>, INotifica
         return null;
     }
 
-    public async Task<List<Notification>> GetNotifications(int userId)
+    public async Task<List<Notification>> GetNotifications(Guid userId)
     {
         var user = await _dbContext.Users.FindAsync(userId);
         if (user != null)

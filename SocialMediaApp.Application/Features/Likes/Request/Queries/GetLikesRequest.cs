@@ -1,4 +1,3 @@
-
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ namespace SocialMediaApp.Application.Features.Likes.Request.Queries;
 
 public class GetLikesRequest:IRequest<List<LikeDto>>
 {   
-    public int PostId { get; set; }
+    public Guid PostId { get; set; }
     
 
 }

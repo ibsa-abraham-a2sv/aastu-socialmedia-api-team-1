@@ -11,5 +11,6 @@ namespace SocialMediaApp.Application.DTOs.Users
     public string Name { get; set; }
     public string Bio { get; set; }
     public string? email { get; set; }
+
     }
 }

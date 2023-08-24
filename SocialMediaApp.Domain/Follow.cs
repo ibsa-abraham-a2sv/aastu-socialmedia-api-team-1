@@ -9,7 +9,8 @@ namespace SocialMediaApp.Domain;
 
 public class Follow : BaseEntity
 {
-    public int CurrentUser { get; set; }
-    public int ToBeFollowed { get; set; }
+ 
+    public Guid CurrentUser { get; set; }
+    public Guid ToBeFollowed { get; set; }
 }
 

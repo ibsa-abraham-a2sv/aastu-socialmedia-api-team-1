@@ -10,5 +10,5 @@ namespace SocialMediaApp.Application.Features.Notifications.Request.Queries;
 
 public class GetNotificationsRequest : IRequest<List<NotificationDto>>
 {
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
 }

@@ -11,7 +11,7 @@ namespace SocialMediaApp.Application.DTOs.Posts
 {
     public class PostListDto : BaseDto
     {
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public string? Title { get; set; }
         public string? Content { get; set; }
         public List<String>? HashTag { get; set; }

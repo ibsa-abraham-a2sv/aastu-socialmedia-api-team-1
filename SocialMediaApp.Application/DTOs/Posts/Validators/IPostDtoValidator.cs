@@ -15,7 +15,6 @@ namespace SocialMediaApp.Application.DTOs.Posts.Validators
         {
             _likeRepository = likeRepository;
             RuleFor(n => n.UserId)
-            .GreaterThan(0)
             .MustAsync(async (id, token) =>
             {
                 var UserIdExists = await _likeRepository.Exists(id);

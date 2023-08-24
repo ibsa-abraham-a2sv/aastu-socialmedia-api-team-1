@@ -32,7 +32,7 @@ namespace SocialMediaApp.Api.Controllers
 
         // GET: api/<ValuesController>
         [HttpGet("{UserId:int}")]
-        public async Task<ActionResult<List<PostListDto>>> GetNewsFeedItemRequest(int UserId)
+        public async Task<ActionResult<List<PostListDto>>> GetNewsFeedItemRequest(Guid UserId)
         { 
             var newsFeedItems = new List<PostListDto>();
             var userFollowings = await _mediator.Send(new GetFollowingRequest { userId = UserId });

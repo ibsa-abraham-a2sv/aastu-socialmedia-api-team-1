@@ -9,7 +9,7 @@ namespace SocialMediaApp.Application.Features.Users.Request.Commands
 {
     public class UpdateUserCommandRequest:IRequest<Unit>
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public UpdateUserDto UpdateUserDto { get; set; } = null!;
         
     }
