@@ -23,6 +23,15 @@ namespace SocialMediaApp.Application.DTOs.Posts.Validators
             })
             .WithMessage("{PropertyName} does not exist.");
 
+            RuleFor(n => n.Title)
+           .NotEmpty().WithMessage("{PropertyName} is required")
+           .NotNull()
+           .MaximumLength(50).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");
+
+            RuleFor(n => n.Content)
+           .NotEmpty().WithMessage("{PropertyName} is required")
+           .NotNull()
+           .MaximumLength(50).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");
         }
     }
 }

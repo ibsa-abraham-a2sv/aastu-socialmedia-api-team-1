@@ -6,6 +6,8 @@ using SocialMediaApp.Infrastructure;
 using Microsoft.Extensions.Hosting;
 using SocialMediaApp.Domain;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Hosting;
+using SocialMediaApp.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 

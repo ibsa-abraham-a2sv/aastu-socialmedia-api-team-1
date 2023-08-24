@@ -8,7 +8,7 @@ namespace SocialMediaApp.Application.DTOs.Notifications;
 
 public class CreateNotificationDto : INotificationDto
 {
-    public bool IsRead { get; set; }
+    public bool IsRead { get; set; } = false;
     public string Content { get; set; } = "";
     public Guid UserId { get; set; }
 }

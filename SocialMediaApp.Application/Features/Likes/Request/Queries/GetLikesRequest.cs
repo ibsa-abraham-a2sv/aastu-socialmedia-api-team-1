@@ -9,7 +9,8 @@ using SocialMediaApp.Application.DTOs.Likes;
 namespace SocialMediaApp.Application.Features.Likes.Request.Queries;
 
 public class GetLikesRequest:IRequest<List<LikeDto>>
-{
+{   
+    public int PostId { get; set; }
     
 
 }

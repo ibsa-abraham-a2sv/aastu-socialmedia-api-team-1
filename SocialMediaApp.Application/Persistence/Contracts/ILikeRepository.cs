@@ -15,5 +15,4 @@ public interface ILikeRepository : IGenericRepository<Like>
 
     bool LikeExists(Guid UserId, Guid PostId);
 
-
 }

@@ -52,7 +52,7 @@ namespace SocialMediaApp.Api.Controllers
 
    // POST: follow
     [HttpPost]
-    public async Task<ActionResult> PostFollow([FromBody] FollowDto  followDto)
+    public async Task<ActionResult> PostFollow([FromBody] CreateFollowDto  followDto)
     {
         var followcommand = new CreateFollowsRequest{createFollowDto = followDto};
         

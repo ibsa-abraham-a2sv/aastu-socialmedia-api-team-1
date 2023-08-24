@@ -17,17 +17,19 @@ namespace SocialMediaApp.Application.Features.Follows.Handler.Commands;
 public class CreateFollowsRequestHandler: IRequestHandler<CreateFollowsRequest, BaseResponseClass>
 {
     private readonly IFollowRepository _followRepository;
+    private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
 
-    public CreateFollowsRequestHandler(IFollowRepository followRepository, IMapper mapper)
+    public CreateFollowsRequestHandler(IFollowRepository followRepository, IMapper mapper, IUserRepository userRepository)
     {
         _followRepository = followRepository;
         _mapper = mapper;
+        _userRepository = userRepository;
     }
 
     public async Task<BaseResponseClass> Handle(CreateFollowsRequest request, CancellationToken cancellationToken)
     {
-        var validator = new ValidateCreateFollow(_followRepository);
+        var validator = new ValidateCreateFollow(_userRepository);
 
         var validationResult = await validator.ValidateAsync(request.createFollowDto);
         var response = new BaseResponseClass();

@@ -17,8 +17,11 @@ public class NotificationRepository : GenericRepository<Notification>, INotifica
         if (user != null)
         {
             var notification = await _dbContext.Notifications.FindAsync(id);
+            
             if (notification != null)
             {
+                notification.IsRead = true;
+                await _dbContext.SaveChangesAsync();
                 return notification;
             }
         }

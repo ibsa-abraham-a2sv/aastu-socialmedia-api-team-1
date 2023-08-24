@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace SocialMediaApp.Application.Features.Posts.Request.Queries
 {
-    public class GetPostsRequestById : IRequest<List<PostDto>>
+    public class GetPostRequestById : IRequest<PostDto>
     {
-        
-        public int PostId { get; set; }
+        public int UserID { get; set; }
+        public int Id { get; set; }
     }
 }
