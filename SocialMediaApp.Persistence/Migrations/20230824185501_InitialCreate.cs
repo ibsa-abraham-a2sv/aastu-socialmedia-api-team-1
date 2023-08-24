@@ -33,8 +33,8 @@ namespace SocialMediaApp.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    FollowerId = table.Column<Guid>(type: "uuid", nullable: false),
-                    FollowingId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CurrentUser = table.Column<Guid>(type: "uuid", nullable: false),
+                    ToBeFollowed = table.Column<Guid>(type: "uuid", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },

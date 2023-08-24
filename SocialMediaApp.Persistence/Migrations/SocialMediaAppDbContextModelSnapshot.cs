@@ -57,10 +57,10 @@ namespace SocialMediaApp.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("FollowerId")
+                    b.Property<Guid>("CurrentUser")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("FollowingId")
+                    b.Property<Guid>("ToBeFollowed")
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("UserId")

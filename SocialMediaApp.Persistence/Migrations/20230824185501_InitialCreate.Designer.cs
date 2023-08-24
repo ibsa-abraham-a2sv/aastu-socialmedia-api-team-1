@@ -13,7 +13,7 @@ using SocialMediaApp.Persistence;
 namespace SocialMediaApp.Persistence.Migrations
 {
     [DbContext(typeof(SocialMediaAppDbContext))]
-    [Migration("20230824075951_InitialCreate")]
+    [Migration("20230824185501_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -60,10 +60,10 @@ namespace SocialMediaApp.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("FollowerId")
+                    b.Property<Guid>("CurrentUser")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("FollowingId")
+                    b.Property<Guid>("ToBeFollowed")
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("UserId")
