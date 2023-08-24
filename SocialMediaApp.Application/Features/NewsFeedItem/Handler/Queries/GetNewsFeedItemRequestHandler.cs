@@ -30,23 +30,9 @@ namespace SocialMediaApp.Application.Features.NewsFeedItem.Handler.Queries
 
         public async Task<List<PostDto>> Handle(GetNewsFeedItemRequest request, CancellationToken cancellationToken)
         {
-            var posts = _postRepository.GetPostForNewsFeed();
+            
             var newsFeedItems = new List<PostDto>();
-            foreach (var post in posts)
-            {
-                var follow =  _followRepository.GetById(post.UserId).Result;
 
-                var newsFeedItem = new PostDto
-                {
-                    Title = post.Title,
-                    Content = post.Content,
-                    CreatedDate = post.CreatedDate
-
-                };
-
-               
-                newsFeedItems.Add(newsFeedItem);
-            }
 
             return _mapper.Map<List<PostDto>>(newsFeedItems);
         }

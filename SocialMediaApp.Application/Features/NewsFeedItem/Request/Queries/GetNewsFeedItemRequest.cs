@@ -10,5 +10,6 @@ namespace SocialMediaApp.Application.Features.NewsFeedItem.Request.Queries
 {
     public class GetNewsFeedItemRequest:IRequest<List<PostDto>>
     {
+        public int UserId { get; set; }
     }
 }
