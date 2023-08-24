@@ -36,7 +36,7 @@ public class UsersController:ControllerBase
         return user;
     }
     //Get:user/name
-    [HttpGet("{name}")]
+    [HttpGet("search")]
     public async Task<ActionResult<List<UserDto>>> GetByNameAsync(string name)
     {
         var users = await _mediator.Send(new GetUsersByNameRequest{Name = name});
