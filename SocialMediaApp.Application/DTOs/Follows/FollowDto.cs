@@ -7,7 +7,7 @@ using SocialMediaApp.Application.DTOs.Common;
 
 namespace SocialMediaApp.Application.DTOs.Follows;
 
-public class FollowDto:BaseDto,IFollowDto
+public class FollowDto:IFollowDto
 {
     public int FollowerId { get; set; }
     public int FollowingId { get; set; }

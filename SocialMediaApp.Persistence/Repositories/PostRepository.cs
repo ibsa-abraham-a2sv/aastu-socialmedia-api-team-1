@@ -41,12 +41,12 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
         return null;
     }
 
-    public List<Post> GetPostForNewsFeed()
+    public async Task<List<Post>> GetPostForNewsFeed(int userId)
     {
-        return _dbContext.Posts
-            .Include(p => p.UserId)
-            .OrderByDescending(p => p.CreatedDate) 
-            .ToList();
+        return await _dbContext.Posts
+            .Where(p => p.UserId == userId)
+            .OrderByDescending(p => p.CreatedDate)
+            .ToListAsync();
     }
 
     
