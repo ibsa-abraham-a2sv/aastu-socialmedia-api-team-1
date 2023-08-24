@@ -47,9 +47,7 @@ namespace test.UnitTest.CommentTest.Mocks
 
         public static Mock<IPostRepository> GetPostRepository()
         {
-            /*public int UserId { get; set; }
-    public string Title { get; set; } = "";   
-    public string Content { get; set; } = "";*/
+            
             var posts = new List<Post>
             {
                 new Post
