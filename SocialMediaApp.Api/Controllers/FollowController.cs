@@ -7,6 +7,11 @@ using MediatR;
 using SocialMediaApp.Application.DTOs.Follows;
 using SocialMediaApp.Application.Features.Follows.Request.Queries;
 using SocialMediaApp.Application.Features.Follows.Request.Commands;
+using SocialMediaApp.Application.DTOs.Comments;
+using SocialMediaApp.Application.DTOs.Notifications;
+using SocialMediaApp.Application.Features.Notifications.Request.Commands;
+using SocialMediaApp.Application.Features.Posts.Request.Queries;
+using SocialMediaApp.Application.Features.Users.Request.Queries;
 
 namespace SocialMediaApp.Api.Controllers
 {
@@ -52,13 +57,25 @@ namespace SocialMediaApp.Api.Controllers
 
    // POST: follow
     [HttpPost]
-    public async Task<ActionResult> PostFollow([FromBody] FollowDto  followDto)
-    {
+    public async Task<ActionResult> PostFollow([FromBody] CreateFollowDto  followDto)
+        {
         var followcommand = new CreateFollowsRequest{createFollowDto = followDto};
         
-        var followRespond = await _mediator.Send(followcommand);
+        var followResponse = await _mediator.Send(followcommand);
+        if (followResponse.Success == true)
+        {
+            var notificationDto = new CreateNotificationDto();
+            var user = await _mediator.Send(new GetUserRequest { Id = followDto.FollowerId});
 
-        return Ok(followRespond);
+            notificationDto.UserId = followDto.FollowingId;
+            notificationDto.Content = $"{user.Name} followed you recently";
+            notificationDto.IsRead = false;
+
+            var notificationCommand = new CreateNotificationRequest { CreateNotificationDto = notificationDto };
+            await _mediator.Send(notificationCommand);
+        }
+
+            return Ok(followResponse);
 
     }
     // DELETE: follow/{id}

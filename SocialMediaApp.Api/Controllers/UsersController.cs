@@ -3,6 +3,9 @@ using MediatR;
 using SocialMediaApp.Application.DTOs.Users;
 using SocialMediaApp.Application.Features.Users.Request.Queries;
 using SocialMediaApp.Application.Features.Users.Request.Commands;
+using SocialMediaApp.Application.Features.Posts.Request.Queries;
+using SocialMediaApp.Application.Features.Follows.Request.Queries;
+using SocialMediaApp.Application.Features.Notifications.Request.Queries;
 
 
 namespace SocialMediaApp.Api.Controllers
@@ -33,11 +36,23 @@ public class UsersController:ControllerBase
     public async Task<ActionResult<UserDto>> GetUserById(int id)
     {
         var user = await _mediator.Send(new GetUserRequest {Id = id});
+        var posts = await _mediator.Send(new GetPostsRequestByUser { UserId = id });
+        var follows=  await _mediator.Send(new GetFollowingRequest { userId = id });
+        var notifications = await _mediator.Send(new GetNotificationsRequest { UserId = id });
+        if (user != null)
+        {
+            user.Post = posts;
+            user.Followers = follows;
+            user.Notifications = notifications;
+
+        }
+
+
 
         return user;
     }
     //Get:user/name
-    [HttpGet("UserByName/{name}")]
+    [HttpGet("search")]
     public async Task<ActionResult<List<UserDto>>> GetByNameAsync(string name)
     {
         var users = await _mediator.Send(new GetUsersByNameRequest{Name = name});

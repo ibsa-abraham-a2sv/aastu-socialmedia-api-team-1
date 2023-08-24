@@ -10,11 +10,14 @@ namespace SocialMediaApp.Application.DTOs.Comments.Validator
 {
     public class UpdateCommentDtoValidator : AbstractValidator<UpdateCommentDto>
     {
-        private readonly ICommentRepository _commentRepository;
-        public UpdateCommentDtoValidator(ICommentRepository commentRepository)
+        private readonly IUserRepository _userRepository;
+        private readonly IPostRepository _postRepository;
+        public UpdateCommentDtoValidator(IUserRepository userRepository, IPostRepository postRepository)
         {
-            _commentRepository = commentRepository;
-            Include(new ICommentDtoValidator(_commentRepository));
+            _userRepository = userRepository;
+            _postRepository = postRepository;
+
+            Include(new ICommentDtoValidator(_postRepository,_userRepository));
         }
     }
 }

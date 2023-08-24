@@ -6,5 +6,5 @@ namespace SocialMediaApp.Application.Features.Follows.Request.Commands;
 
 public class CreateFollowsRequest:IRequest<BaseResponseClass>
 {
-    public FollowDto createFollowDto {get; set;}
+    public CreateFollowDto createFollowDto {get; set;}
 }

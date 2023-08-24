@@ -1,12 +1,16 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
+using Microsoft.Extensions.Hosting;
 using SocialMediaApp.Application.DTOs.Comments;
 using SocialMediaApp.Application.DTOs.Notifications;
 using SocialMediaApp.Application.Features.Comments.Request.Commands;
 using SocialMediaApp.Application.Features.Comments.Request.Queries;
 using SocialMediaApp.Application.Features.Notifications.Request.Commands;
 using SocialMediaApp.Application.Features.Notifications.Request.Queries;
+using SocialMediaApp.Application.Features.Posts.Request.Queries;
+using SocialMediaApp.Application.Features.Users.Request.Queries;
+using SocialMediaApp.Domain;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -48,6 +52,19 @@ namespace SocialMediaApp.Api.Controllers
         {
             var command = new CreateCommentRequest { creatCommentDto = commentDto };
             var response = await _mediator.Send(command);
+            if (response.Success == true)
+            {
+                var notificationDto = new CreateNotificationDto();
+                var user = await _mediator.Send(new GetUserRequest { Id = commentDto.UserId});
+                var post = await _mediator.Send(new GetPostRequestById { Id = commentDto.PostId, UserID = user.Id });
+
+                notificationDto.UserId = user.Id;
+                notificationDto.Content = $"{user.Name} commented on your {post.Title} post";
+                notificationDto.IsRead = false;
+
+                var notificationCommand = new CreateNotificationRequest { CreateNotificationDto = notificationDto };
+                await _mediator.Send(notificationCommand);
+            }
             return Ok(response);
         }
 
