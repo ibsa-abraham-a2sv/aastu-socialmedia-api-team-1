@@ -30,9 +30,9 @@ public class LikeRepository: GenericRepository<Like>, ILikeRepository
         return user != null;
     }
 
-    public Task<List<Like>> GetLikesByPostId(int userId, int PostId)
+    public async Task<List<Like>> GetLikesByPostId(int userId, int PostId)
     {
-        var likes = _dbContext.Likes.Where(l => l.PostId == PostId).ToList();
+        var likes = await _dbContext.Likes.Where(l => l.PostId == PostId).ToListAsync();
         return likes;
     }
 }
