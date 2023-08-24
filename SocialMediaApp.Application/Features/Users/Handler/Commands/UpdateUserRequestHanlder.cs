@@ -30,6 +30,7 @@ namespace SocialMediaApp.Application.Features.Users.Handler.Commands
 
 
             var user = await _userRepository.GetById(request.Id);
+            _mapper.Map(request.UpdateUserDto, user);
             await _userRepository.Update(user);
             return Unit.Value;
         }

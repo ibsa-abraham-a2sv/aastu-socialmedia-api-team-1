@@ -24,7 +24,7 @@ public class UserRepository : GenericRepository<User>, IUserRepository
 
     public async Task<IReadOnlyList<User>> GetByNameAsync(string Name)
     {
-        var users = _dbContext.Users.Where(u => u.Name == Name).ToList() ?? throw new NotFoundException("${Name}", Name);
+        var users = _dbContext.Users.Where(u => u.Name.Contains(Name)).ToList() ?? throw new NotFoundException("${Name}", Name);
         return users;
     }
 

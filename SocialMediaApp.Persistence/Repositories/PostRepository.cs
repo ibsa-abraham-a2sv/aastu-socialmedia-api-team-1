@@ -1,11 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Dynamic;
+using System.Security.Cryptography;
+using AutoMapper.Configuration.Annotations;
+using Microsoft.EntityFrameworkCore;
 using SocialMediaApp.Application.Persistence.Contracts;
 using SocialMediaApp.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SocialMediaApp.Persistence.Repositories;
 
@@ -41,6 +39,32 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
         return null;
     }
 
+    public async Task<List<Post>> SearchPosts(string query)
+    {
+        var posts = _dbContext.Posts.ToList();
+
+        List<Post> postResult = new List<Post>();
+        foreach (var post in posts)
+        {
+            if (post.Title.Contains(query) || post.Content.Contains(query))
+            {
+                postResult.Add(post);
+                continue; // Skip the hashtag loop if title or content match
+            }
+
+            foreach (var hash in post.HashTag)
+            {
+                if (hash.Contains(query))
+                {
+                    postResult.Add(post);
+                    break;
+                }
+            }
+        }
+
+        return postResult;
+
+    }
     public async Task<List<Post>> GetPostForNewsFeed(Guid userId)
     {
         return await _dbContext.Posts

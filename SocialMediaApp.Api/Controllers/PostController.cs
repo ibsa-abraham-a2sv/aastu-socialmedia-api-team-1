@@ -90,5 +90,13 @@ namespace SocialMediaApp.Api.Controllers
             await _mediator.Send(new DeletePostCommand { Id  =id, UserId = UserId});
             return NoContent();
         }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<List<PostDto>>> SearchPosts(string q)
+        {
+            var posts = await _mediator.Send(new SearchPostRequest{query = q});
+
+            return posts;
+        }
     }
 }
