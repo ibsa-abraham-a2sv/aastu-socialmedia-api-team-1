@@ -10,17 +10,18 @@ namespace SocialMediaApp.Application.DTOs.Comments.Validator
 {
     public class ICommentDtoValidator : AbstractValidator<ICommentDto>
     {
-        private readonly ICommentRepository _commentRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IPostRepository _postRepository;
 
-        public ICommentDtoValidator(ICommentRepository commentRepository)
+        public ICommentDtoValidator(IPostRepository postRepository, IUserRepository userRepository)
         {
-            this._commentRepository = commentRepository;
-
+            _postRepository = postRepository;
+            _userRepository = userRepository;
             RuleFor(n => n.UserId)
                .GreaterThan(0)
                .MustAsync(async (id, token) =>
                {
-                   var UserIdExists = await _commentRepository.Exists(id);
+                   var UserIdExists = await _userRepository.Exists(id);
                    return UserIdExists;
                })
                .WithMessage("{PropertyName} does not exist.");
@@ -29,7 +30,7 @@ namespace SocialMediaApp.Application.DTOs.Comments.Validator
                .GreaterThan(0)
                .MustAsync(async (id, token) =>
                {
-                   var PostIdExists = await _commentRepository.Exists(id);
+                   var PostIdExists = await _postRepository.Exists(id);
                    return PostIdExists;
                })
                .WithMessage("{PropertyName} does not exist.");
@@ -38,6 +39,7 @@ namespace SocialMediaApp.Application.DTOs.Comments.Validator
                 .NotEmpty().WithMessage("{PropertyName} is required")
                 .NotNull()
                 .MaximumLength(50).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");
+            
         }
 
     }

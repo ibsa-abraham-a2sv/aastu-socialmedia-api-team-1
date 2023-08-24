@@ -44,6 +44,7 @@ public class MappingProfile : Profile
 
         #region Follow
         CreateMap<Follow, FollowDto>().ReverseMap();
+        CreateMap<Follow, CreateFollowDto>().ReverseMap();
         #endregion Follow
 
         #region Notification
