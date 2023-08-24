@@ -15,7 +15,7 @@ namespace SocialMediaApp.Application.DTOs.Posts
         public string? Title { get; set; }
         public string? Content { get; set; }
         public List<String>? HashTag { get; set; }
-        public int Likes;
+        public int Likes { get; set; }
         public List<string> Comments { get; set; }
 
     }

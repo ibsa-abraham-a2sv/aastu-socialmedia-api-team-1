@@ -6,7 +6,6 @@ using SocialMediaApp.Application.DTOs.Posts;
 using SocialMediaApp.Application.Features.Comments.Request.Queries;
 using SocialMediaApp.Application.Features.Follows.Request.Queries;
 using SocialMediaApp.Application.Features.Likes.Request.Queries;
-using SocialMediaApp.Application.Features.NewsFeedItem.Request.Queries;
 using SocialMediaApp.Application.Features.Posts.Request.Queries;
 using SocialMediaApp.Domain;
 using System.Diagnostics.Metrics;
