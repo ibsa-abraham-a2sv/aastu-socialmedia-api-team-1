@@ -12,8 +12,8 @@ public class User: BaseEntity
     public string Name { get; set; }
     public string email { get; set; }
     public string password { get; set; }
-    public List<Follow> Followers { get; set; }
-    public List<Post> Post { get; set; }
-    public string Bio { get; set; }
+    public List<Follow>? Followers { get; set; }
+    public List<Post>? Post { get; set; }
+    public string? Bio { get; set; }
 
 }

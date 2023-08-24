@@ -1,4 +1,6 @@
-﻿using SocialMediaApp.Application.Persistence.Contracts.Common;
+﻿using SocialMediaApp.Application.Persistence.Contracts;
+using SocialMediaApp.Application.Persistence.Contracts.Common;
+using SocialMediaApp.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +16,11 @@ namespace SocialMediaApp.Application.Services.Authentication
 
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
 
-        public AuthenticationService(IJwtTokenGenerator jwtTokenGenerator)
+        private readonly IUserRepository _userRepository;
+        public AuthenticationService(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
         {
             _jwtTokenGenerator = jwtTokenGenerator;
+            _userRepository = userRepository;
         }
 
 
@@ -24,12 +28,30 @@ namespace SocialMediaApp.Application.Services.Authentication
         // check if user exists in database
         public AuthenticationResult Register(string Name, string Email, string password)
         {
+            // validate if the user email does not exist
 
-            Guid userId = Guid.NewGuid();
-            var token = _jwtTokenGenerator.GenerateToken(Guid.NewGuid(), Name);
+            if (_userRepository.GetByEmail(Email) is not  null)
+            {
+                throw new Exception("User with the given email already exists");
+            }
+
+            // create a new user (generate unique Id ) and add it to the database
+
+            var user = new User
+            {
+                Name = Name,
+                email = Email,
+                password = password
+            };
+
+
+            _userRepository.AddUser(user);
+
+           
+            var token = _jwtTokenGenerator.GenerateToken(user.Id, Name);
 
             return new AuthenticationResult(
-                Guid.NewGuid(),
+                user.Id,
                 Email,
                 Name,
                 token);
@@ -37,6 +59,23 @@ namespace SocialMediaApp.Application.Services.Authentication
 
         public AuthenticationResult Login(string Email, string password)
         {
+            //validate if the user exists
+
+            if (_userRepository.GetByEmail(Email) is not User user)
+            {
+                throw new Exception("User with the given email does not exist");
+            }
+            // validate if the password is correct
+
+            if (user.password != password)
+            {
+                throw new Exception("Password is incorrect");
+            }
+
+            // generate token
+
+            var token = _jwtTokenGenerator.GenerateToken(user.Id, user.Name);
+
             return new AuthenticationResult(
                 Guid.NewGuid(),
                 Email,
