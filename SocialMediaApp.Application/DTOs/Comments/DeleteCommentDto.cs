@@ -8,8 +8,8 @@ namespace SocialMediaApp.Application.DTOs.Comments
 {
     public class DeleteCommentDto
     {
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

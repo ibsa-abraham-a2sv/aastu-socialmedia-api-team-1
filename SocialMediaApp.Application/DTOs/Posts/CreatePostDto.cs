@@ -9,8 +9,8 @@ namespace SocialMediaApp.Application.DTOs.Posts
 {
     public class CreatePostDto
     {
-        public int UserId { get; set; }
-        public int PostId { get; set; }
+        public Guid UserId { get; set; }
+        public Guid PostId { get; set; }
         public string? Title { get; set; }
         public string? Content { get; set; }
 

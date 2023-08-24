@@ -13,7 +13,7 @@ public interface ILikeRepository : IGenericRepository<Like>
 {
 
 
-    bool LikeExists(int UserId, int PostId);
+    bool LikeExists(Guid UserId, Guid PostId);
 
 
 }
