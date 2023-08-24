@@ -37,9 +37,9 @@ namespace SocialMediaApp.Api.Controllers
     }
 
     // GET: follow/folllowing/{id}
-    [HttpGet("following/{FollowingId:int}")]
+    [HttpGet("following/{FollowingId:Guid}")]
         //[HttpGet("following/{FollowingId:int}")]
-        public async Task<ActionResult<List<FollowDto>>> GetFollowings(int FollowingId)
+        public async Task<ActionResult<List<FollowDto>>> GetFollowings(Guid FollowingId)
     {
         var follow = await _mediator.Send(new GetFollowingRequest {userId = FollowingId});
         
@@ -47,8 +47,8 @@ namespace SocialMediaApp.Api.Controllers
     }
 
     // POST: follow/followers
-    [HttpGet("followers/{FollowerId:int}")]
-   public async Task<ActionResult<List<FollowDto>>> GetFollowers(int FollowerId)
+    [HttpGet("followers/{FollowerId:Guid}")]
+   public async Task<ActionResult<List<FollowDto>>> GetFollowers(Guid FollowerId)
     {
         var follow = await _mediator.Send(new GetFollowerRequest {userId = FollowerId});
         
@@ -79,8 +79,8 @@ namespace SocialMediaApp.Api.Controllers
 
     }
     // DELETE: follow/{id}
-    [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteUser(int id)
+    [HttpDelete("{id:Guid}")]
+    public async Task<ActionResult> DeleteUser(Guid id)
     {
         await _mediator.Send( new DeleteFollowCommandRequest{ Id = id });
         return NoContent();

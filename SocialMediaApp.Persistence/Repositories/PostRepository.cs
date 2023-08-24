@@ -16,7 +16,7 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
     {
         _dbContext = dbContext;
     }
-    public async Task<Post> GetPostDetails(int userId, int id)
+    public async Task<Post> GetPostDetails(Guid userId, Guid id)
     {
         var user = await _dbContext.Users.FindAsync(userId);
         if (user != null)
@@ -30,7 +30,7 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
         return null;
     }
 
-    public async Task<List<Post>> GetPosts(int userId)
+    public async Task<List<Post>> GetPosts(Guid userId)
     {
         var user = await _dbContext.Users.FindAsync(userId);
         if (user != null)
@@ -49,5 +49,4 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
             .ToList();
     }
 
-    
 }

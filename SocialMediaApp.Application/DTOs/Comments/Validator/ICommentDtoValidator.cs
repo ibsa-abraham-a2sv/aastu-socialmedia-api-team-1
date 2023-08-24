@@ -18,7 +18,6 @@ namespace SocialMediaApp.Application.DTOs.Comments.Validator
             _postRepository = postRepository;
             _userRepository = userRepository;
             RuleFor(n => n.UserId)
-               .GreaterThan(0)
                .MustAsync(async (id, token) =>
                {
                    var UserIdExists = await _userRepository.Exists(id);
@@ -27,7 +26,6 @@ namespace SocialMediaApp.Application.DTOs.Comments.Validator
                .WithMessage("{PropertyName} does not exist.");
 
             RuleFor(n => n.PostId)
-               .GreaterThan(0)
                .MustAsync(async (id, token) =>
                {
                    var PostIdExists = await _postRepository.Exists(id);

@@ -19,13 +19,15 @@ public class CreateLikeCommandHandler : IRequestHandler<CreateLikeRequest, BaseR
 {
     private readonly ILikeRepository _likeRepository;
     private readonly IPostRepository _postRepository;
+    private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
 
-    public CreateLikeCommandHandler(ILikeRepository likeRepository, IPostRepository postRepository , IMapper mapper)
+    public CreateLikeCommandHandler(ILikeRepository likeRepository, IPostRepository postRepository , IMapper mapper, IUserRepository userRepository )
     {
         _likeRepository = likeRepository;
         _mapper = mapper;
         _postRepository = postRepository;
+        _userRepository = userRepository;
         
     }
 
@@ -33,7 +35,7 @@ public class CreateLikeCommandHandler : IRequestHandler<CreateLikeRequest, BaseR
     {
 
         
-        var validator = new CreateLikeDtoValidator(_postRepository);
+        var validator = new CreateLikeDtoValidator(_postRepository,_userRepository);
         var validationResult = await validator.ValidateAsync(request.LikeDto, cancellationToken);
 
         var response = new BaseResponseClass();

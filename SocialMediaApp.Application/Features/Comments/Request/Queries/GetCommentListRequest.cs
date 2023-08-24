@@ -10,6 +10,6 @@ namespace SocialMediaApp.Application.Features.Comments.Request.Queries
 {
     public class GetCommentListRequest : IRequest<List<CommentDto>>
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

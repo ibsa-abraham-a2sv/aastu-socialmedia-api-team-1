@@ -17,13 +17,13 @@ public class CommentRepository : GenericRepository<Comment>, ICommentRepository
         _dbContext = dbContext;
     }
 
-    public async Task<Comment> GetCommentById(int commentId)
+    public async Task<Comment> GetCommentById(Guid commentId)
     {
         var comment = await _dbContext.Comments.FindAsync(commentId);
         return comment;
     }
 
-    public async Task<List<Comment>> GetCommentsByPostId(int postId)
+    public async Task<List<Comment>> GetCommentsByPostId(Guid postId)
 
     {
         var comments = await _dbContext.Comments.Where(c => c.PostId == postId).ToListAsync();
