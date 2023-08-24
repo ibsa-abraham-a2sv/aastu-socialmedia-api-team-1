@@ -9,8 +9,8 @@ namespace SocialMediaApp.Application.DTOs.Likes
 {
     public class CreateLikeDto:ILikeDto
     {
-        public int UserId { get; set; }
-        public int PostId { get; set; }
+        public Guid UserId { get; set; }
+        public Guid PostId { get; set; }
 
        
     }

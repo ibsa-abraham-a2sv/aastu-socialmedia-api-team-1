@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SocialMediaApp.Application.Persistence.Contracts;
 public interface IUserRepository:IGenericRepository<User>
 {
+    User? GetByEmail(string email);
 
-    Task<IReadOnlyList<User>> GetByNameAsync(string Name); 
-
+    void AddUser(User user);
 }
