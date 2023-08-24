@@ -35,11 +35,11 @@ namespace SocialMediaApp.Api.Controllers
         public async Task<ActionResult<List<PostListDto>>> GetNewsFeedItemRequest(int UserId)
         { 
             var newsFeedItems = new List<PostListDto>();
-            var userFollowings = await _mediator.Send(new GetFollowerRequest { userId = UserId });
+            var userFollowings = await _mediator.Send(new GetFollowingRequest { userId = UserId });
             Console.WriteLine(userFollowings.Count);
             foreach (var follower in userFollowings)
             {
-                var posts = await _mediator.Send(new GetPostsRequestByUser { UserId = follower.FollowingId });
+                var posts = await _mediator.Send(new GetPostsRequestByUser { UserId = follower.ToBeFollowed });
                 foreach(var post in posts)
                 {
                     var likes = await _mediator.Send(new GetLikesRequest { PostId = post.Id });

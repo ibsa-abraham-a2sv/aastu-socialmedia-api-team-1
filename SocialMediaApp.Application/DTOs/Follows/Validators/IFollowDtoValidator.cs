@@ -14,7 +14,7 @@ namespace SocialMediaApp.Application.DTOs.Follows.Validators
         public IFollowDtoValidator(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            RuleFor(n => n.FollowerId)
+            RuleFor(n => n.ToBeFollowed)
             .GreaterThan(0)
             .MustAsync(async (id, token) =>
             {
@@ -23,7 +23,7 @@ namespace SocialMediaApp.Application.DTOs.Follows.Validators
             })
             .WithMessage("{PropertyName} does not exist.");
             
-            RuleFor(n => n.FollowingId)
+            RuleFor(n => n.CurrentUser)
             .GreaterThan(0)
             .MustAsync(async (id, token) =>
             {

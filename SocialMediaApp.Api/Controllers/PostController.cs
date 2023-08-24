@@ -65,7 +65,7 @@ namespace SocialMediaApp.Api.Controllers
                 notificationDto.Content = $"{user.Name} posted {post.Title}";
                 foreach (var follower in followers)
                 {
-                    notificationDto.UserId = follower.FollowingId;
+                    notificationDto.UserId = follower.CurrentUser;
                     var notificationCommand = new CreateNotificationRequest { CreateNotificationDto = notificationDto };
                     await _mediator.Send(notificationCommand);
                 }

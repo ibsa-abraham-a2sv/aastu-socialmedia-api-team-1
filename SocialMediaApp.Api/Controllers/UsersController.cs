@@ -31,7 +31,7 @@ public class UsersController:ControllerBase
     }
 
     // GET: api/items/{id}
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public async Task<ActionResult<UserDto>> GetUserById(int id)
     {
         var user = await _mediator.Send(new GetUserRequest {Id = id});
