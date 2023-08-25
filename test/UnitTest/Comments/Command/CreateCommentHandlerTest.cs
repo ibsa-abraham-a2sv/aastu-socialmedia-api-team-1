@@ -44,8 +44,8 @@ namespace test.UnitTest.Comments.Handler
     
             _createCommentDto = new CreateCommentDto
             {
-                UserId = 1,
-                PostId = 2,
+                UserId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
+                PostId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
                 Text = "I like the picture:)"
             };
         }

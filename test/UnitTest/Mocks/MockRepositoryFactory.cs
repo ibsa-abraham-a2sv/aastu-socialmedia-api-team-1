@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,17 +17,17 @@ namespace test.UnitTest.CommentTest.Mocks
             {
                new Comment
                {
-                    Id = 1,
-                    UserId = 2,
-                    PostId = 1,
+                    Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
+                    UserId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
+                    PostId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
                     Text = "I like it :)" 
                },
 
                new Comment
                {
-                    Id = 2,
-                    UserId = 3,
-                    PostId = 1,
+                   Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
+                    UserId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
+                    PostId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
                     Text = "Wow amazing :)" 
                }
 
@@ -53,13 +54,13 @@ namespace test.UnitTest.CommentTest.Mocks
             {
                 new Post
                 {
-                    UserId = 1,
+                    UserId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
                     Title = "Gamming Pc",
                     Content = "High performance, have a graphic card",
                 },
                 new Post
                 {
-                  UserId = 2,
+                  UserId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
                   Title = "Desktop Pc",
                   Content = "low performance, have no  graphic card",
                 }
