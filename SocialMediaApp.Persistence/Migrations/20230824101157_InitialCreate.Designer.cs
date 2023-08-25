@@ -13,7 +13,7 @@ using SocialMediaApp.Persistence;
 namespace SocialMediaApp.Persistence.Migrations
 {
     [DbContext(typeof(SocialMediaAppDbContext))]
-    [Migration("20230824075951_InitialCreate")]
+    [Migration("20230824101157_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
