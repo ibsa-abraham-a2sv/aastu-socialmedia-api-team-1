@@ -38,7 +38,10 @@ namespace SocialMediaApp.Infrastructure.Authentication
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.Name),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim("uid", user.Id.ToString())
+
+            
             };
 
 

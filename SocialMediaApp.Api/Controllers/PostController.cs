@@ -11,6 +11,8 @@ using SocialMediaApp.Application.Features.Posts.Request.Commands;
 using SocialMediaApp.Application.Features.Posts.Request.Queries;
 using SocialMediaApp.Application.Features.Users.Request.Queries;
 using SocialMediaApp.Domain;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Xml.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -22,12 +24,14 @@ namespace SocialMediaApp.Api.Controllers
     [Authorize]
     public class PostController : ControllerBase
     {
-        public readonly IMediator _mediator;
+        private readonly IMediator _mediator;
 
-        public PostController(IMediator mediator)
+        private readonly IHttpContextAccessor _contextAccessor;
+
+        public PostController(IMediator mediator, IHttpContextAccessor contextAccessor)
         {
             _mediator = mediator;
-            
+            _contextAccessor = contextAccessor;
         }
 
         // GET: api/<PostController>
@@ -52,9 +56,21 @@ namespace SocialMediaApp.Api.Controllers
         }  
 
         // POST api/<PostController>
-        [HttpPost]
-        public async Task<ActionResult> Post([FromBody] CreatePostDto post)
+        [HttpPost("{Text}, {Content}")]
+        public async Task<ActionResult> Post(string Text, string Content)
         {
+            var Id = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
+
+            Console.WriteLine(Id);
+            Console.WriteLine("Id here");
+
+            CreatePostDto post = new CreatePostDto()
+            {
+                UserId = new Guid(Id),
+                Content = Content,
+                Title = Text
+            };
+
             var command = new CreatePostsCommand { postDto = post };
             var response = await _mediator.Send(command);
             if(response.Success == true)
