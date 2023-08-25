@@ -36,7 +36,7 @@ namespace SocialMediaApp.Application.DTOs.Comments.Validator
             RuleFor(n => n.Text)
                 .NotEmpty().WithMessage("{PropertyName} is required")
                 .NotNull()
-                .MaximumLength(50).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");
+                .MaximumLength(100).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");
             
         }
 
