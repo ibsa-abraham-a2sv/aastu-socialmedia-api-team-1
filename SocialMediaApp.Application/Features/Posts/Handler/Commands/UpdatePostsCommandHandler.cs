@@ -26,11 +26,12 @@ namespace SocialMediaApp.Application.Features.Posts.Handler.Commands
 
         public async Task<Unit> Handle(UpdatePostsCommand request, CancellationToken cancellationToken)
         {
-            var post = await _postRepository.GetById(request.post.Id);
+            
             var validator = new UpdatePostDtoValidator(_postRepository);
             var validationResult = await validator.ValidateAsync(request.post);
             if (validationResult.IsValid == true)
             {
+                var post = await _postRepository.GetById(request.post.Id);
                 _mapper.Map(request.post, post);
                 await _postRepository.Update(post);
             }

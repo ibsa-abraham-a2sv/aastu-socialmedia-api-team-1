@@ -32,8 +32,8 @@ public class UsersController:ControllerBase
     }
 
     // GET: api/items/{id}
-    [HttpGet("{id}")]
-    public async Task<ActionResult<UserDto>> GetUserById(int id)
+    [HttpGet("{id:Guid}")]
+    public async Task<ActionResult<UserDto>> GetUserById(Guid id)
     {
         var user = await _mediator.Send(new GetUserRequest {Id = id});
         var posts = await _mediator.Send(new GetPostsRequestByUser { UserId = id });
@@ -71,8 +71,8 @@ public class UsersController:ControllerBase
     }
 
     // PUT: api/items/{id}
-    [HttpPut("{id}")]
-    public async Task<ActionResult> UpdateUser(int id,UpdateUserDto updateUser )
+    [HttpPut("{id:Guid}")]
+    public async Task<ActionResult> UpdateUser(Guid id,UpdateUserDto updateUser )
     {
         var NewUser = new UpdateUserCommandRequest{Id = id,UpdateUserDto = updateUser};
         await _mediator.Send(NewUser);
@@ -81,8 +81,8 @@ public class UsersController:ControllerBase
     }
 
     // DELETE: api/items/{id}
-    [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteUser(int id)
+    [HttpDelete("{id:Guid}")]
+    public async Task<ActionResult> DeleteUser(Guid id)
     {
         await _mediator.Send( new DeleteUserCommandRequest{ Id = id });
         return NoContent();

@@ -11,6 +11,6 @@ namespace SocialMediaApp.Application.Features.Posts.Request.Queries
 {
     public class GetPostsRequestByUser: IRequest<List<PostDto>>
     {
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
     }
 }

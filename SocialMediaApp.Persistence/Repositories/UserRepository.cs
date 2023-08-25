@@ -17,6 +17,10 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         _dbContext = dbContext;
     }
 
+    public User? GetByEmail(string email)
+    {
+        throw new NotImplementedException();
+    }
 
     public async Task<IReadOnlyList<User>> GetByNameAsync(string Name)
     {

@@ -3,7 +3,6 @@
 namespace SocialMediaApp.Application.Persistence.Contracts;
 public interface IUserRepository:IGenericRepository<User>
 {
-
-    Task<IReadOnlyList<User>> GetByNameAsync(string Name); 
-
+    public User? GetByEmail(string email);
+    Task<IReadOnlyList<User>> GetByNameAsync(string name);
 }

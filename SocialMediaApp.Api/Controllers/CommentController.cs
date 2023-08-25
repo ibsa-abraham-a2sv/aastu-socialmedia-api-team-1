@@ -29,8 +29,8 @@ namespace SocialMediaApp.Api.Controllers
 
 
         // GET: api/<CommentController>
-        [HttpGet("{userId:int}")]
-        public async Task<ActionResult<List<CommentDto>>> Get(int userId)
+        [HttpGet("{userId:Guid}")]
+        public async Task<ActionResult<List<CommentDto>>> Get(Guid userId)
         {
             var query = new GetCommentListRequest { Id = userId };
             var comments = await _mediator.Send(query);
@@ -38,8 +38,8 @@ namespace SocialMediaApp.Api.Controllers
         }
 
         // GET api/<CommentController>/5
-        [HttpGet("/GetComment/{id:int}")]
-        public async Task<ActionResult<CommentDto>> GetComment( int id)
+        [HttpGet("/GetComment/{id:Guid}")]
+        public async Task<ActionResult<CommentDto>> GetComment(Guid id)
         {
             var query = new GetCommentDetailRequest { Id = id };
             var comment = await _mediator.Send(query);
@@ -58,7 +58,7 @@ namespace SocialMediaApp.Api.Controllers
                 var user = await _mediator.Send(new GetUserRequest { Id = commentDto.UserId});
                 var post = await _mediator.Send(new GetPostRequestById { Id = commentDto.PostId, UserID = user.Id });
 
-                notificationDto.UserId = user.Id;
+                notificationDto.UserId = post.UserId;
                 notificationDto.Content = $"{user.Name} commented on your {post.Title} post";
                 notificationDto.IsRead = false;
 
@@ -78,8 +78,8 @@ namespace SocialMediaApp.Api.Controllers
         }
 
         // DELETE api/<CommentController>/5
-        [HttpDelete("{userId:int},{id:int}")]
-        public async Task<ActionResult<int>> Delete(int userId, int id)
+        [HttpDelete("{userId:Guid},{id:Guid}")]
+        public async Task<ActionResult<Guid>> Delete(Guid userId, Guid id)
         {
             var command = new DeleteCommentRequest { UserId= userId, Id = id};
             await _mediator.Send(command);

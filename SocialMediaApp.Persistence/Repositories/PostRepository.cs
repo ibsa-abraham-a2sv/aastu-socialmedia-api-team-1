@@ -14,7 +14,7 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
     {
         _dbContext = dbContext;
     }
-    public async Task<Post> GetPostDetails(int userId, int id)
+    public async Task<Post> GetPostDetails(Guid userId, Guid id)
     {
         var user = await _dbContext.Users.FindAsync(userId);
         if (user != null)
@@ -28,7 +28,7 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
         return null;
     }
 
-    public async Task<List<Post>> GetPosts(int userId)
+    public async Task<List<Post>> GetPosts(Guid userId)
     {
         var user = await _dbContext.Users.FindAsync(userId);
         if (user != null)
@@ -39,22 +39,23 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
         return null;
     }
 
-
     public async Task<List<Post>> SearchPosts(string query)
     {
         var posts = _dbContext.Posts.ToList();
-        
+
         List<Post> postResult = new List<Post>();
-        foreach(var post in posts)
+        foreach (var post in posts)
         {
             if (post.Title.Contains(query) || post.Content.Contains(query))
-                {
-                    postResult.Add(post);
-                    continue; // Skip the hashtag loop if title or content match
-                }
+            {
+                postResult.Add(post);
+                continue; // Skip the hashtag loop if title or content match
+            }
 
-            foreach(var hash in post.HashTag){
-                if(hash.Contains(query)){
+            foreach (var hash in post.HashTag)
+            {
+                if (hash.Contains(query))
+                {
                     postResult.Add(post);
                     break;
                 }
@@ -64,13 +65,12 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
         return postResult;
 
     }
-    public List<Post> GetPostForNewsFeed()
+    public async Task<List<Post>> GetPostForNewsFeed(Guid userId)
     {
-        return _dbContext.Posts
-            .Include(p => p.UserId)
-            .OrderByDescending(p => p.CreatedDate) 
-            .ToList();
+        return await _dbContext.Posts
+            .Where(p => p.UserId == userId)
+            .OrderByDescending(p => p.CreatedDate)
+            .ToListAsync();
     }
 
-    
 }

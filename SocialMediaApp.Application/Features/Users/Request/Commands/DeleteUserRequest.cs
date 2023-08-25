@@ -8,6 +8,6 @@ namespace SocialMediaApp.Application.Features.Users.Request.Commands
 {
     public class DeleteUserCommandRequest:IRequest<Unit>
     {
-        public int Id { get; set; }   
+        public Guid Id { get; set; }   
     }
 }

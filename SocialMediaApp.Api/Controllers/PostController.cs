@@ -29,8 +29,8 @@ namespace SocialMediaApp.Api.Controllers
         }
 
         // GET: api/<PostController>
-        [HttpGet("{UserId:int}")]
-        public async Task<ActionResult<List<PostDto>>> Get(int UserId)
+        [HttpGet("{UserId:Guid}")]
+        public async Task<ActionResult<List<PostDto>>> Get(Guid UserId)
         {
             var posts = await _mediator.Send(new GetPostsRequestByUser { UserId = UserId});
 
@@ -38,8 +38,8 @@ namespace SocialMediaApp.Api.Controllers
         }
 
         // GET api/<PostController>/5
-        [HttpGet("{UserId:int},{id:int}")]
-        public async Task<ActionResult<PostDto>> Get(int UserId,int id)
+        [HttpGet("{UserId:Guid},{id:Guid}")]
+        public async Task<ActionResult<PostDto>> Get(Guid UserId, Guid id)
         {
             var post = await _mediator.Send(new GetPostRequestById{Id=id, UserID = UserId});
             if(post != null)
@@ -65,7 +65,7 @@ namespace SocialMediaApp.Api.Controllers
                 notificationDto.Content = $"{user.Name} posted {post.Title}";
                 foreach (var follower in followers)
                 {
-                    notificationDto.UserId = follower.FollowingId;
+                    notificationDto.UserId = follower.CurrentUser;
                     var notificationCommand = new CreateNotificationRequest { CreateNotificationDto = notificationDto };
                     await _mediator.Send(notificationCommand);
                 }
@@ -84,8 +84,8 @@ namespace SocialMediaApp.Api.Controllers
         }
 
         // DELETE api/<PostController>/5 
-        [HttpDelete("{id:int}, {UserId:int}")]
-        public async Task<ActionResult> Delete(int id, int UserId)
+        [HttpDelete("{id:Guid}, {UserId:Guid}")]
+        public async Task<ActionResult> Delete(Guid id, Guid UserId)
         {
             await _mediator.Send(new DeletePostCommand { Id  =id, UserId = UserId});
             return NoContent();

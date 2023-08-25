@@ -11,15 +11,20 @@ namespace SocialMediaApp.Application.DTOs.Likes.Validators
 {
     public class ILikeDtoValidator: AbstractValidator<ILikeDto> {
         private readonly IPostRepository _postRepository;
-        public ILikeDtoValidator(IPostRepository postRepository)
+        private readonly IUserRepository _userRepository;
+        public ILikeDtoValidator(IPostRepository postRepository, IUserRepository userRepository)
         {
             _postRepository = postRepository;
+            _userRepository = userRepository;
             RuleFor(n => n.UserId)
-            .GreaterThan(0)
+            .MustAsync(async (id, token) =>
+            {
+                var UserIdExists = await _userRepository.Exists(id);
+                return UserIdExists;
+            })
             .WithMessage("{PropertyName} does not exist.");
 
             RuleFor(n => n.PostId)
-            .GreaterThan(0)
             .MustAsync(async (id, token) =>
             {
                 var UserIdExists = await _postRepository.Exists(id);

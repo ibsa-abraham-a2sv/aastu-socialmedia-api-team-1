@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace SocialMediaApp.Application.Persistence.Contracts;
 
 public interface ILikeRepository : IGenericRepository<Like>
+
 {
-    bool LikeExists(int UserId, int PostId);
-    
-    // Task<List<Like>> GetLikesByPostId(int userId, int Id);
-    Task<List<Like>> GetLikesById(int postId);
+
+    Task<List<Like>> GetLikesById(Guid PostId);
+    bool LikeExists(Guid UserId, Guid PostId);
 
 }

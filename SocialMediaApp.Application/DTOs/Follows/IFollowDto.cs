@@ -7,7 +7,7 @@ namespace SocialMediaApp.Application.DTOs.Follows
 {
     public interface IFollowDto
     {
-    public int FollowerId { get; set; }
-    public int FollowingId { get; set; }
+    public Guid CurrentUser { get; set; }
+    public Guid ToBeFollowed { get; set; }
     }
 }

@@ -10,8 +10,8 @@ namespace SocialMediaApp.Application.Features.Comments.Request.Commands
 {
     public class DeleteCommentRequest : IRequest<Unit>
     {
-        public int UserId  { get; set; }
+        public Guid UserId  { get; set; }
 
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

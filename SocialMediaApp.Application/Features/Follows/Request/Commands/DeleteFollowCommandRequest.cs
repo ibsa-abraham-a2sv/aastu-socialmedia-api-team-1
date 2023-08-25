@@ -8,6 +8,6 @@ namespace SocialMediaApp.Application.Features.Follows.Request.Commands
 {
     public class DeleteFollowCommandRequest:IRequest<Unit>
     {
-        public int Id { get; set; }   
+        public Guid Id { get; set; }   
     }
 }
