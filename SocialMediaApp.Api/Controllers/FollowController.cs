@@ -12,11 +12,13 @@ using SocialMediaApp.Application.DTOs.Notifications;
 using SocialMediaApp.Application.Features.Notifications.Request.Commands;
 using SocialMediaApp.Application.Features.Posts.Request.Queries;
 using SocialMediaApp.Application.Features.Users.Request.Queries;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SocialMediaApp.Api.Controllers
 {
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
     public class FollowController:ControllerBase
 {
     private readonly IMediator _mediator;

@@ -6,13 +6,15 @@ using SocialMediaApp.Application.Features.Users.Request.Commands;
 using SocialMediaApp.Application.Features.Posts.Request.Queries;
 using SocialMediaApp.Application.Features.Follows.Request.Queries;
 using SocialMediaApp.Application.Features.Notifications.Request.Queries;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace SocialMediaApp.Api.Controllers
 {
 [Route("api/[controller]")]
 [ApiController]
-public class UsersController:ControllerBase
+[Authorize]
+    public class UsersController:ControllerBase
 {
     private readonly IMediator _mediator;
 
