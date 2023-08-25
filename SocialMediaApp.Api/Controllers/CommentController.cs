@@ -60,7 +60,7 @@ namespace SocialMediaApp.Api.Controllers
                 var user = await _mediator.Send(new GetUserRequest { Id = commentDto.UserId});
                 var post = await _mediator.Send(new GetPostRequestById { Id = commentDto.PostId, UserID = user.Id });
 
-                notificationDto.UserId = user.Id;
+                notificationDto.UserId = post.UserId;
                 notificationDto.Content = $"{user.Name} commented on your {post.Title} post";
                 notificationDto.IsRead = false;
 

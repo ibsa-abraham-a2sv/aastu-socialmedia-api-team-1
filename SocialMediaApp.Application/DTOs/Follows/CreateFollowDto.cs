@@ -8,6 +8,6 @@ namespace SocialMediaApp.Application.DTOs.Follows;
 
 public class CreateFollowDto : IFollowDto
 {
-    public Guid FollowerId { get; set; }
-    public Guid FollowingId { get; set; }
+    public Guid CurrentUser { get; set; }
+    public Guid ToBeFollowed { get; set; }
 }

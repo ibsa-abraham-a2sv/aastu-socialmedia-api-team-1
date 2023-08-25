@@ -8,6 +8,7 @@ using SocialMediaApp.Application.Features.Follows.Request.Queries;
 using SocialMediaApp.Application.Features.Notifications.Request.Queries;
 using Microsoft.AspNetCore.Authorization;
 
+
 namespace SocialMediaApp.Api.Controllers
 {
 [Route("api/[controller]")]
@@ -53,7 +54,7 @@ namespace SocialMediaApp.Api.Controllers
         return user;
     }
     //Get:user/name
-    [HttpGet("{name}")]
+    [HttpGet("search")]
     public async Task<ActionResult<List<UserDto>>> GetByNameAsync(string name)
     {
         var users = await _mediator.Send(new GetUsersByNameRequest{Name = name});

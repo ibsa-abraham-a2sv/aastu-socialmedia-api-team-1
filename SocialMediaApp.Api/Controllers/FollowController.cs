@@ -67,9 +67,9 @@ namespace SocialMediaApp.Api.Controllers
         if (followResponse.Success == true)
         {
             var notificationDto = new CreateNotificationDto();
-            var user = await _mediator.Send(new GetUserRequest { Id = followDto.FollowerId});
+            var user = await _mediator.Send(new GetUserRequest { Id = followDto.CurrentUser});
 
-            notificationDto.UserId = followDto.FollowingId;
+            notificationDto.UserId = followDto.ToBeFollowed;
             notificationDto.Content = $"{user.Name} followed you recently";
             notificationDto.IsRead = false;
 

@@ -7,10 +7,8 @@ using SocialMediaApp.Application.DTOs.Common;
 
 namespace SocialMediaApp.Application.DTOs.Follows;
 
-public class FollowDto:BaseDto,IFollowDto
+public class FollowDto:IFollowDto
 {
-    public Guid FollowerId { get; set; }
-    public Guid FollowingId { get; set; }
-    // public User Follower { get; set; }
-    // public User Following { get; set; }
+    public Guid CurrentUser { get; set; }
+    public Guid ToBeFollowed { get; set; }
 }

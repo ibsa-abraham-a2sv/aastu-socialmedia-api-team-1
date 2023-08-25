@@ -14,7 +14,7 @@ public class Post:BaseEntity
     public string Content { get; set; } = "";
     public List<Comment>? Comments { get; set; }
     public List<Like>? Like { get; set; }
-    public List<string>? HashTag { get; set; }
+    public List<string> HashTag { get; set; }
 
 
 

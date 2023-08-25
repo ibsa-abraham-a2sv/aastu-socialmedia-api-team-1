@@ -83,7 +83,7 @@ namespace SocialMediaApp.Api.Controllers
                 notificationDto.Content = $"{user.Name} posted {post.Title}";
                 foreach (var follower in followers)
                 {
-                    notificationDto.UserId = follower.FollowingId;
+                    notificationDto.UserId = follower.CurrentUser;
                     var notificationCommand = new CreateNotificationRequest { CreateNotificationDto = notificationDto };
                     await _mediator.Send(notificationCommand);
                 }
@@ -107,6 +107,14 @@ namespace SocialMediaApp.Api.Controllers
         {
             await _mediator.Send(new DeletePostCommand { Id  =id, UserId = UserId});
             return NoContent();
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<List<PostDto>>> SearchPosts(string q)
+        {
+            var posts = await _mediator.Send(new SearchPostRequest{query = q});
+
+            return posts;
         }
     }
 }
