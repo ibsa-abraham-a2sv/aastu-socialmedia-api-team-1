@@ -25,7 +25,7 @@ namespace test.UnitTest.Users.Commands
     {
         private readonly IMapper _mapper;
 
-        private readonly Mock<IUserRepository> _mokeRepoUser;
+        private readonly Mock<IUserRepository> _mockRepoUser;
 
         private readonly UpdateUserCommandRequestHandler _handler;
 
@@ -35,7 +35,7 @@ namespace test.UnitTest.Users.Commands
         public UpdateUserRequestHandlerTest()
         {
 
-            _mokeRepoUser = MockRepositoryFactory.GetUserRepository();
+            _mockRepoUser = MockRepositoryFactory.GetUserRepository();
 
             _handler = new UpdateUserCommandRequestHandler(_mockRepoUser.Object, _mapper);
 

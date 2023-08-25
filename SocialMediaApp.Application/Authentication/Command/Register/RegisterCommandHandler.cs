@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using SocialMediaApp.Application.Authentication.Common;
+using SocialMediaApp.Application.Authentication.Command.Validations;
+using SocialMediaApp.Application.Exceptions;
 
 namespace SocialMediaApp.Application.Authentication.Command.Register
 {
@@ -45,16 +47,25 @@ namespace SocialMediaApp.Application.Authentication.Command.Register
                 Bio = "",
 
             };
+            var validator = new ValidateCreateUserDto(_userRepository);
+            var validationResult = await validator.ValidateAsync(user);
+
+            if (validationResult.IsValid == true)
+            {
+                _userRepository.AddUser(user);
 
 
-            _userRepository.AddUser(user);
+                var token = _jwtTokenGenerator.GenerateToken(user);
 
-
-            var token = _jwtTokenGenerator.GenerateToken(user);
-
-            return new AuthenticationResult(
-                user,
-                token);
+                return new AuthenticationResult(
+                    user,
+                    token);
+            }
+            else
+            {
+                throw new ValidationException(validationResult);
+            }
+            
         }
     }
 }
