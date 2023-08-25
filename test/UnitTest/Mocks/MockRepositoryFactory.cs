@@ -41,6 +41,7 @@ namespace test.UnitTest.CommentTest.Mocks
                 return comment;
             });
 
+
             return mockRepo;
 
         }
@@ -109,7 +110,10 @@ namespace test.UnitTest.CommentTest.Mocks
                     users.Add(user);
                     return user;
                 });
-
+               
+                mockRepo.Setup(r => r.Update(It.IsAny<User>())).ReturnsAsync(new User());
+                
+                mockRepo.Setup(r => r.GetById(It.IsAny<int>())).ReturnsAsync(new User());
                 return mockRepo;
 
         }
