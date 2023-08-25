@@ -7,7 +7,7 @@ using SocialMediaApp.Application.Features.Posts.Request.Queries;
 using SocialMediaApp.Application.Features.Follows.Request.Queries;
 using SocialMediaApp.Application.Features.Notifications.Request.Queries;
 using Microsoft.AspNetCore.Authorization;
-
+using System.Security.Claims;
 
 namespace SocialMediaApp.Api.Controllers
 {
@@ -17,16 +17,16 @@ namespace SocialMediaApp.Api.Controllers
     public class UsersController:ControllerBase
 {
     private readonly IMediator _mediator;
-
-
-    public UsersController(IMediator mediator)
+    private readonly IHttpContextAccessor _contextAccessor;
+    public UsersController(IMediator mediator, IHttpContextAccessor httpContextAccessor)
     {
         _mediator = mediator;
+        _contextAccessor = httpContextAccessor;
         
     }
 
     // GET: api/items
-    [HttpGet]
+    [HttpGet("/users")]
     public async Task<ActionResult<List<UserDto>>> Get()
     {
         var users = await _mediator.Send(new GetUsersRequest());
@@ -34,13 +34,15 @@ namespace SocialMediaApp.Api.Controllers
     }
 
     // GET: api/items/{id}
-    [HttpGet("{id:Guid}")]
-    public async Task<ActionResult<UserDto>> GetUserById(Guid id)
+    [HttpGet]
+    public async Task<ActionResult<UserDto>> GetUserById()
     {
-        var user = await _mediator.Send(new GetUserRequest {Id = id});
-        var posts = await _mediator.Send(new GetPostsRequestByUser { UserId = id });
-        var follows=  await _mediator.Send(new GetFollowingRequest { userId = id });
-        var notifications = await _mediator.Send(new GetNotificationsRequest { UserId = id });
+        var userId = new Guid(_contextAccessor.HttpContext!.User.FindFirstValue("uid"));
+
+        var user = await _mediator.Send(new GetUserRequest { Id = userId });
+        var posts = await _mediator.Send(new GetPostsRequestByUser { UserId = userId });
+        var follows=  await _mediator.Send(new GetFollowingRequest { userId = userId });
+        var notifications = await _mediator.Send(new GetNotificationsRequest { UserId = userId });
         if (user != null)
         {
             user.Post = posts;
@@ -64,6 +66,7 @@ namespace SocialMediaApp.Api.Controllers
     [HttpPost]
     public async Task<ActionResult> PostUsers([FromBody] CreateUserDto  createUserDto)
     {
+            // to be deleted controller function
         var usercommand = new CreateUserRequest{CreateUserDto = createUserDto};
         
         var userRespond = await _mediator.Send(usercommand);
@@ -73,20 +76,22 @@ namespace SocialMediaApp.Api.Controllers
     }
 
     // PUT: api/items/{id}
-    [HttpPut("{id:Guid}")]
-    public async Task<ActionResult> UpdateUser(Guid id,UpdateUserDto updateUser )
+    [HttpPut]
+    public async Task<ActionResult> UpdateUser([FromBody] UpdateUserDto updateUser )
     {
-        var NewUser = new UpdateUserCommandRequest{Id = id,UpdateUserDto = updateUser};
+        var userId = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
+        var NewUser = new UpdateUserCommandRequest{Id = new Guid(userId),UpdateUserDto = updateUser};
         await _mediator.Send(NewUser);
 
         return NoContent();
     }
 
     // DELETE: api/items/{id}
-    [HttpDelete("{id:Guid}")]
-    public async Task<ActionResult> DeleteUser(Guid id)
+    [HttpDelete]
+    public async Task<ActionResult> DeleteUser()
     {
-        await _mediator.Send( new DeleteUserCommandRequest{ Id = id });
+        var userId = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
+        await _mediator.Send( new DeleteUserCommandRequest{ Id = new Guid(userId) });
         return NoContent();
     }
 }

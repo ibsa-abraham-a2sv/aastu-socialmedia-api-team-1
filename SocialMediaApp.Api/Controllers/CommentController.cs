@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using Microsoft.Extensions.Hosting;
 using SocialMediaApp.Application.DTOs.Comments;
 using SocialMediaApp.Application.DTOs.Notifications;
+using SocialMediaApp.Application.DTOs.Views;
 using SocialMediaApp.Application.Features.Comments.Request.Commands;
 using SocialMediaApp.Application.Features.Comments.Request.Queries;
 using SocialMediaApp.Application.Features.Notifications.Request.Commands;
@@ -12,6 +13,7 @@ using SocialMediaApp.Application.Features.Notifications.Request.Queries;
 using SocialMediaApp.Application.Features.Posts.Request.Queries;
 using SocialMediaApp.Application.Features.Users.Request.Queries;
 using SocialMediaApp.Domain;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,18 +25,22 @@ namespace SocialMediaApp.Api.Controllers
     public class CommentController : ControllerBase
     {
         public IMediator _mediator { get; }
+        private readonly IHttpContextAccessor _contextAccessor;
 
-        public CommentController(IMediator mediator)
+        public CommentController(IMediator mediator, IHttpContextAccessor contextAccessor)
         {
             _mediator = mediator;
+            _contextAccessor = contextAccessor;
         }
 
 
         // GET: api/<CommentController>
-        [HttpGet("{userId:Guid}")]
-        public async Task<ActionResult<List<CommentDto>>> Get(Guid userId)
+        [HttpGet]
+        public async Task<ActionResult<List<CommentDto>>> Get()
         {
-            var query = new GetCommentListRequest { Id = userId };
+            var Id = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
+
+            var query = new GetCommentListRequest { Id = new Guid(Id) };
             var comments = await _mediator.Send(query);
             return Ok(comments);
         }
@@ -50,8 +56,16 @@ namespace SocialMediaApp.Api.Controllers
 
         // POST api/<CommentController>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] CreateCommentDto commentDto)
+        public async Task<ActionResult> Post([FromBody] CreateCommentView comment)
         {
+            var Id = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
+
+            CreateCommentDto commentDto = new CreateCommentDto()
+            {
+                UserId = new Guid(Id),
+                PostId = comment.PostId,
+                Text = comment.Text
+            };
             var command = new CreateCommentRequest { creatCommentDto = commentDto };
             var response = await _mediator.Send(command);
             if (response.Success == true)
@@ -72,18 +86,28 @@ namespace SocialMediaApp.Api.Controllers
 
         // PUT api/<CommentController>/5
         [HttpPut]
-        public async Task<ActionResult> Put([FromBody] UpdateCommentDto updateCommentDto)
+        public async Task<ActionResult> Put([FromBody] CreateCommentView comment)
         {
+            var Id = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
+            UpdateCommentDto updateCommentDto = new UpdateCommentDto()
+            {
+                UserId = new Guid(Id),
+                PostId = comment.PostId,
+                Text = comment.Text
+            };
+
             var command = new UpdateCommentRequest { updatedCommentDto = updateCommentDto };
             await _mediator.Send(command);
             return NoContent();
         }
 
         // DELETE api/<CommentController>/5
-        [HttpDelete("{userId:Guid},{id:Guid}")]
-        public async Task<ActionResult<Guid>> Delete(Guid userId, Guid id)
+        [HttpDelete("{id:Guid}")]
+        public async Task<ActionResult<Guid>> Delete(Guid id)
         {
-            var command = new DeleteCommentRequest { UserId= userId, Id = id};
+            var userId = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
+
+            var command = new DeleteCommentRequest { UserId= new Guid(userId), Id = id};
             await _mediator.Send(command);
             return NoContent();
         }
