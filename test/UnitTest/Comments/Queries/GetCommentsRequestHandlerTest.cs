@@ -13,7 +13,7 @@ using SocialMediaApp.Application.DTOs.Comments;
 using SocialMediaApp.Application.Profiles;   
 using Shouldly;
 
-namespace test.UnitTest.CommentTest.Comments.Queries
+namespace test.UnitTest.Comments.Queries
 {
     public class GetCommentsRequestHandlerTest
     {

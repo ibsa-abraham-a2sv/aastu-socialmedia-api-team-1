@@ -41,15 +41,14 @@ namespace test.UnitTest.CommentTest.Mocks
                 return comment;
             });
 
+
             return mockRepo;
 
         }
 
         public static Mock<IPostRepository> GetPostRepository()
         {
-            /*public int UserId { get; set; }
-    public string Title { get; set; } = "";   
-    public string Content { get; set; } = "";*/
+            
             var posts = new List<Post>
             {
                 new Post
@@ -111,7 +110,10 @@ namespace test.UnitTest.CommentTest.Mocks
                     users.Add(user);
                     return user;
                 });
-
+               
+                mockRepo.Setup(r => r.Update(It.IsAny<User>())).ReturnsAsync(new User());
+                
+                mockRepo.Setup(r => r.GetById(It.IsAny<int>())).ReturnsAsync(new User());
                 return mockRepo;
 
         }

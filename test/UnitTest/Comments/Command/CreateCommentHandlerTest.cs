@@ -15,9 +15,9 @@ using SocialMediaApp.Application.Profiles;
 using Shouldly;
 using SocialMediaApp.Application.Features.Comments.Handler.Commands;
 using SocialMediaApp.Application.Features.Comments.Request.Commands;
+using SocialMediaApp.Application.Exceptions;
 
-
-namespace test.UnitTest.CommentTest.Comments.Handler
+namespace test.UnitTest.Comments.Handler
 {
     public class CreateCommentHandlerTest
     {
@@ -25,6 +25,7 @@ namespace test.UnitTest.CommentTest.Comments.Handler
         private readonly Mock<ICommentRepository> _mockRepoComment;
         private readonly Mock<IPostRepository> _mockRepoPost;
         private readonly Mock<IUserRepository> _mockRepoUser;
+        private readonly CreateCommentRequestHandler _handler;
         
         private readonly CreateCommentDto _createCommentDto;
         public CreateCommentHandlerTest()
@@ -32,12 +33,15 @@ namespace test.UnitTest.CommentTest.Comments.Handler
             _mockRepoComment = MockRepositoryFactory.GetCommentRepository();
             _mockRepoPost = MockRepositoryFactory.GetPostRepository();
             _mockRepoUser = MockRepositoryFactory.GetUserRepository();
+            _handler = new CreateCommentRequestHandler(_mockRepoComment.Object, _mapper, _mockRepoPost.Object,_mockRepoUser.Object);
+
+
             var mapperConfig = new MapperConfiguration(c => {
                 c.AddProfile<MappingProfile>();
             });
 
             _mapper = mapperConfig.CreateMapper();  
-
+    
             _createCommentDto = new CreateCommentDto
             {
                 UserId = 1,
@@ -51,16 +55,32 @@ namespace test.UnitTest.CommentTest.Comments.Handler
         public async Task CreateComment()
         {
             // When
-            var handler = new CreateCommentRequestHandler(_mockRepoComment.Object, _mapper, _mockRepoPost.Object,_mockRepoUser.Object);
+            
 
-            var result = handler.Handle(new CreateCommentRequest(){ creatCommentDto = _createCommentDto}, CancellationToken.None);
-
+            var resultTask = _handler.Handle(new CreateCommentRequest(){ creatCommentDto = _createCommentDto}, CancellationToken.None);
+            
+            var result = await resultTask;
             var comments = await _mockRepoComment.Object.GetAll();
 
             result.ShouldBeOfType<BaseResponseClass>();
 
             // Then
         }
-    }
+
+
+        [Fact]
+        public async Task Invalid_Comment()
+        {
+            // Given
+            ValidationException ex = await Should.ThrowAsync<ValidationException>(async() => 
+                    await _handler.Handle(new CreateCommentRequest(){ creatCommentDto = _createCommentDto}, CancellationToken.None)
+
+            );
+            // When
+            var comment =  await _mockRepoComment.Object.GetAll();
+            // Then
+            comment.Count.ShouldBe(0);
+        }
+    }   
 
 }
