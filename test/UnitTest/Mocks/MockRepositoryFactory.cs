@@ -9,7 +9,7 @@ using SocialMediaApp.Domain;
 using SocialMediaApp.Application.Persistence.Contracts;
 using Moq;
 
-namespace test.UnitTest.CommentTest.Mocks;
+namespace test.UnitTest.Mocks;
 
 public static class MockRepositoryFactory
 {
@@ -27,7 +27,7 @@ public static class MockRepositoryFactory
 
                new Comment
                {
-                   Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
+                    Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
                     UserId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
                     PostId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
                     Text = "Wow amazing :)" 
@@ -109,13 +109,15 @@ public static class MockRepositoryFactory
 
             var mockRepo = new Mock<IUserRepository>();
 
-                mockRepo.Setup(r => r.GetAll()).ReturnsAsync(users);
+                mockRepo.Setup(r => r.GetAll()).ReturnsAsync(() => users);
 
-                mockRepo.Setup(r => r.Add(It.IsAny<User>())).ReturnsAsync((User user) => {
-                    users.Add(user);
-                    return user;
+                mockRepo.Setup(r => r.Add(It.IsAny<User>())).Callback((User user) => users.Add(user));
+                mockRepo.Setup(r => r.Exists(It.IsAny<Guid>())).ReturnsAsync((Guid userId) =>{
+                    var user = users.Where(u => u.Id == userId);
+
+                    return user.Any();
                 });
-               
+
                 mockRepo.Setup(r => r.Update(It.IsAny<User>()));
                 
                 return mockRepo;
@@ -147,12 +149,22 @@ public static class MockRepositoryFactory
 
             var mockRepo = new Mock<INotificationRepository>();
 
-                mockRepo.Setup(r => r.GetAll()).ReturnsAsync(notifications);
+                mockRepo.Setup(r => r.GetNotifications(It.IsAny<Guid>())).ReturnsAsync((Guid userId) => {
+                    // null if not found
+                    var result =  notifications.Where(n => n.UserId == userId).ToList();
+                    if (result == null)
+                    {
+                        return null;
+                    }
+                    return result;
+                    
+                    });
 
                 mockRepo.Setup(r => r.Add(It.IsAny<Notification>())).ReturnsAsync((Notification notification) => {
                     notifications.Add(notification);
                     return notification;
                 });
+                
 
                 return mockRepo;
 

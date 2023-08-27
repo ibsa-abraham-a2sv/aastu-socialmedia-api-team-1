@@ -11,6 +11,9 @@ using SocialMediaApp.Application.Features.Users.Request.Queries;
 using SocialMediaApp.Application.DTOs.Users;
 using SocialMediaApp.Application.Profiles;   
 using Shouldly;
+using test.UnitTest.Mocks;
+
+
 namespace test.UnitTest.Users.Queries
 {
     public class GetUserRequestHanlderTest

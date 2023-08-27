@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using test.UnitTest.CommentTest.Mocks;
+using test.UnitTest.Mocks;
 using AutoMapper;
 using Moq;
 using SocialMediaApp.Application.Persistence.Contracts;
@@ -19,6 +19,7 @@ using SocialMediaApp.Application.Features.Users.Request.Commands;
 using SocialMediaApp.Application.Exceptions;
 using SocialMediaApp.Application.Features.Users.Handler.Commands;
 using SocialMediaApp.Domain;
+using MediatR;
 
 
 namespace test.UnitTest.Users.Commands
@@ -34,22 +35,57 @@ namespace test.UnitTest.Users.Commands
         private readonly UpdateUserDto _updateUserDto;
         private readonly Guid _userId;
 
-        public UpdateUserRequestHandlerTest()
+        // public UpdateUserRequestHandlerTest()
+        // {
+
+        //     _mockRepoUser = MockRepositoryFactory.GetUserRepository();
+
+        //     _handler = new UpdateUserCommandRequestHandler(_mockRepoUser.Object, _mapper);
+
+
+        //     var mapperConfig = new MapperConfiguration(c => {
+        //         c.AddProfile<MappingProfile>();
+        //     });
+
+        //     _mapper = mapperConfig.CreateMapper();  
+
+        //     _userId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc4");
+        //     _updateUserDto = new UpdateUserDto
+            // {
+            //     Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc4"),
+            //     Name = "Jima Dube",
+            //     email = "jima@gmail.com",
+            //     Bio = "I like the picture:)"
+            // };
+
+        // }
+
+
+        [Fact]
+        public async Task UpdateuserTest()
         {
+            var users = new List<User>
+            {
+                new User
+                {
+                    Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
+                    Name = "Jima Dube",
+                    email = "jimd@gmail.com",
+                    password = "High123@",
+                },
+                new User
+                {
+                    Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc6"),
+                    Name = "xBebe",
+                    email = "bebe@gmail.com",
+                    password = "bebe123#",
+                }
+            };
 
-            _mockRepoUser = MockRepositoryFactory.GetUserRepository();
 
-            _handler = new UpdateUserCommandRequestHandler(_mockRepoUser.Object, _mapper);
-
-
-            var mapperConfig = new MapperConfiguration(c => {
-                c.AddProfile<MappingProfile>();
-            });
-
-            _mapper = mapperConfig.CreateMapper();  
-
-            _userId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc4");
-            _updateUserDto = new UpdateUserDto
+            // Arrange
+            var userId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc6");
+            var updateUserDto = new UpdateUserDto
             {
                 Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc4"),
                 Name = "Jima Dube",
@@ -57,19 +93,23 @@ namespace test.UnitTest.Users.Commands
                 Bio = "I like the picture:)"
             };
 
-        }
+            var mockUserRepository = new Mock<IUserRepository>();
+            var mockMapper = new Mock<IMapper>();
+            
+            // Configure mock behavior (replace this with your actual behavior)
+            mockUserRepository.Setup(repo => repo.GetById(userId))
+                            .ReturnsAsync(users[1]);
 
+            // mockUserRepository.Setup(repo => repo.GetAll()).ReturnsAsync(() => users);
+            
+            var handler = new UpdateUserCommandRequestHandler(mockUserRepository.Object, mockMapper.Object);
+            var request = new UpdateUserCommandRequest { Id = userId, UpdateUserDto = updateUserDto };
 
-        [Fact]
-        public async Task UpdateuserTest()
-        {
-            // Given
-             
-            // When
-            //   var result = await _handler.Handle(new UpdateUserCommandRequest { Id = _userId, UpdateUserDto = _updateUserDto }, CancellationToken.None);
-            //   var resultUsers = await _mockRepoUser.Object.GetAll(); 
-            //  // Then
-            //     resultUsers.Count.ShouldBe(0);
-        }
+            // Act & Assert
+            await handler.Handle(request, CancellationToken.None);
+            mockUserRepository.Verify(repo => repo.GetById(userId), Times.Once);
+            
+
+         } 
     }
 }

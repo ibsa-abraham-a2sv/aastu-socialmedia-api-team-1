@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using test.UnitTest.CommentTest.Mocks;
+using test.UnitTest.Mocks;
 using AutoMapper;
 using Moq;
 using SocialMediaApp.Application.Persistence.Contracts;
