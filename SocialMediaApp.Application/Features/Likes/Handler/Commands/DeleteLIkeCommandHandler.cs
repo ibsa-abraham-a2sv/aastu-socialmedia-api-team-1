@@ -31,6 +31,10 @@ namespace SocialMediaApp.Application.Features.Likes.Handler.Commands
             {
                 throw new NotFoundException(nameof(Like), request.LikeId);
             }
+            else if(like.UserId !=  request.UserId)
+            {
+                throw new BadRequestException("you are not the owner of the like");
+            }
             await _likeRepository.Delete(like);
             return Unit.Value;
         }

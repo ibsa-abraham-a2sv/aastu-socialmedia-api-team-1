@@ -5,6 +5,7 @@ using SocialMediaApp.Application.DTOs.Notifications;
 using SocialMediaApp.Application.Features.Notifications.Request.Commands;
 using SocialMediaApp.Application.Features.Notifications.Request.Queries;
 using SocialMediaApp.Domain;
+using System.Security.Claims;
 
 namespace SocialMediaApp.Api.Controllers
 {
@@ -14,42 +15,39 @@ namespace SocialMediaApp.Api.Controllers
     public class NotificationController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public NotificationController(IMediator mediator)
+        private readonly IHttpContextAccessor _contextAccessor;
+        public NotificationController(IMediator mediator, IHttpContextAccessor contextAccessor)
         {
             _mediator = mediator;
+            _contextAccessor = contextAccessor;
         }
         // GET: api/<NotificationController>
-        [HttpGet("{userId:Guid}")]
-        public async Task<ActionResult<List<NotificationDto>>> Get(Guid userId)
+        [HttpGet]
+        public async Task<ActionResult<List<NotificationDto>>> Get()
         {
-            var query = new GetNotificationsRequest { UserId = userId };
+            var userId = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
+            var query = new GetNotificationsRequest { UserId = new Guid(userId) };
             var notifications = await _mediator.Send(query);
             return Ok(notifications);
         }
 
         // GET api/<NotificationController>/5
-        [HttpGet("{userId:Guid},{id:Guid}")]
-        public async Task<ActionResult<NotificationDto>> Get(Guid userId, Guid id)
+        [HttpGet("{id:Guid}")]
+        public async Task<ActionResult<NotificationDto>> Get(Guid id)
         {
-            var query = new GetNotificationDetailsRequest { UserId = userId, NotificationId = id };
+            var userId = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
+            var query = new GetNotificationDetailsRequest { UserId = new Guid(userId), NotificationId = id };
             var notificaiton = await _mediator.Send(query);
             return Ok(notificaiton);
         }
 
-        // POST api/<NotificationController>
-        [HttpPost]
-        public async Task<ActionResult> Post([FromBody] CreateNotificationDto notificationDto)
-        {
-            var command = new CreateNotificationRequest { CreateNotificationDto = notificationDto };
-            var response = await _mediator.Send(command);
-            return Ok( response);
-        }       
 
         // DELETE api/<NotificationController>/5
-        [HttpDelete("{userId:Guid},{id:Guid}")]
-        public async Task<ActionResult<Guid>> Delete(Guid userId, Guid id)
+        [HttpDelete("{id:Guid}")]
+        public async Task<ActionResult<Guid>> Delete(Guid id)
         {
-            var command = new DeleteNotificationRequest { UserId = userId,NotificationId = id };
+            var userId = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
+            var command = new DeleteNotificationRequest { UserId = new Guid(userId),NotificationId = id };
             await _mediator.Send(command);
             return NoContent();
         }
