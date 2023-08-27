@@ -62,18 +62,7 @@ namespace SocialMediaApp.Api.Controllers
         var users = await _mediator.Send(new GetUsersByNameRequest{Name = name});
         return users;
     }
-    // POST: api/items
-    [HttpPost]
-    public async Task<ActionResult> PostUsers([FromBody] CreateUserDto  createUserDto)
-    {
-            // to be deleted controller function
-        var usercommand = new CreateUserRequest{CreateUserDto = createUserDto};
-        
-        var userRespond = await _mediator.Send(usercommand);
-
-        return Ok(userRespond);
-
-    }
+    
 
     // PUT: api/items/{id}
     [HttpPut]

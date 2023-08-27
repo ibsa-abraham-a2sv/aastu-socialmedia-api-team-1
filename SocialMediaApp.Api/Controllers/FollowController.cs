@@ -93,8 +93,10 @@ namespace SocialMediaApp.Api.Controllers
     [HttpDelete("{id:Guid}")]
     public async Task<ActionResult> DeleteFollow(Guid id)
     {
-            // authenticate the owner if he is the one asking to unfollow
-        await _mediator.Send( new DeleteFollowCommandRequest{ Id = id });
+        // authenticate the owner if he is the one asking to unfollow
+        var userId = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
+
+        await _mediator.Send( new DeleteFollowCommandRequest{ Id = id, UserId = new Guid(userId) });
         return NoContent();
     }
     }

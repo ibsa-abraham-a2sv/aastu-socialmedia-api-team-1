@@ -76,7 +76,8 @@ namespace SocialMediaApp.Api.Controllers
         public async Task<ActionResult> Unlike(Guid id)
         {
             // authenticate the user pls 
-            await _mediator.Send(new DeleteLikeRequest { LikeId = id });
+            var UserId = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
+            await _mediator.Send(new DeleteLikeRequest { LikeId = id, UserId = new Guid(UserId) });
             return NoContent();
         }
     }
