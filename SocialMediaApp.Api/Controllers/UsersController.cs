@@ -8,6 +8,7 @@ using SocialMediaApp.Application.Features.Follows.Request.Queries;
 using SocialMediaApp.Application.Features.Notifications.Request.Queries;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using SocialMediaApp.Application.DTOs.Views;
 
 namespace SocialMediaApp.Api.Controllers
 {
@@ -26,7 +27,7 @@ namespace SocialMediaApp.Api.Controllers
     }
 
     // GET: api/items
-    [HttpGet("/users")]
+    [HttpGet("GetAll")]
     public async Task<ActionResult<List<UserDto>>> Get()
     {
         var users = await _mediator.Send(new GetUsersRequest());
@@ -66,10 +67,17 @@ namespace SocialMediaApp.Api.Controllers
 
     // PUT: api/items/{id}
     [HttpPut]
-    public async Task<ActionResult> UpdateUser([FromBody] UpdateUserDto updateUser )
+    public async Task<ActionResult> UpdateUser([FromBody] RegisterUserView user  )
     {
         var userId = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
-        var NewUser = new UpdateUserCommandRequest{Id = new Guid(userId),UpdateUserDto = updateUser};
+        UpdateUserDto updateUser = new UpdateUserDto()
+        {
+            Id = new Guid(userId),
+            Bio = user.Bio,
+            email = user.email,
+            Name = user.Name,
+        };
+        var NewUser = new UpdateUserCommandRequest{UpdateUserDto = updateUser};
         await _mediator.Send(NewUser);
 
         return NoContent();
