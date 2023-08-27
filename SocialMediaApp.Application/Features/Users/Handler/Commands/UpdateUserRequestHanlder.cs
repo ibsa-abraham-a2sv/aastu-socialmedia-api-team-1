@@ -29,7 +29,7 @@ namespace SocialMediaApp.Application.Features.Users.Handler.Commands
                 throw new ValidationException(validationResult);
 
 
-            var user = await _userRepository.GetById(request.Id);
+            var user = await _userRepository.GetById(request.UpdateUserDto.Id);
             _mapper.Map(request.UpdateUserDto, user);
             await _userRepository.Update(user);
             return Unit.Value;

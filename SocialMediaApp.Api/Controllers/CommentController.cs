@@ -36,17 +36,16 @@ namespace SocialMediaApp.Api.Controllers
 
         // GET: api/<CommentController>
         [HttpGet]
-        public async Task<ActionResult<List<CommentDto>>> Get()
+        public async Task<ActionResult<List<CommentDto>>> Get(Guid postId)
         {
-            var Id = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
 
-            var query = new GetCommentListRequest { Id = new Guid(Id) };
+            var query = new GetCommentListRequest { Id = postId };
             var comments = await _mediator.Send(query);
             return Ok(comments);
         }
 
         // GET api/<CommentController>/5
-        [HttpGet("/GetComment/{id:Guid}")]
+        [HttpGet("GetComment/{id:Guid}")]
         public async Task<ActionResult<CommentDto>> GetComment(Guid id)
         {
             var query = new GetCommentDetailRequest { Id = id };
@@ -86,14 +85,15 @@ namespace SocialMediaApp.Api.Controllers
 
         // PUT api/<CommentController>/5
         [HttpPut]
-        public async Task<ActionResult> Put([FromBody] CreateCommentView comment)
+        public async Task<ActionResult> Put([FromBody] UpdateCommentView comment)
         {
             var Id = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
             UpdateCommentDto updateCommentDto = new UpdateCommentDto()
             {
                 UserId = new Guid(Id),
                 PostId = comment.PostId,
-                Text = comment.Text
+                Text = comment.Text,
+                Id = comment.CommentId
             };
 
             var command = new UpdateCommentRequest { updatedCommentDto = updateCommentDto };
