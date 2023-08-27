@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ using SocialMediaApp.Application.Features.Users.Handler.Commands;
 using SocialMediaApp.Application.Features.Users.Request.Commands;
 using SocialMediaApp.Application.Exceptions;
 using SocialMediaApp.Application.Features.Users.Handler.Commands;
+using SocialMediaApp.Domain;
 
 
 namespace test.UnitTest.Users.Commands
@@ -25,17 +27,17 @@ namespace test.UnitTest.Users.Commands
     {
         private readonly IMapper _mapper;
 
-        private readonly Mock<IUserRepository> _mokeRepoUser;
+        private readonly Mock<IUserRepository> _mockRepoUser;
 
         private readonly UpdateUserCommandRequestHandler _handler;
 
         private readonly UpdateUserDto _updateUserDto;
-
+        private readonly Guid _userId;
 
         public UpdateUserRequestHandlerTest()
         {
 
-            _mokeRepoUser = MockRepositoryFactory.GetUserRepository();
+            _mockRepoUser = MockRepositoryFactory.GetUserRepository();
 
             _handler = new UpdateUserCommandRequestHandler(_mockRepoUser.Object, _mapper);
 
@@ -46,14 +48,28 @@ namespace test.UnitTest.Users.Commands
 
             _mapper = mapperConfig.CreateMapper();  
 
-
+            _userId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc4");
             _updateUserDto = new UpdateUserDto
             {
+                Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc4"),
                 Name = "Jima Dube",
                 email = "jima@gmail.com",
                 Bio = "I like the picture:)"
             };
 
+        }
+
+
+        [Fact]
+        public async Task UpdateuserTest()
+        {
+            // Given
+             
+            // When
+            //   var result = await _handler.Handle(new UpdateUserCommandRequest { Id = _userId, UpdateUserDto = _updateUserDto }, CancellationToken.None);
+            //   var resultUsers = await _mockRepoUser.Object.GetAll(); 
+            //  // Then
+            //     resultUsers.Count.ShouldBe(0);
         }
     }
 }

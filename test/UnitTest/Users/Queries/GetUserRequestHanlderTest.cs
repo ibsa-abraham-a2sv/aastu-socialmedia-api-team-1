@@ -3,7 +3,6 @@ using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using test.UnitTest.CommentTest.Mocks;
 using AutoMapper;
 using Moq;
 using SocialMediaApp.Application.Persistence.Contracts;
@@ -15,7 +14,7 @@ using Shouldly;
 namespace test.UnitTest.Users.Queries
 {
     public class GetUserRequestHanlderTest
-    {
+  {
             private  readonly IMapper _mapper;
             private readonly Mock<IUserRepository> _mockRepo;
 
@@ -39,14 +38,7 @@ namespace test.UnitTest.Users.Queries
                 var result = await handler.Handle(new GetUsersRequest(), CancellationToken.None);
 
                 result.ShouldBeOfType<List<UserDto>>();
-                // result.ShouldBe.Count();
-
-
-                // Given
-            
-                // When
-            
-                // Then
+                result.Count.ShouldBe(2);
             }
         
     }

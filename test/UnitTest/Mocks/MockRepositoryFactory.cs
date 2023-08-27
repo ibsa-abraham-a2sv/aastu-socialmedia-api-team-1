@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System;
 using System.Collections.Generic;
@@ -7,10 +9,10 @@ using SocialMediaApp.Domain;
 using SocialMediaApp.Application.Persistence.Contracts;
 using Moq;
 
-namespace test.UnitTest.CommentTest.Mocks
+namespace test.UnitTest.CommentTest.Mocks;
+
+public static class MockRepositoryFactory
 {
-    public static class MockRepositoryFactory
-    {
         public static Mock<ICommentRepository> GetCommentRepository()
         {
             var comments = new List<Comment>
@@ -91,12 +93,14 @@ namespace test.UnitTest.CommentTest.Mocks
             {
                 new User
                 {
+                    Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
                     Name = "Jima Dube",
                     email = "jimd@gmail.com",
                     password = "High123@",
                 },
                 new User
                 {
+                    Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc6"),
                     Name = "xBebe",
                     email = "bebe@gmail.com",
                     password = "bebe123#",
@@ -112,11 +116,45 @@ namespace test.UnitTest.CommentTest.Mocks
                     return user;
                 });
                
-                mockRepo.Setup(r => r.Update(It.IsAny<User>())).ReturnsAsync(new User());
+                mockRepo.Setup(r => r.Update(It.IsAny<User>()));
                 
-                mockRepo.Setup(r => r.GetById(It.IsAny<int>())).ReturnsAsync(new User());
                 return mockRepo;
 
         }
-    }
+
+
+
+        public static Mock<INotificationRepository> GetNotificationRepository()
+        {
+            
+            var notifications = new List<Notification>
+            {
+                new Notification
+                {
+                    Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc9"),
+                    UserId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
+                    Content = "Gamming Pc",
+                    IsRead = false,
+                },
+                new Notification
+                {
+                    Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc9"),
+                    UserId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc3"),
+                    Content = "Gamming Pc",
+                    IsRead = false,
+                }
+            };
+
+            var mockRepo = new Mock<INotificationRepository>();
+
+                mockRepo.Setup(r => r.GetAll()).ReturnsAsync(notifications);
+
+                mockRepo.Setup(r => r.Add(It.IsAny<Notification>())).ReturnsAsync((Notification notification) => {
+                    notifications.Add(notification);
+                    return notification;
+                });
+
+                return mockRepo;
+
+        }
 }

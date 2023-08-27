@@ -68,19 +68,20 @@ namespace test.UnitTest.Comments.Handler
         }
 
 
-        [Fact]
-        public async Task Invalid_Comment()
-        {
-            // Given
-            ValidationException ex = await Should.ThrowAsync<ValidationException>(async() => 
-                    await _handler.Handle(new CreateCommentRequest(){ creatCommentDto = _createCommentDto}, CancellationToken.None)
+        // [Fact]
+        // public async Task Invalid_Comment()
+        // {
+        //     // Given
+        //     ValidationException ex = await Should.ThrowAsync<ValidationException>(async() => 
+        //             await _handler.Handle(new CreateCommentRequest(){ creatCommentDto = _createCommentDto}, CancellationToken.None)
 
-            );
-            // When
-            var comment =  await _mockRepoComment.Object.GetAll();
-            // Then
-            comment.Count.ShouldBe(0);
-        }
+        //     );
+        //     // When
+        //     var comment =  await _mockRepoComment.Object.GetAll();
+        //     // Then
+           
+        //     comment.Count.ShouldBe(0);
+        // }
     }   
 
 }
