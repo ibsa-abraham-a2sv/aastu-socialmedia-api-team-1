@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SocialMediaApp.Application.DTOs.Comments;
 using SocialMediaApp.Application.DTOs.Likes;
@@ -18,6 +19,7 @@ namespace SocialMediaApp.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class NewsFeedController : ControllerBase
     {
         private readonly IMediator _mediator;
