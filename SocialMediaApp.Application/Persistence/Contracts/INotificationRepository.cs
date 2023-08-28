@@ -9,7 +9,7 @@ namespace SocialMediaApp.Application.Persistence.Contracts;
 
 public interface INotificationRepository : IGenericRepository<Notification>
 {
-    Task<List<Notification>> GetNotifications(int userId);
-    Task<Notification> GetNotificationDetails(int userId, int id);
+    Task<List<Notification>> GetNotifications(Guid userId);
+    Task<Notification> GetNotificationDetails(Guid userId, Guid id);
 
 }

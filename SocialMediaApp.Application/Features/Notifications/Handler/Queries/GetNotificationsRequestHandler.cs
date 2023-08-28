@@ -1,6 +1,7 @@
-﻿using AutoMapper;
+using AutoMapper;
 using MediatR;
 using SocialMediaApp.Application.DTOs.Notifications;
+using SocialMediaApp.Application.Exceptions;
 using SocialMediaApp.Application.Features.Notifications.Request.Queries;
 using SocialMediaApp.Application.Persistence.Contracts;
 using SocialMediaApp.Domain;
@@ -24,6 +25,8 @@ public class GetNotificationsRequestHandler : IRequestHandler<GetNotificationsRe
     public async Task<List<NotificationDto>> Handle(GetNotificationsRequest request, CancellationToken cancellationToken)
     {
         var notifications = await _notificationRepository.GetNotifications(request.UserId);
+
+            
         return _mapper.Map<List<NotificationDto>>(notifications);
     }
 }
