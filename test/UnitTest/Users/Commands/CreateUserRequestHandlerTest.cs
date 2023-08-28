@@ -1,9 +1,10 @@
+using System;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using test.UnitTest.CommentTest.Mocks;
+using test.UnitTest.Mocks;
 using AutoMapper;
 using Moq;
 using SocialMediaApp.Application.Persistence.Contracts;
@@ -26,8 +27,6 @@ namespace test.UnitTest.Users.Commands
     public class CreateUserRequestHandlerTest
     {
             private  readonly IMapper _mapper;
-            private readonly Mock<ICommentRepository> _mockRepoComment;
-            private readonly Mock<IPostRepository> _mockRepoPost;
             private readonly Mock<IUserRepository> _mockRepoUser;
             private readonly CreateUsersRequestHandler _handler;
             
@@ -36,8 +35,6 @@ namespace test.UnitTest.Users.Commands
         public CreateUserRequestHandlerTest()
         {
             
-            _mockRepoUser = MockRepositoryFactory.GetUserRepository();
-            _mockRepoPost = MockRepositoryFactory.GetPostRepository();
             _mockRepoUser = MockRepositoryFactory.GetUserRepository();
             _handler = new CreateUsersRequestHandler(_mockRepoUser.Object, _mapper);
 
@@ -58,7 +55,6 @@ namespace test.UnitTest.Users.Commands
                 Name = "Jima Dube",
                 email = "jima@gmail.com",
                 Bio = "I like the picture:)",
-                password = "Passs12#"
             };
         }
 
@@ -66,13 +62,12 @@ namespace test.UnitTest.Users.Commands
         public async Task createUser()
         {
         
-            var resultTask = _handler.Handle(new CreateUserRequest(){ CreateUserDto = _createUserDto}, CancellationToken.None);
+            var result = await _handler.Handle(new CreateUserRequest(){ CreateUserDto = _createUserDto}, CancellationToken.None);
             
-            var result = await resultTask;
-            var usesrs = await _mockRepoComment.Object.GetAll();
-
+            var users = await _mockRepoUser.Object.GetAll();
+            
             result.ShouldBeOfType<BaseResponseClass>();
-        
+            users.Count.ShouldBe(2);
         }
 
     }

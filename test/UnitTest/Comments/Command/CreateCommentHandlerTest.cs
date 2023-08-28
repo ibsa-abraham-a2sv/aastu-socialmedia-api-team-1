@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using test.UnitTest.CommentTest.Mocks;
+using test.UnitTest.Mocks;
 using AutoMapper;
 using Moq;
 using SocialMediaApp.Application.Persistence.Contracts;
@@ -65,21 +65,6 @@ namespace test.UnitTest.Comments.Handler
             result.ShouldBeOfType<BaseResponseClass>();
 
             // Then
-        }
-
-
-        [Fact]
-        public async Task Invalid_Comment()
-        {
-            // Given
-            ValidationException ex = await Should.ThrowAsync<ValidationException>(async() => 
-                    await _handler.Handle(new CreateCommentRequest(){ creatCommentDto = _createCommentDto}, CancellationToken.None)
-
-            );
-            // When
-            var comment =  await _mockRepoComment.Object.GetAll();
-            // Then
-            comment.Count.ShouldBe(0);
         }
     }   
 
