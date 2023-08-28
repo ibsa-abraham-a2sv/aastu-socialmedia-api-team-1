@@ -11,5 +11,5 @@ public interface IFollowRepository: IGenericRepository<Follow>
 {
     Task<List<Follow>> GetFollowersAsync(Guid userId);
     Task<List<Follow>> GetFollowingsAsync(Guid userId);
-    
+    Task<bool> IsAlreadyFollowing(Guid current, Guid toBeFollowed);
 }

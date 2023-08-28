@@ -44,7 +44,7 @@ namespace SocialMediaApp.Infrastructure.Authentication
             
             };
 
-
+            Console.WriteLine(_jwtSettings.ExpiryMinutes + " "+_jwtSettings.ExpiryMinutes.GetType());
             var securityToken = new JwtSecurityToken(
                             issuer: _jwtSettings.Issuer,
                             audience: _jwtSettings.Audience,

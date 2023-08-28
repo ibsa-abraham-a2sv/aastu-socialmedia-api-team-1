@@ -61,6 +61,10 @@ namespace SocialMediaApp.Api.Controllers
 
                 }
             }
+            if(newsFeedItems.Count > 0)
+            {
+                newsFeedItems.OrderByDescending(news => news.CreatedDate);
+            }
 
             return Ok(newsFeedItems);
         }
