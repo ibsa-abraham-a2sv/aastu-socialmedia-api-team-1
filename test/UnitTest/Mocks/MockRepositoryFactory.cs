@@ -118,7 +118,7 @@ public static class MockRepositoryFactory
                     return user.Any();
                 });
 
-                mockRepo.Setup(r => r.Update(Itw.IsAny<User>()));
+                mockRepo.Setup(r => r.Update(It.IsAny<User>()));
                 
                 return mockRepo;
 

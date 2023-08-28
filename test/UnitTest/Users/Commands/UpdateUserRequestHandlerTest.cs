@@ -79,7 +79,7 @@ namespace test.UnitTest.Users.Commands
             // mockUserRepository.Setup(repo => repo.GetAll()).ReturnsAsync(() => users);
             
             var handler = new UpdateUserCommandRequestHandler(mockUserRepository.Object, mockMapper.Object);
-            var request = new UpdateUserCommandRequest { Id = userId, UpdateUserDto = updateUserDto };
+            var request = new UpdateUserCommandRequest { UpdateUserDto = updateUserDto };
 
             // Act & Assert
             await handler.Handle(request, CancellationToken.None);

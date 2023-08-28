@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using SocialMediaApp.Application.Exceptions;
 using SocialMediaApp.Application.Persistence.Contracts;
 using SocialMediaApp.Domain;
@@ -35,5 +36,10 @@ public class FollowRepository : GenericRepository<Follow>, IFollowRepository
 
     }
 
-        
+    public async Task<bool> IsAlreadyFollowing(Guid current, Guid toBeFollowed)
+    {
+        var followExists = await _context.Follows.Where(f=>f.CurrentUser == current && f.ToBeFollowed==toBeFollowed).ToListAsync();
+        Console.WriteLine(followExists.Count());
+        return followExists.IsNullOrEmpty();
+    }
 }

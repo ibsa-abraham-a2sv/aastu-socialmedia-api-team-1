@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Microsoft.EntityFrameworkCore;
 using SocialMediaApp.Application.Exceptions;
 using SocialMediaApp.Application.Persistence.Contracts;
 using SocialMediaApp.Domain;
@@ -32,7 +33,7 @@ public class UserRepository : GenericRepository<User>, IUserRepository
 
     public async Task<IReadOnlyList<User>> GetByNameAsync(string Name)
     {
-        var users = _dbContext.Users.Where(u => u.Name.Contains(Name)).ToList() ?? throw new NotFoundException("${Name}", Name);
+        var users = await _dbContext.Users.Where(u => u.Name.Contains(Name)).ToListAsync() ?? throw new NotFoundException("${Name}", Name);
         return users;
     }
 
