@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using SocialMediaApp.Application.Persistence.Contracts.Common;
 using SocialMediaApp.Application.Persistence.Contracts.Common.Services;
+using SocialMediaApp.Domain;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -25,7 +26,7 @@ namespace SocialMediaApp.Infrastructure.Authentication
             _jwtSettings = jwtOptions.Value;
         }
 
-        public string GenerateToken(Guid userId, string Name)
+        public string GenerateToken(User user)
         {
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(
@@ -35,9 +36,12 @@ namespace SocialMediaApp.Infrastructure.Authentication
                
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-                new Claim(JwtRegisteredClaimNames.UniqueName, Name),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.Name),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim("uid", user.Id.ToString())
+
+            
             };
 
 

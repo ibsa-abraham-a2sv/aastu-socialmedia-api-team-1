@@ -9,6 +9,7 @@ using SocialMediaApp.Application.Features.Likes.Request.Queries;
 using SocialMediaApp.Application.Features.Posts.Request.Queries;
 using SocialMediaApp.Domain;
 using System.Diagnostics.Metrics;
+using System.Security.Claims;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -20,23 +21,24 @@ namespace SocialMediaApp.Api.Controllers
     public class NewsFeedController : ControllerBase
     {
         private readonly IMediator _mediator;
- 
+        private readonly IHttpContextAccessor _contextAccessor;
 
-
-        public NewsFeedController(IMediator mediator)
+        public NewsFeedController(IMediator mediator, IHttpContextAccessor httpContextAccessor )
         {
             _mediator = mediator;
+            _contextAccessor = httpContextAccessor;
         }
 
 
 
         // GET: api/<ValuesController>
-        [HttpGet("{UserId:int}")]
-        public async Task<ActionResult<List<PostListDto>>> GetNewsFeedItemRequest(Guid UserId)
-        { 
+        [HttpGet]
+        public async Task<ActionResult<List<PostListDto>>> GetNewsFeedItemRequest()
+        {
+            var Id = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
             var newsFeedItems = new List<PostListDto>();
-            var userFollowings = await _mediator.Send(new GetFollowingRequest { userId = UserId });
-            Console.WriteLine(userFollowings.Count);
+            var userFollowings = await _mediator.Send(new GetFollowingRequest { userId = new Guid(Id) });
+
             foreach (var follower in userFollowings)
             {
                 var posts = await _mediator.Send(new GetPostsRequestByUser { UserId = follower.ToBeFollowed });

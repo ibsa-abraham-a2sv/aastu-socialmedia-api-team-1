@@ -1,50 +1,56 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SocialMediaApp.Application.Authentication.Command.Register;
+using SocialMediaApp.Application.Authentication.Common;
+using SocialMediaApp.Application.Authentication.Query.Login;
 using SocialMediaApp.Application.Features.Authentication;
-using SocialMediaApp.Application.Services.Authentication;
+
 
 namespace SocialMediaApp.Api.Controllers
 {
-    
+
 
 
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class AuthenticationController : ControllerBase
     {
-        private readonly IAuthenticationService _authenticationService;
 
-        public AuthenticationController( IAuthenticationService authenticationService)
+        private readonly ISender _mediator;
+
+        public AuthenticationController(ISender mediator)
         {
-            _authenticationService = authenticationService;
+            _mediator = mediator;
         }
 
         [HttpPost("register")]
-        public IActionResult Register(RegisterRequest request)
+        public async Task<IActionResult> Register(RegisterRequest request)
         {
-            var authResult = _authenticationService.Register(
-                request.Name,
-                request.Email,
-                request.Password);
+            var command = new RegisterCommand(request.Name, request.Email, request.Password);
+
+            AuthenticationResult authResult = await _mediator.Send(command);
+               
             var authResponse = new AuthenticationResponse(
-                authResult.Id,
-                authResult.Email,
-                authResult.Name,
+                authResult.User.Id,
+                authResult.User.email,
+                authResult.User.Name,
                 authResult.Token);
             return Ok(authResponse);
             
         }
 
         [HttpPost("login")]
-        public IActionResult Login(LoginRequest request)
+        public async Task<IActionResult> Login(LoginRequest request)
         {
-            var authResult = _authenticationService.Login(
-                request.Email,
-                request.Password);
+            var query = new LoginQuary(request.Email, request.Password);
+            var authResult = await _mediator.Send(query);
             var authResponse = new AuthenticationResponse(
-                authResult.Id,
-                authResult.Email,
-                authResult.Name,
+                authResult.User.Id,
+                authResult.User.email,
+                authResult.User.Name,
                 authResult.Token);
             return Ok(authResponse);
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using SocialMediaApp.Application.Exceptions;
 using SocialMediaApp.Application.Persistence.Contracts;
 using SocialMediaApp.Domain;
@@ -19,7 +20,14 @@ public class UserRepository : GenericRepository<User>, IUserRepository
 
     public User? GetByEmail(string email)
     {
-        throw new NotImplementedException();
+        var users = _dbContext.Users.SingleOrDefault(u => u.email == email);
+        return users;
+    }
+
+    public void AddUser(User user)
+    {
+        _dbContext.Users.Add(user);
+        _dbContext.SaveChanges();
     }
 
     public async Task<IReadOnlyList<User>> GetByNameAsync(string Name)

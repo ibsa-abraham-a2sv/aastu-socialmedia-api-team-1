@@ -35,30 +35,6 @@ namespace test.UnitTest.Users.Commands
         private readonly UpdateUserDto _updateUserDto;
         private readonly Guid _userId;
 
-        // public UpdateUserRequestHandlerTest()
-        // {
-
-        //     _mockRepoUser = MockRepositoryFactory.GetUserRepository();
-
-        //     _handler = new UpdateUserCommandRequestHandler(_mockRepoUser.Object, _mapper);
-
-
-        //     var mapperConfig = new MapperConfiguration(c => {
-        //         c.AddProfile<MappingProfile>();
-        //     });
-
-        //     _mapper = mapperConfig.CreateMapper();  
-
-        //     _userId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc4");
-        //     _updateUserDto = new UpdateUserDto
-            // {
-            //     Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc4"),
-            //     Name = "Jima Dube",
-            //     email = "jima@gmail.com",
-            //     Bio = "I like the picture:)"
-            // };
-
-        // }
 
 
         [Fact]
