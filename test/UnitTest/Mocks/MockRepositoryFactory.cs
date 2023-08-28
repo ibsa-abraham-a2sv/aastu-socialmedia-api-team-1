@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System;
 using System.Collections.Generic;
@@ -7,10 +9,10 @@ using SocialMediaApp.Domain;
 using SocialMediaApp.Application.Persistence.Contracts;
 using Moq;
 
-namespace test.UnitTest.CommentTest.Mocks
+namespace test.UnitTest.Mocks;
+
+public static class MockRepositoryFactory
 {
-    public static class MockRepositoryFactory
-    {
         public static Mock<ICommentRepository> GetCommentRepository()
         {
             var comments = new List<Comment>
@@ -25,7 +27,7 @@ namespace test.UnitTest.CommentTest.Mocks
 
                new Comment
                {
-                   Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
+                    Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
                     UserId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
                     PostId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
                     Text = "Wow amazing :)" 
@@ -91,12 +93,14 @@ namespace test.UnitTest.CommentTest.Mocks
             {
                 new User
                 {
+                    Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
                     Name = "Jima Dube",
                     email = "jimd@gmail.com",
                     password = "High123@",
                 },
                 new User
                 {
+                    Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc6"),
                     Name = "xBebe",
                     email = "bebe@gmail.com",
                     password = "bebe123#",
@@ -105,18 +109,65 @@ namespace test.UnitTest.CommentTest.Mocks
 
             var mockRepo = new Mock<IUserRepository>();
 
-                mockRepo.Setup(r => r.GetAll()).ReturnsAsync(users);
+                mockRepo.Setup(r => r.GetAll()).ReturnsAsync(() => users);
 
-                mockRepo.Setup(r => r.Add(It.IsAny<User>())).ReturnsAsync((User user) => {
-                    users.Add(user);
-                    return user;
+                mockRepo.Setup(r => r.Add(It.IsAny<User>())).Callback((User user) => users.Add(user));
+                mockRepo.Setup(r => r.Exists(It.IsAny<Guid>())).ReturnsAsync((Guid userId) =>{
+                    var user = users.Where(u => u.Id == userId);
+
+                    return user.Any();
                 });
-               
+
                 mockRepo.Setup(r => r.Update(It.IsAny<User>()));
                 
-                mockRepo.Setup(r => r.GetById(It.IsAny<Guid>())).ReturnsAsync(new User());
                 return mockRepo;
 
         }
-    }
+
+
+
+        public static Mock<INotificationRepository> GetNotificationRepository()
+        {
+            
+            var notifications = new List<Notification>
+            {
+                new Notification
+                {
+                    Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc9"),
+                    UserId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
+                    Content = "Gamming Pc",
+                    IsRead = false,
+                },
+                new Notification
+                {
+                    Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc9"),
+                    UserId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc3"),
+                    Content = "Gamming Pc",
+                    IsRead = false,
+                }
+            };
+
+            var mockRepo = new Mock<INotificationRepository>();
+
+                mockRepo.Setup(r => r.GetNotifications(It.IsAny<Guid>())).ReturnsAsync((Guid userId) => {
+                    // null if not found
+                    var result =  notifications.Where(n => n.UserId == userId).ToList();
+                    if (result == null)
+                    {
+                        return null;
+                    }
+                    return result;
+                    
+                    });
+
+                mockRepo.Setup(r => r.Add(It.IsAny<Notification>())).ReturnsAsync((Notification notification) => {
+                    notifications.Add(notification);
+                    return notification;
+                });
+                
+
+
+                return mockRepo;
+
+        }
 }

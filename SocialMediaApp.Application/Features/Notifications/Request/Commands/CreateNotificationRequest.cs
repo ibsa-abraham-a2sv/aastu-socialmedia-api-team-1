@@ -11,5 +11,5 @@ namespace SocialMediaApp.Application.Features.Notifications.Request.Commands;
 
 public class CreateNotificationRequest : IRequest<BaseResponseClass>
 {
-    public CreateNotificationDto CreateNotificationDto { get; set; }
+    public CreateNotificationDto CreateNotificationDto { get; set; } 
 }

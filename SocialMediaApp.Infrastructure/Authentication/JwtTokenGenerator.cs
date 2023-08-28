@@ -44,12 +44,12 @@ namespace SocialMediaApp.Infrastructure.Authentication
             
             };
 
-            Console.WriteLine(_jwtSettings.ExpiryMinutes + " "+_jwtSettings.ExpiryMinutes.GetType());
+            
             var securityToken = new JwtSecurityToken(
                             issuer: _jwtSettings.Issuer,
                             audience: _jwtSettings.Audience,
                             claims: claims,
-                            expires: _dateTimeProvider.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes),
+                            expires: _dateTimeProvider.UtcNow.AddMinutes(60),
                             signingCredentials: signingCredentials);
 
             return new JwtSecurityTokenHandler().WriteToken(securityToken);

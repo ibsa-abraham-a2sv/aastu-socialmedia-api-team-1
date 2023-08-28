@@ -19,10 +19,12 @@ namespace SocialMediaApp.Application.Authentication.Command.Register
 
         private readonly IUserRepository _userRepository;
 
-        public LoginQueryHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
+        private readonly IPasswordService _passwordService;
+        public LoginQueryHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository, IPasswordService passwordService)
         {
             _jwtTokenGenerator = jwtTokenGenerator;
             _userRepository = userRepository;
+            _passwordService = passwordService;
         }
 
         public async Task<AuthenticationResult> Handle(LoginQuary query, CancellationToken cancellationToken)
@@ -35,7 +37,7 @@ namespace SocialMediaApp.Application.Authentication.Command.Register
             }
             // validate if the password is correct
 
-            if (user.password != query.Password)
+            if (!_passwordService.VerifyPassword(query.Password, user.password))
             {
                 throw new Exception("Password is incorrect");
             }
