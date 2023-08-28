@@ -20,10 +20,12 @@ namespace SocialMediaApp.Application.Authentication.Command.Register
 
         private readonly IUserRepository _userRepository;
 
-        public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
+        private readonly IPasswordService _passwordService;
+        public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository, IPasswordService passwordService)
         {
             _jwtTokenGenerator = jwtTokenGenerator;
             _userRepository = userRepository;
+            _passwordService = passwordService;
         }
 
         public async Task<AuthenticationResult> Handle(RegisterCommand command, CancellationToken cancellationToken)
@@ -37,13 +39,14 @@ namespace SocialMediaApp.Application.Authentication.Command.Register
                 throw new Exception("User with the given email already exists");
             }
 
+            string h_password = _passwordService.HashPassword(command.Password);
             // create a new user (generate unique Id ) and add it to the database
 
             var user = new User
             {
                 Name = command.Name,
                 email = command.Email,
-                password = command.Password,
+                password = h_password,
                 Bio = "",
 
             };
