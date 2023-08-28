@@ -26,8 +26,13 @@ namespace SocialMediaApp.Application.Features.Follows.Handler.Commands
         {
             var follow = await _followRepository.GetById(request.Id);
             if (follow == null)
-               throw new NotFoundException(nameof(follow), request.Id);
-
+            {
+                throw new NotFoundException(nameof(follow), request.Id);
+            }
+            else if(follow.CurrentUser != request.UserId)
+            {
+                throw new BadRequestException("you are not the owner of the Follow");
+            }
             await _followRepository.Delete(follow);
 
             return Unit.Value;

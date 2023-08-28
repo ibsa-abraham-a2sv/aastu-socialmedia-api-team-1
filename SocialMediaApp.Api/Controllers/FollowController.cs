@@ -12,19 +12,23 @@ using SocialMediaApp.Application.DTOs.Notifications;
 using SocialMediaApp.Application.Features.Notifications.Request.Commands;
 using SocialMediaApp.Application.Features.Posts.Request.Queries;
 using SocialMediaApp.Application.Features.Users.Request.Queries;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using SocialMediaApp.Application.DTOs.Views;
 
 namespace SocialMediaApp.Api.Controllers
 {
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
     public class FollowController:ControllerBase
 {
     private readonly IMediator _mediator;
-
-
-    public FollowController(IMediator mediator)
+    private readonly IHttpContextAccessor _contextAccessor;
+    public FollowController(IMediator mediator, IHttpContextAccessor httpContextAccessor)
     {
         _mediator = mediator;
+        _contextAccessor = httpContextAccessor;
         
     }
 
@@ -37,28 +41,35 @@ namespace SocialMediaApp.Api.Controllers
     }
 
     // GET: follow/folllowing/{id}
-    [HttpGet("following/{FollowingId:Guid}")]
-        //[HttpGet("following/{FollowingId:int}")]
-        public async Task<ActionResult<List<FollowDto>>> GetFollowings(Guid FollowingId)
+    [HttpGet("following/")]
+        public async Task<ActionResult<List<FollowDto>>> GetFollowings()
     {
-        var follow = await _mediator.Send(new GetFollowingRequest {userId = FollowingId});
+            var Id = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
+            var follow = await _mediator.Send(new GetFollowingRequest {userId = new Guid(Id)});
         
         return follow;
     }
 
     // POST: follow/followers
-    [HttpGet("followers/{FollowerId:Guid}")]
-   public async Task<ActionResult<List<FollowDto>>> GetFollowers(Guid FollowerId)
+    [HttpGet("followers/")]
+   public async Task<ActionResult<List<FollowDto>>> GetFollowers()
     {
-        var follow = await _mediator.Send(new GetFollowerRequest {userId = FollowerId});
+            var Id = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
+            var follow = await _mediator.Send(new GetFollowerRequest {userId = new Guid(Id)});
         
         return follow;
     }
 
    // POST: follow
     [HttpPost]
-    public async Task<ActionResult> PostFollow([FromBody] CreateFollowDto  followDto)
+    public async Task<ActionResult> PostFollow([FromBody] CreateFollowView createFollow )
         {
+            var Id = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
+            CreateFollowDto followDto = new CreateFollowDto()
+            {
+                CurrentUser = new Guid(Id),
+                ToBeFollowed = createFollow.ToBeFollowed
+            };
         var followcommand = new CreateFollowsRequest{createFollowDto = followDto};
         
         var followResponse = await _mediator.Send(followcommand);
@@ -80,9 +91,12 @@ namespace SocialMediaApp.Api.Controllers
     }
     // DELETE: follow/{id}
     [HttpDelete("{id:Guid}")]
-    public async Task<ActionResult> DeleteUser(Guid id)
+    public async Task<ActionResult> DeleteFollow(Guid id)
     {
-        await _mediator.Send( new DeleteFollowCommandRequest{ Id = id });
+        // authenticate the owner if he is the one asking to unfollow
+        var userId = _contextAccessor.HttpContext!.User.FindFirstValue("uid");
+
+        await _mediator.Send( new DeleteFollowCommandRequest{ Id = id, UserId = new Guid(userId) });
         return NoContent();
     }
     }

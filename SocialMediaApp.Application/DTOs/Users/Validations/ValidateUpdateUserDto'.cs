@@ -16,13 +16,13 @@ namespace SocialMediaApp.Application.DTOs.Users.Validations
 
         
         RuleFor(u => u.Id)
-        .NotEmpty().WithMessage("{PropertyName} must required")
-        .MustAsync(async (id, token) =>
-        {
-            var userIdExist = await _userRepository.Exists(id);
-            return userIdExist;
-        })
-        .WithMessage("{PropertyName} does not exist.");
+        .NotEmpty().WithMessage("{PropertyName} must required");
+        // .MustAsync(async (id, token) =>
+        // {
+        //     var userIdExist = await _userRepository.Exists(id);
+        //     return userIdExist;
+        // })
+        // .WithMessage("{PropertyName} does not exist.");
         }
        
         

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SocialMediaApp.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace SocialMediaApp.Application.Persistence.Contracts.Common
 {
     public interface IJwtTokenGenerator
     {
-        string GenerateToken(Guid userId, string Name);
+        string GenerateToken(User user);
     }
 }

@@ -1,47 +1,65 @@
 ﻿using AutoMapper;
-using Microsoft.Extensions.Options;
 using Moq;
-using Shouldly;
 using SocialMediaApp.Application.DTOs.Posts;
+using SocialMediaApp.Application.Exceptions;
 using SocialMediaApp.Application.Features.Posts.Handler.Queries;
 using SocialMediaApp.Application.Features.Posts.Request.Queries;
 using SocialMediaApp.Application.Persistence.Contracts;
-using SocialMediaApp.Application.Profiles;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using test.UnitTest.CommentTest.Mocks;
+using Xunit;
+using Shouldly;
+using FluentAssertions;
+using SocialMediaApp.Domain;
 
-namespace test.UnitTest.Posts.Queries
+namespace SocialMediaApp.Application.UnitTests.Features.Posts.Handler.Queries
 {
-    public class SearchPostRequestHandlerTest
+    public class SearchPostRequestHandlerTests
     {
-
-        private readonly IMapper _mapper;
-        private readonly Mock<IPostRepository> _mockRepo;
-
-        public SearchPostRequestHandlerTest()
+        [Fact]
+        public async Task Handle_ValidRequest_ReturnsPostDtos()
         {
-            _mockRepo = MockRepositoryFactory.GetPostRepository();
-            var mapperConfig = new MapperConfiguration(c => {
-                c.AddProfile<MappingProfile>();
-            });
+            // Arrange
+            var query = "example";
+            var posts = new List<Post> { new Post { Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"), Title = "Example Post" } };
+            var postRepositoryMock = new Mock<IPostRepository>();
+            postRepositoryMock.Setup(repo => repo.SearchPosts(query))
+                .ReturnsAsync(posts);
+            var mapperMock = new Mock<IMapper>();
+            mapperMock.Setup(mapper => mapper.Map<List<PostDto>>(posts))
+                .Returns(new List<PostDto> { new PostDto { Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"), Title = "Example Post" } });
+            var searchPostRequest = new SearchPostRequest { query = query };
+            var searchPostRequestHandler = new SearchPostRequestHandler(postRepositoryMock.Object, mapperMock.Object);
 
-            _mapper = mapperConfig.CreateMapper();
+            // Act
+            var result = await searchPostRequestHandler.Handle(searchPostRequest, CancellationToken.None);
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<List<PostDto>>();
+            result.Count.ShouldBe(1);
+            result[0].Id.ShouldBe(Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"));
+            result[0].Title.ShouldBe("Example Post");
         }
 
         [Fact]
-        public async Task GetPostsTest()
+        public async Task Handle_NoPostsFound_ThrowsNotFoundException()
         {
-            var handler = new SearchPostRequestHandler(_mockRepo.Object, _mapper);
-            var result = await handler.Handle(new SearchPostRequest(), CancellationToken.None);
+            // Arrange
+            var query = "example";
+            var postRepositoryMock = new Mock<IPostRepository>();
+            postRepositoryMock.Setup(repo => repo.SearchPosts(query))
+                .ReturnsAsync((List<Post>)null);
+            var mapperMock = new Mock<IMapper>();
+            var searchPostRequest = new SearchPostRequest { query = query };
+            var searchPostRequestHandler = new SearchPostRequestHandler(postRepositoryMock.Object, mapperMock.Object);
 
-            result.ShouldBeOfType<List<PostDto>>();
-
-
+            // Act & Assert
+            await Should.ThrowAsync<NotFoundException>(async () =>
+            {
+                await searchPostRequestHandler.Handle(searchPostRequest, CancellationToken.None);
+            });
         }
-
     }
 }

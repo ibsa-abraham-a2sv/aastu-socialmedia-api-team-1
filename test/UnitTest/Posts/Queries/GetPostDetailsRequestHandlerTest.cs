@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using test.UnitTest.CommentTest.Mocks;
+using test.UnitTest.Mocks;
 
 namespace test.UnitTest.Posts.Queries
 {

@@ -1,29 +1,68 @@
 ﻿using AutoMapper;
+using FluentValidation.TestHelper;
+using MediatR;
 using Moq;
+using Shouldly;
+using SocialMediaApp.Application.DTOs.Posts;
+using SocialMediaApp.Application.DTOs.Posts.Validators;
+using SocialMediaApp.Application.Features.Posts.Handler.Commands;
+using SocialMediaApp.Application.Features.Posts.Request.Commands;
 using SocialMediaApp.Application.Persistence.Contracts;
-using SocialMediaApp.Application.Profiles;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using SocialMediaApp.Domain;
+using System.Threading;
 using System.Threading.Tasks;
-using test.UnitTest.CommentTest.Mocks;
+using Xunit;
 
-namespace test.UnitTest.Posts.Commands
+namespace SocialMediaApp.Application.UnitTests.Features.Posts.Handler.Commands
 {
-    public class UpdatePostsCommandHandler
+    public class UpdatePostsCommandHandlerTests
     {
-        private readonly IMapper _mapper;
-        private readonly Mock<IPostRepository> _mockRepo;
-        public UpdatePostsCommandHandler()
+        [Fact]
+        public async Task Handle_ValidRequest_PostUpdated()
         {
-            _mockRepo = MockRepositoryFactory.GetPostRepository();
-            var mapperConfig = new MapperConfiguration(c =>
-            {
-                c.AddProfile<MappingProfile>();
-            });
+            // Arrange
+            var postId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8");
+            var updatePostDto = new UpdatePostDto { Id = postId, Title = "New Title" };
+            var post = new Post { Id = postId, Title = "Old Title" };
+            var postRepositoryMock = new Mock<IPostRepository>();
+            postRepositoryMock.Setup(repo => repo.GetById(postId))
+                .ReturnsAsync(post);
+            postRepositoryMock.Setup(repo => repo.Update(post))
+                .Returns(Task.CompletedTask);
+            var mapperMock = new Mock<IMapper>();
+            var updatePostDtoValidator = new UpdatePostDtoValidator(postRepositoryMock.Object);
+            var validationResult = await updatePostDtoValidator.ValidateAsync(updatePostDto);
+            var updatePostsCommand = new UpdatePostsCommand { post = updatePostDto };
+            var updatePostsCommandHandler = new UpdatePostsCommandHandler(postRepositoryMock.Object, mapperMock.Object);
 
-            _mapper = mapperConfig.CreateMapper();
+            // Act
+            await updatePostsCommandHandler.Handle(updatePostsCommand, CancellationToken.None);
+
+            // Assert
+            mapperMock.Verify(mapper => mapper.Map(updatePostDto, post), Times.Once);
+            postRepositoryMock.Verify(repo => repo.Update(post), Times.Once);
+        }
+
+        [Fact]
+        public async Task Handle_InvalidRequest_ValidationFails_PostNotUpdated()
+        {
+            // Arrange
+            var postId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8");
+            var updatePostDto = new UpdatePostDto { Id = postId, Title = null }; // Invalid data
+            var postRepositoryMock = new Mock<IPostRepository>();
+            var mapperMock = new Mock<IMapper>();
+            var updatePostDtoValidator = new UpdatePostDtoValidator(postRepositoryMock.Object);
+            var validationResult = await updatePostDtoValidator.TestValidateAsync(updatePostDto);
+            var updatePostsCommand = new UpdatePostsCommand { post = updatePostDto };
+            var updatePostsCommandHandler = new UpdatePostsCommandHandler(postRepositoryMock.Object, mapperMock.Object);
+
+            // Act
+            var result = await updatePostsCommandHandler.Handle(updatePostsCommand, CancellationToken.None);
+
+            // Assert
+            result.ShouldBe(Unit.Value);
+            validationResult.ShouldHaveValidationErrorFor(dto => dto.Title);
+            postRepositoryMock.Verify(repo => repo.Update(It.IsAny<Post>()), Times.Never);
         }
     }
 }

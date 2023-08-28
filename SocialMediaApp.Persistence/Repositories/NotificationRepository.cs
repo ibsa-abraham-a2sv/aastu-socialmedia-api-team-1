@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SocialMediaApp.Application.Exceptions;
 using SocialMediaApp.Application.Persistence.Contracts;
 using SocialMediaApp.Domain;
 
@@ -18,7 +19,7 @@ public class NotificationRepository : GenericRepository<Notification>, INotifica
         {
             var notification = await _dbContext.Notifications.FindAsync(id);
             
-            if (notification != null)
+            if (notification != null && notification.UserId == user.Id)
             {
                 notification.IsRead = true;
                 await _dbContext.SaveChangesAsync();
@@ -33,7 +34,7 @@ public class NotificationRepository : GenericRepository<Notification>, INotifica
         var user = await _dbContext.Users.FindAsync(userId);
         if (user != null)
         {
-            var notifications = await  _dbContext.Notifications.Where(n=>n.UserId == userId).ToListAsync();
+            var notifications = await  _dbContext.Notifications.Where(n=>n.UserId == userId && n.IsRead == false).OrderByDescending(n => n.CreatedDate).ToListAsync();
             return notifications;
         }
         return null;
