@@ -45,11 +45,11 @@ public class CreateLikeCommandHandler : IRequestHandler<CreateLikeRequest, BaseR
             response.Message = "Creation failed";
             response.Errors = validationResult.Errors.Select(err => err.ErrorMessage).ToList();
         }
-        else if (_likeRepository.LikeExists(request.LikeDto.UserId, request.LikeDto.PostId))
+        else if (! await _likeRepository.LikeExists(request.LikeDto.UserId, request.LikeDto.PostId))
         {
             response.Success = false;
             response.Message = "Creation failed";
-            response.Errors = new List<string>() { "post Cant not be liked by owner"};
+            response.Errors = new List<string>() { "already liked by user"};
         }
         else
         {

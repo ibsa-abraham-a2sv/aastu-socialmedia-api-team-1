@@ -29,5 +29,9 @@
     <ProjectReference Include="..\SocialMediaApp.Infrastructure\SocialMediaApp.Infrastructure.csproj" />
     <ProjectReference Include="..\SocialMediaApp.Persistence\SocialMediaApp.Persistence.csproj" />
   </ItemGroup>
+   
+  <ItemGroup>
+     <InternalsVisibleTo Include="../test/test.csproj"/>
+  </ItemGroup>
 
 </Project>

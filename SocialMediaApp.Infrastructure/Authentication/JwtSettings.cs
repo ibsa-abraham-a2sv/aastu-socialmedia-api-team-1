@@ -13,7 +13,7 @@ namespace SocialMediaApp.Infrastructure.Authentication
         public string Issuer { get; init; }
 
         public string Audience { get; init; }
-        public int ExpiryMinutes { get; init; }
+        public int ExpiryMinutes { get; init; } = 60;
 
     }
 }

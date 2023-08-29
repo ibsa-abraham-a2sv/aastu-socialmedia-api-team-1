@@ -3,8 +3,6 @@ using Microsoft.IdentityModel.Tokens;
 using SocialMediaApp.Application.Persistence.Contracts.Common;
 using SocialMediaApp.Application.Persistence.Contracts.Common.Services;
 using SocialMediaApp.Domain;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -44,12 +42,12 @@ namespace SocialMediaApp.Infrastructure.Authentication
             
             };
 
-
+            
             var securityToken = new JwtSecurityToken(
                             issuer: _jwtSettings.Issuer,
                             audience: _jwtSettings.Audience,
                             claims: claims,
-                            expires: _dateTimeProvider.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes),
+                            expires: _dateTimeProvider.UtcNow.AddMinutes(60),
                             signingCredentials: signingCredentials);
 
             return new JwtSecurityTokenHandler().WriteToken(securityToken);

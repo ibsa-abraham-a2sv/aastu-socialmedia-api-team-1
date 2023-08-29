@@ -33,13 +33,22 @@ public class CreateFollowsRequestHandler: IRequestHandler<CreateFollowsRequest, 
 
         var validationResult = await validator.ValidateAsync(request.createFollowDto);
         var response = new BaseResponseClass();
+        var followExists = await _followRepository.IsAlreadyFollowing(request.createFollowDto.CurrentUser, request.createFollowDto.ToBeFollowed);
 
-
-        if(validationResult.IsValid == false)
+        if (validationResult.IsValid == false)
         {
             response.Success = false;
             response.Message = "Creation Failed";
             response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+        }
+        else if (!followExists)
+        {
+            response.Success = false;
+            response.Message = "Creation Failed";
+            response.Errors = new List<string>()
+            {
+                "already following the current user"
+            };
         }
         else
         {
