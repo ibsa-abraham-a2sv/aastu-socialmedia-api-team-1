@@ -22,23 +22,26 @@ namespace SocialMediaApp.Application.UnitTests.Features.Posts.Handler.Commands
         {
             // Arrange
             var postId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8");
-            var updatePostDto = new UpdatePostDto { Id = postId, Title = "New Title" };
-            var post = new Post { Id = postId, Title = "Old Title" };
+            var updatePostDto = new UpdatePostDto { Id = postId, Title = "New Title", Content="people" };
+            var post = new Post { Id = postId, Title = "Old Title", Content= "sheesh" };
             var postRepositoryMock = new Mock<IPostRepository>();
+            postRepositoryMock.Setup(p => p.Add(post)).ReturnsAsync(post);
             postRepositoryMock.Setup(repo => repo.GetById(postId))
                 .ReturnsAsync(post);
-            postRepositoryMock.Setup(repo => repo.Update(post))
-                .Returns(Task.CompletedTask);
+            //postRepositoryMock.Setup(repo => repo.Update()).Returns(Task.CompletedTask);
+
             var mapperMock = new Mock<IMapper>();
             var updatePostDtoValidator = new UpdatePostDtoValidator(postRepositoryMock.Object);
             var validationResult = await updatePostDtoValidator.ValidateAsync(updatePostDto);
             var updatePostsCommand = new UpdatePostsCommand { post = updatePostDto };
             var updatePostsCommandHandler = new UpdatePostsCommandHandler(postRepositoryMock.Object, mapperMock.Object);
-
+            
             // Act
-            await updatePostsCommandHandler.Handle(updatePostsCommand, CancellationToken.None);
-
+            var result  = await updatePostsCommandHandler.Handle(updatePostsCommand, CancellationToken.None);
+            var fetchPost = await postRepositoryMock.Object.GetById(postId);
             // Assert
+            Assert.True(validationResult.IsValid);
+            Assert.IsType<Unit>(result);
             mapperMock.Verify(mapper => mapper.Map(updatePostDto, post), Times.Once);
             postRepositoryMock.Verify(repo => repo.Update(post), Times.Once);
         }

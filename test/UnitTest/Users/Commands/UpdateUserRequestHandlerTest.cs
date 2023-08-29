@@ -21,6 +21,8 @@ using SocialMediaApp.Application.Features.Users.Handler.Commands;
 using SocialMediaApp.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SocialMediaApp.Application.DTOs.Users.Validations;
+using Microsoft.Extensions.Hosting;
 
 namespace test.UnitTest.Users.Commands
 {
@@ -54,28 +56,31 @@ namespace test.UnitTest.Users.Commands
             var userId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc6");
             var updateUserDto = new UpdateUserDto
             {
-                Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc4"),
+                Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc6"),
                 Name = "Jima Dube",
                 email = "jima@gmail.com",
                 Bio = "I like the picture:)"
             };
-            _mockRepoUser = MockRepositoryFactory.GetUserRepository();
 
             var mockUserRepository = new Mock<IUserRepository>();
-            var mockMapper = new Mock<IMapper>();
-            
-            // Configure mock behavior (replace this with your actual behavior)
-           
 
+            var mockMapper = new Mock<IMapper>();
+
+            // Configure mock behavior (replace this with your actual behavior)
+
+            mockUserRepository.Setup(p => p.Add(users[1])).ReturnsAsync(users[1]);
             // mockUserRepository.Setup(repo => repo.GetAll()).ReturnsAsync(() => users);
-            
+
             var handler = new UpdateUserCommandRequestHandler(mockUserRepository.Object, mockMapper.Object);
 
             var request = new UpdateUserCommandRequest { UpdateUserDto = updateUserDto };
-
+            var validator = new ValidateUpdateUserDto(mockUserRepository.Object);
+            var validationResult = await validator.ValidateAsync(updateUserDto);
+            
             // Act & Assert
             var result = await handler.Handle(request, CancellationToken.None);
             Assert.IsType<Unit>(result);
+            Assert.True(validationResult.IsValid);
 
 
         } 
