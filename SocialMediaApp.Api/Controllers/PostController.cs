@@ -127,9 +127,9 @@ namespace SocialMediaApp.Api.Controllers
         }
 
         [HttpGet("search")]
-        public async Task<ActionResult<List<PostDto>>> SearchPosts(string q)
+        public async Task<ActionResult<List<PostDto>>> SearchPosts(string query)
         {
-            var posts = await _mediator.Send(new SearchPostRequest{query = q});
+            var posts = await _mediator.Send(new SearchPostRequest{query = query});
 
             return posts;
         }

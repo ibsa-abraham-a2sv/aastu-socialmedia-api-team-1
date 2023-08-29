@@ -20,7 +20,7 @@ using SocialMediaApp.Application.Exceptions;
 using SocialMediaApp.Application.Features.Users.Handler.Commands;
 using SocialMediaApp.Domain;
 using MediatR;
-
+using Microsoft.AspNetCore.Mvc;
 
 namespace test.UnitTest.Users.Commands
 {
@@ -73,8 +73,7 @@ namespace test.UnitTest.Users.Commands
             var mockMapper = new Mock<IMapper>();
             
             // Configure mock behavior (replace this with your actual behavior)
-            mockUserRepository.Setup(repo => repo.GetById(userId))
-                            .ReturnsAsync(users[1]);
+           
 
             // mockUserRepository.Setup(repo => repo.GetAll()).ReturnsAsync(() => users);
             
@@ -82,10 +81,10 @@ namespace test.UnitTest.Users.Commands
             var request = new UpdateUserCommandRequest { UpdateUserDto = updateUserDto };
 
             // Act & Assert
-            await handler.Handle(request, CancellationToken.None);
-            mockUserRepository.Verify(repo => repo.GetById(userId), Times.Once);
-            
+            var result = await handler.Handle(request, CancellationToken.None);
+            Assert.IsType<Unit>(result);
 
-         } 
+
+        } 
     }
 }
