@@ -26,14 +26,7 @@ namespace test.UnitTest.Users.Commands
 {
     public class UpdateUserRequestHandlerTest
     {
-        private readonly IMapper _mapper;
 
-        private readonly Mock<IUserRepository> _mockRepoUser;
-
-        private readonly UpdateUserCommandRequestHandler _handler;
-
-        private readonly UpdateUserDto _updateUserDto;
-        private readonly Guid _userId;
 
 
 
