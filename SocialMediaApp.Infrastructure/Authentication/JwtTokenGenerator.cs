@@ -3,8 +3,6 @@ using Microsoft.IdentityModel.Tokens;
 using SocialMediaApp.Application.Persistence.Contracts.Common;
 using SocialMediaApp.Application.Persistence.Contracts.Common.Services;
 using SocialMediaApp.Domain;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
