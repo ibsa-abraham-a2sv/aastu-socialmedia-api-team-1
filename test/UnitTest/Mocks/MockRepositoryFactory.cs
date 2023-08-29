@@ -77,6 +77,8 @@ public static class MockRepositoryFactory
                     return post;
                 });
 
+                mockRepo.Setup(r => r.Delete(It.IsAny<Post>()));
+
                 return mockRepo;
 
         }
@@ -120,6 +122,7 @@ public static class MockRepositoryFactory
 
                 mockRepo.Setup(r => r.Update(It.IsAny<User>()));
                 
+                mockRepo.Setup(r => r.GetById(It.IsAny<Guid>())).ReturnsAsync(new User());
                 return mockRepo;
 
         }

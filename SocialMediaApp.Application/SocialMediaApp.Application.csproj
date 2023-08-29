@@ -1,6 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <Compile Remove="Features\NewsFeedItem\**" />
+    <EmbeddedResource Remove="Features\NewsFeedItem\**" />
+    <None Remove="Features\NewsFeedItem\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SocialMediaApp.Domain\SocialMediaApp.Domain.csproj" />
   </ItemGroup>
 
@@ -22,11 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SocialMediaApp.Domain\SocialMediaApp.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\NewsFeedItem\Handler\Commands\" />
-    <Folder Include="Features\NewsFeedItem\Request\Commands\" />
   </ItemGroup>
 
 </Project>

@@ -28,8 +28,6 @@ namespace test.UnitTest.Users.Commands
     {
 
 
-
-
         [Fact]
         public async Task UpdateuserTest()
         {
@@ -61,6 +59,7 @@ namespace test.UnitTest.Users.Commands
                 email = "jima@gmail.com",
                 Bio = "I like the picture:)"
             };
+            _mockRepoUser = MockRepositoryFactory.GetUserRepository();
 
             var mockUserRepository = new Mock<IUserRepository>();
             var mockMapper = new Mock<IMapper>();
@@ -71,6 +70,7 @@ namespace test.UnitTest.Users.Commands
             // mockUserRepository.Setup(repo => repo.GetAll()).ReturnsAsync(() => users);
             
             var handler = new UpdateUserCommandRequestHandler(mockUserRepository.Object, mockMapper.Object);
+
             var request = new UpdateUserCommandRequest { UpdateUserDto = updateUserDto };
 
             // Act & Assert
