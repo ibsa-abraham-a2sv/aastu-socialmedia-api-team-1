@@ -95,3 +95,5 @@ void AddSwaggerDoc(IServiceCollection services)
         });
     });
 }
+
+public partial class Program { }
