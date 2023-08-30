@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Microsoft.EntityFrameworkCore;
 using SocialMediaApp.Application.Exceptions;
 using SocialMediaApp.Application.Persistence.Contracts;
 using SocialMediaApp.Domain;
@@ -34,6 +35,21 @@ public class UserRepository : GenericRepository<User>, IUserRepository
     {
         var users = _dbContext.Users.Where(u => u.Name.Contains(Name)).ToList() ?? throw new NotFoundException("${Name}", Name);
         return users;
+    }
+
+    public User EditUser(User user)
+    {
+        var userToEdit = _dbContext.Users.FirstOrDefault(u => u.Id == user.Id);
+        if (userToEdit == null)
+            throw new Exception("User not found");
+        userToEdit.Name = user.Name;
+        userToEdit.email = user.email;
+        userToEdit.Bio = user.Bio;
+
+        if (_dbContext.SaveChanges() == 0)
+            throw new Exception("User not edited");
+
+        return userToEdit;
     }
 
 }

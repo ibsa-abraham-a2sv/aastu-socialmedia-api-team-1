@@ -21,6 +21,7 @@ namespace SocialMediaApp.Persistence.Migrations
                     email = table.Column<string>(type: "text", nullable: false),
                     password = table.Column<string>(type: "text", nullable: false),
                     Bio = table.Column<string>(type: "text", nullable: false),
+                    IsVerified = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>

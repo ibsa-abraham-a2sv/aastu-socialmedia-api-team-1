@@ -13,7 +13,7 @@ using SocialMediaApp.Persistence;
 namespace SocialMediaApp.Persistence.Migrations
 {
     [DbContext(typeof(SocialMediaAppDbContext))]
-    [Migration("20230828081138_InitialCreate")]
+    [Migration("20230829195857_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -167,6 +167,9 @@ namespace SocialMediaApp.Persistence.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
