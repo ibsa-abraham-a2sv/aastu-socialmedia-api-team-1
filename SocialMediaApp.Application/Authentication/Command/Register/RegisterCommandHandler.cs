@@ -53,6 +53,7 @@ namespace SocialMediaApp.Application.Authentication.Command.Register
                 email = command.Email,
                 password = h_password,
                 Bio = "",
+                CreatedDate = DateTime.UtcNow,
 
             };
             var validator = new ValidateCreateUserDto(_userRepository);
