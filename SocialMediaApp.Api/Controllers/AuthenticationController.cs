@@ -83,7 +83,7 @@ namespace SocialMediaApp.Api.Controllers
                 throw new Exception();
             }
 
-            return Ok("Welcome to Social Media App " + verificationResult.User.Name + " use this Token to Authenticate" + verificationResult.Token);
+            return Ok("Welcome to Social Media App " + verificationResult.User.Name + " use this Token to Authenticate: " + verificationResult.Token);
             //return Ok(verificationResult);
         }
 
