@@ -56,12 +56,14 @@ public static class MockRepositoryFactory
             {
                 new Post
                 {
-                    UserId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
+                    Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc6"),
+                    UserId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc7"),
                     Title = "Gamming Pc",
-                    Content = "High performance, have a graphic card",
+                    Content = "High performance, have a graphic card"
                 },
                 new Post
                 {
+                  Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc5"),
                   UserId = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"),
                   Title = "Desktop Pc",
                   Content = "low performance, have no  graphic card",
@@ -71,7 +73,8 @@ public static class MockRepositoryFactory
             var mockRepo = new Mock<IPostRepository>();
 
                 mockRepo.Setup(r => r.GetAll()).ReturnsAsync(posts);
-
+                mockRepo.Setup(r => r.GetPosts(Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"))).ReturnsAsync(posts);
+                mockRepo.Setup(r => r.GetPostDetails(Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8"), Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc5"))).ReturnsAsync(posts[1]);
                 mockRepo.Setup(r => r.Add(It.IsAny<Post>())).ReturnsAsync((Post post) => {
                     posts.Add(post);
                     return post;

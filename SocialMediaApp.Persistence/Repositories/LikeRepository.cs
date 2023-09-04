@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using SocialMediaApp.Application.Persistence.Contracts;
 using SocialMediaApp.Domain;
 using System;
@@ -24,10 +25,11 @@ public class LikeRepository: GenericRepository<Like>, ILikeRepository
         return likes;
     }
 
-    public bool LikeExists(Guid UserId, Guid PostId)
+    public async Task<bool> LikeExists(Guid UserId, Guid PostId)
     {
-        var user = _dbContext.Posts.Where(n => n.UserId == UserId && n.Id == PostId).FirstOrDefault();
-        return user != null;
+        var user = await _dbContext.Likes.Where(n => n.UserId == UserId && n.PostId == PostId).ToListAsync();
+        Console.WriteLine(user.IsNullOrEmpty());
+        return user.IsNullOrEmpty();
     }
 
     public async Task<List<Like>> GetLikesByPostId(Guid userId, Guid PostId)

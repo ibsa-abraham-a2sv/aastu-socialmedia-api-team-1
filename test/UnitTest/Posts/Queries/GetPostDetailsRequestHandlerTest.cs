@@ -38,7 +38,8 @@ namespace test.UnitTest.Posts.Queries
         public async Task GetPostDetailTest()
         {
             var handler = new GetPostDetailsRequestHandler(_mockRepo.Object, _mapper);
-            var result = await handler.Handle(new GetPostRequestById(), CancellationToken.None);
+            var getPostDetailsRequest = new GetPostRequestById { Id = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc5"), UserID = Guid.Parse("0b8b1a9d-2383-424c-9098-eb1b89e2efc8") };
+            var result = await handler.Handle(getPostDetailsRequest, CancellationToken.None);
 
             result.ShouldBeOfType<PostDto>();
             

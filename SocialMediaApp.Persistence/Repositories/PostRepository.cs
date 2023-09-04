@@ -41,7 +41,7 @@ public class PostRepository : GenericRepository<Post>, IPostRepository
 
     public async Task<List<Post>> SearchPosts(string query)
     {
-        var posts = _dbContext.Posts.ToList();
+        var posts = await  _dbContext.Posts.ToListAsync();
 
         List<Post> postResult = new List<Post>();
         foreach (var post in posts)

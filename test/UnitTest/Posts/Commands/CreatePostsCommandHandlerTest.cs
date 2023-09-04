@@ -23,7 +23,7 @@ namespace test.UnitTest.Posts.Commands
     {
         private readonly IMapper _mapper;
         private readonly Mock<IPostRepository> _mockRepo ;
-        private readonly CreatePostsCommandHandler _handler;
+        private  CreatePostsCommandHandler _handler;
         private readonly CreatePostDto _createPostDto;
 
         public CreatePostsCommandHandlerTest()
@@ -48,12 +48,12 @@ namespace test.UnitTest.Posts.Commands
         [Fact]
         public async Task CreatePost()
         {
-            var resultTask = _handler.Handle(new CreatePostsCommand(){postDto = _createPostDto }, CancellationToken.None);
-
-            var result = await resultTask;
+            _handler = new CreatePostsCommandHandler(_mockRepo.Object, _mapper);
+            var CreateRequest = new CreatePostsCommand() { postDto = _createPostDto };
+            var resultTask = await _handler.Handle(CreateRequest, CancellationToken.None);
+            Assert.NotNull(resultTask); 
             
-
-            result.ShouldBeOfType<BaseResponseClass>();
+            resultTask.ShouldBeOfType<BaseResponseClass>();
 
         }
 

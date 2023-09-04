@@ -19,25 +19,30 @@ namespace SocialMediaApp.Application.Authentication.Command.Register
 
         private readonly IUserRepository _userRepository;
 
-        public LoginQueryHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
+        private readonly IPasswordService _passwordService;
+        public LoginQueryHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository, IPasswordService passwordService)
         {
             _jwtTokenGenerator = jwtTokenGenerator;
             _userRepository = userRepository;
+            _passwordService = passwordService;
         }
 
         public async Task<AuthenticationResult> Handle(LoginQuary query, CancellationToken cancellationToken)
         {
             //validate if the user exists
-
-            if ( _userRepository.GetByEmail(query.Email) is not User user)
+            if (_userRepository.GetByEmail(query.Email) is not User user)
             {
                 throw new Exception("User with the given email does not exist");
             }
             // validate if the password is correct
 
-            if (user.password != query.Password)
+            if (!_passwordService.VerifyPassword(query.Password, user.password))
             {
                 throw new Exception("Password is incorrect");
+            }
+            if (!user.IsVerified)
+            {
+                throw new Exception("User Account is not Verified");
             }
 
             // generate token
