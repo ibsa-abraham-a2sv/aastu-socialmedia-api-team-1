@@ -73,7 +73,7 @@ namespace SocialMediaApp.Application.Authentication.Command.Register
                 {
                     To = user.email,
                     Subject = "Social Media App Verification",
-                    Body = $"Please verify your account by clicking the link below: <br/> <a href='{scheme}://{host}/api/auth/verify-email?token={token}'>Verify Email</a>"
+                    Body = $"Please verify your account by clicking the link below: <br/> <a href='{scheme}://{host}/api/Authentication/verify-email?token={token}'>Verify Email</a>"
                 });
 
                 return "Please verify your Email";
